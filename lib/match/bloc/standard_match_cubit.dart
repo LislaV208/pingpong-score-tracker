@@ -1,13 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pingpong_score_tracker/config.dart';
-import 'package:pingpong_score_tracker/match/bloc/double_match_state.dart';
 import 'package:pingpong_score_tracker/match/bloc/standard_match_state.dart';
 import 'package:pingpong_score_tracker/players/models/player.dart';
+import 'package:stack/stack.dart';
 
 @injectable
 class StandardMatchCubit extends Cubit<StandardMatchState> {
   StandardMatchCubit(super.initialState);
+
+  final _stateStack = Stack<StandardMatchState>();
 
   void givePointToPlayer(Player player) {
     var leftPlayerSetScore = state.leftPlayerSetScore;
@@ -66,6 +68,8 @@ class StandardMatchCubit extends Cubit<StandardMatchState> {
       }
     }
 
+    _stateStack.push(state);
+
     emit(state.copyWith(
       leftPlayerSetScore: leftPlayerSetScore,
       rightPlayerSetScore: rightPlayerSetScore,
@@ -75,6 +79,14 @@ class StandardMatchCubit extends Cubit<StandardMatchState> {
       rightPlayerMatchScore: rightPlayerMatchScore,
       playerServing: playerServing,
       isFinished: isFinished,
+      canUndo: _stateStack.isNotEmpty,
     ));
+  }
+
+  void undo() {
+    if (_stateStack.isNotEmpty) {
+      final previousState = _stateStack.pop();
+      emit(previousState);
+    }
   }
 }

@@ -26,6 +26,7 @@ mixin _$StandardMatchState {
   int get leftPlayerMatchScore => throw _privateConstructorUsedError;
   int get rightPlayerMatchScore => throw _privateConstructorUsedError;
   int get playerServesCount => throw _privateConstructorUsedError;
+  bool get canUndo => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $StandardMatchStateCopyWith<StandardMatchState> get copyWith =>
@@ -47,7 +48,8 @@ abstract class $StandardMatchStateCopyWith<$Res> {
       int rightPlayerSetScore,
       int leftPlayerMatchScore,
       int rightPlayerMatchScore,
-      int playerServesCount});
+      int playerServesCount,
+      bool canUndo});
 
   $PlayerCopyWith<$Res> get leftPlayer;
   $PlayerCopyWith<$Res> get rightPlayer;
@@ -76,6 +78,7 @@ class _$StandardMatchStateCopyWithImpl<$Res>
     Object? leftPlayerMatchScore = freezed,
     Object? rightPlayerMatchScore = freezed,
     Object? playerServesCount = freezed,
+    Object? canUndo = freezed,
   }) {
     return _then(_value.copyWith(
       leftPlayer: leftPlayer == freezed
@@ -118,6 +121,10 @@ class _$StandardMatchStateCopyWithImpl<$Res>
           ? _value.playerServesCount
           : playerServesCount // ignore: cast_nullable_to_non_nullable
               as int,
+      canUndo: canUndo == freezed
+          ? _value.canUndo
+          : canUndo // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 
@@ -167,7 +174,8 @@ abstract class _$$_StandardMatchStateCopyWith<$Res>
       int rightPlayerSetScore,
       int leftPlayerMatchScore,
       int rightPlayerMatchScore,
-      int playerServesCount});
+      int playerServesCount,
+      bool canUndo});
 
   @override
   $PlayerCopyWith<$Res> get leftPlayer;
@@ -202,6 +210,7 @@ class __$$_StandardMatchStateCopyWithImpl<$Res>
     Object? leftPlayerMatchScore = freezed,
     Object? rightPlayerMatchScore = freezed,
     Object? playerServesCount = freezed,
+    Object? canUndo = freezed,
   }) {
     return _then(_$_StandardMatchState(
       leftPlayer: leftPlayer == freezed
@@ -244,6 +253,10 @@ class __$$_StandardMatchStateCopyWithImpl<$Res>
           ? _value.playerServesCount
           : playerServesCount // ignore: cast_nullable_to_non_nullable
               as int,
+      canUndo: canUndo == freezed
+          ? _value.canUndo
+          : canUndo // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -261,7 +274,8 @@ class _$_StandardMatchState implements _StandardMatchState {
       this.rightPlayerSetScore = 0,
       this.leftPlayerMatchScore = 0,
       this.rightPlayerMatchScore = 0,
-      this.playerServesCount = 0});
+      this.playerServesCount = 0,
+      this.canUndo = false});
 
   @override
   final Player leftPlayer;
@@ -289,10 +303,13 @@ class _$_StandardMatchState implements _StandardMatchState {
   @override
   @JsonKey()
   final int playerServesCount;
+  @override
+  @JsonKey()
+  final bool canUndo;
 
   @override
   String toString() {
-    return 'StandardMatchState(leftPlayer: $leftPlayer, rightPlayer: $rightPlayer, playerServing: $playerServing, currentPlayerServing: $currentPlayerServing, isFinished: $isFinished, leftPlayerSetScore: $leftPlayerSetScore, rightPlayerSetScore: $rightPlayerSetScore, leftPlayerMatchScore: $leftPlayerMatchScore, rightPlayerMatchScore: $rightPlayerMatchScore, playerServesCount: $playerServesCount)';
+    return 'StandardMatchState(leftPlayer: $leftPlayer, rightPlayer: $rightPlayer, playerServing: $playerServing, currentPlayerServing: $currentPlayerServing, isFinished: $isFinished, leftPlayerSetScore: $leftPlayerSetScore, rightPlayerSetScore: $rightPlayerSetScore, leftPlayerMatchScore: $leftPlayerMatchScore, rightPlayerMatchScore: $rightPlayerMatchScore, playerServesCount: $playerServesCount, canUndo: $canUndo)';
   }
 
   @override
@@ -319,7 +336,8 @@ class _$_StandardMatchState implements _StandardMatchState {
             const DeepCollectionEquality()
                 .equals(other.rightPlayerMatchScore, rightPlayerMatchScore) &&
             const DeepCollectionEquality()
-                .equals(other.playerServesCount, playerServesCount));
+                .equals(other.playerServesCount, playerServesCount) &&
+            const DeepCollectionEquality().equals(other.canUndo, canUndo));
   }
 
   @override
@@ -334,7 +352,8 @@ class _$_StandardMatchState implements _StandardMatchState {
       const DeepCollectionEquality().hash(rightPlayerSetScore),
       const DeepCollectionEquality().hash(leftPlayerMatchScore),
       const DeepCollectionEquality().hash(rightPlayerMatchScore),
-      const DeepCollectionEquality().hash(playerServesCount));
+      const DeepCollectionEquality().hash(playerServesCount),
+      const DeepCollectionEquality().hash(canUndo));
 
   @JsonKey(ignore: true)
   @override
@@ -354,7 +373,8 @@ abstract class _StandardMatchState implements StandardMatchState {
       final int rightPlayerSetScore,
       final int leftPlayerMatchScore,
       final int rightPlayerMatchScore,
-      final int playerServesCount}) = _$_StandardMatchState;
+      final int playerServesCount,
+      final bool canUndo}) = _$_StandardMatchState;
 
   @override
   Player get leftPlayer;
@@ -376,6 +396,8 @@ abstract class _StandardMatchState implements StandardMatchState {
   int get rightPlayerMatchScore;
   @override
   int get playerServesCount;
+  @override
+  bool get canUndo;
   @override
   @JsonKey(ignore: true)
   _$$_StandardMatchStateCopyWith<_$_StandardMatchState> get copyWith =>

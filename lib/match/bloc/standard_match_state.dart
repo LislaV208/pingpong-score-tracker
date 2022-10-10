@@ -18,5 +18,6 @@ class StandardMatchState with _$StandardMatchState {
     @Default(0) int leftPlayerMatchScore,
     @Default(0) int rightPlayerMatchScore,
     @Default(0) int playerServesCount,
+    @Default(false) bool canUndo,
   }) = _StandardMatchState;
 }
