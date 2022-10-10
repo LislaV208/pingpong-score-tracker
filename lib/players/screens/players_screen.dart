@@ -95,13 +95,11 @@ class _PlayersScreenState extends State<PlayersScreen> {
                             navigator.push(
                               MaterialPageRoute(
                                 builder: (context) => BlocProvider.value(
-                                    value: getIt.get<PlayersCubit>(),
-                                    child:
-                                        //  matchType == MatchType.standard
-                                        // ?
-                                        const StandardMatchConfigScreen()
-                                    // : const DoubleMatchConfigScreen(),
-                                    ),
+                                  value: getIt.get<PlayersCubit>(),
+                                  child: matchType == MatchType.standard
+                                      ? const StandardMatchConfigScreen()
+                                      : const DoubleMatchConfigScreen(),
+                                ),
                               ),
                             );
                           }

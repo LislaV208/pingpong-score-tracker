@@ -1,132 +1,142 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:injectable/injectable.dart';
-// import 'package:pingpong_score_tracker/injectable/injectable.dart';
-// import 'package:pingpong_score_tracker/match/bloc/double_match_state.dart';
-// import 'package:pingpong_score_tracker/match/bloc/standard_match_cubit.dart';
-// import 'package:pingpong_score_tracker/match/bloc/standard_match_state.dart';
-// import 'package:pingpong_score_tracker/match/widgets/match_finished_dialog.dart';
-// import 'package:pingpong_score_tracker/match/widgets/match_score.dart';
-// import 'package:pingpong_score_tracker/match/widgets/player_name.dart';
-// import 'package:pingpong_score_tracker/match/widgets/player_score.dart';
-// import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
-// import 'package:pingpong_score_tracker/players/models/player.dart';
-// import 'package:pingpong_score_tracker/players/screens/players_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pingpong_score_tracker/match/bloc/double_match_cubit.dart';
+import 'package:pingpong_score_tracker/match/bloc/double_match_state.dart';
+import 'package:pingpong_score_tracker/match/models/team.dart';
+import 'package:pingpong_score_tracker/match/widgets/end_match_dialog.dart';
+import 'package:pingpong_score_tracker/match/widgets/match_finished_dialog.dart';
+import 'package:pingpong_score_tracker/match/widgets/match_score.dart';
+import 'package:pingpong_score_tracker/match/widgets/player_point_button.dart';
+import 'package:pingpong_score_tracker/match/widgets/team_point_button.dart';
+import 'package:pingpong_score_tracker/match/widgets/undo_button.dart';
+import 'package:pingpong_score_tracker/players/models/player.dart';
+import 'package:wakelock/wakelock.dart';
 
-// @injectable
-// class DoubleMatchScreen extends StatelessWidget {
-//   const DoubleMatchScreen({
-//     super.key,
-//     required this.leftTopPlayer,
-//     required this.leftBottomPlayer,
-//     required this.rightTopPlayer,
-//     required this.rightBottomPlayer,
-//   });
+class DoubleMatchScreen extends StatefulWidget {
+  const DoubleMatchScreen({
+    super.key,
+    required this.leftTeam,
+    required this.rightTeam,
+  });
 
-//   final Player leftTopPlayer;
-//   final Player leftBottomPlayer;
-//   final Player rightTopPlayer;
-//   final Player rightBottomPlayer;
+  final Team leftTeam;
+  final Team rightTeam;
 
-//   String get leftTeamName => '$leftTopPlayer - $leftBottomPlayer';
-//   String get rightTeamName => '$rightTopPlayer - $rightBottomPlayer';
+  @override
+  State<DoubleMatchScreen> createState() => _DoubleMatchScreenState();
+}
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: SafeArea(
-//         child: Padding(
-//           padding: const EdgeInsets.only(top: 00),
-//           child: BlocConsumer<DoubleMatchCubit, DoubleMatchState>(
-//               listener: (context, state) async {
-//             if (state.isFinished) {
-//               final navigator = Navigator.of(context);
+class _DoubleMatchScreenState extends State<DoubleMatchScreen> {
+  @override
+  void initState() {
+    super.initState();
 
-//               // await showDialog(
-//               //   barrierDismissible: false,
-//               //   context: context,
-//               //   builder: (context) => MatchFinishedDialog(
-//               //     leftPlayer: leftPlayer,
-//               //     rightPlayer: rightPlayer,
-//               //     leftPlayerScore: state.leftPlayerMatchScore,
-//               //     rightPlayerScore: state.rightPlayerMatchScore,
-//               //   ),
-//               // );
-//               navigator.popUntil(
-//                 ModalRoute.withName('/'),
-//               );
-//             }
-//           }, builder: (context, state) {
-//             return Column(
-//               children: [
-//                 MatchScore(
-//                   teamLeft: '${leftTopPlayer.name} - ${leftBottomPlayer.name}',
-//                   teamRight:
-//                       '${rightTopPlayer.name} - ${rightBottomPlayer.name}',
-//                   scoreLeft: state.leftPlayerMatchScore,
-//                   scoreRight: state.rightPlayerMatchScore,
-//                 ),
-//                 Expanded(
-//                   child: Row(
-//                     children: [
-//                       Expanded(
-//                         child: InkWell(
-//                           onTap: () {
-//                             context
-//                                 .read<DoubleMatchCubit>()
-//                                 .givePointToPlayer(leftTeamName);
-//                           },
-//                           child: Container(
-//                             color: Colors.green.withOpacity(0.4),
-//                             child: Column(
-//                               mainAxisAlignment: MainAxisAlignment.center,
-//                               children: [
-//                                 PlayerName(
-//                                   name: leftTeamName,
-//                                   isServing:
-//                                       state.currentPlayerServing == leftPlayer,
-//                                 ),
-//                                 PlayerScore(score: state.leftPlayerSetScore),
-//                               ],
-//                             ),
-//                           ),
-//                         ),
-//                       ),
-//                       VerticalDivider(
-//                         thickness: 4.0,
-//                         color: Colors.white,
-//                       ),
-//                       Expanded(
-//                         child: InkWell(
-//                           onTap: () {
-//                             context
-//                                 .read<DoubleMatchCubit>()
-//                                 .givePointToPlayer(rightPlayer);
-//                           },
-//                           child: Container(
-//                             color: Colors.green.withOpacity(0.4),
-//                             child: Column(
-//                               mainAxisAlignment: MainAxisAlignment.center,
-//                               children: [
-//                                 PlayerName(
-//                                   name: rightPlayer.name,
-//                                   isServing:
-//                                       state.currentPlayerServing == rightPlayer,
-//                                 ),
-//                                 PlayerScore(score: state.rightPlayerSetScore),
-//                               ],
-//                             ),
-//                           ),
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ],
-//             );
-//           }),
-//         ),
-//       ),
-//     );
-//   }
-// }
+    Wakelock.enable();
+  }
+
+  @override
+  void dispose() {
+    Wakelock.disable();
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<DoubleMatchCubit, DoubleMatchState>(
+      listener: (context, state) async {
+        if (state.isFinished) {
+          final navigator = Navigator.of(context);
+
+          // await showDialog(
+          //   barrierDismissible: false,
+          //   context: context,
+          //   builder: (context) => MatchFinishedDialog(
+          //     leftPlayer: widget.leftTeam.,
+          //     rightPlayer: widget.rightTeam,
+          //     leftPlayerScore: state.leftPlayerMatchScore,
+          //     rightPlayerScore: state.rightPlayerMatchScore,
+          //   ),
+          // );
+          navigator.popUntil(
+            ModalRoute.withName('/'),
+          );
+        }
+      },
+      builder: (context, state) {
+        return WillPopScope(
+          onWillPop: () async {
+            return await showDialog(
+              context: context,
+              builder: (context) => const EndMatchDialog(),
+            );
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              title: MatchScore(
+                teamLeft: widget.leftTeam.name,
+                teamRight: widget.rightTeam.name,
+                scoreLeft: state.leftTeamMatchScore,
+                scoreRight: state.rightTeamMatchScore,
+              ),
+            ),
+            body: SafeArea(
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 14),
+                    child: Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        Column(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: TeamPointButton(
+                                      team: widget.leftTeam,
+                                      currentPlayerServing:
+                                          state.currentPlayerServing,
+                                      setScore: state.leftTeamSetScore,
+                                    ),
+                                  ),
+                                  const VerticalDivider(
+                                    thickness: 4.0,
+                                    color: Colors.white,
+                                  ),
+                                  Expanded(
+                                    child: TeamPointButton(
+                                      team: widget.rightTeam,
+                                      currentPlayerServing:
+                                          state.currentPlayerServing,
+                                      setScore: state.rightTeamSetScore,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: UndoButton(
+                            onPressed: state.canUndo
+                                ? () {
+                                    context.read<DoubleMatchCubit>().undo();
+                                  }
+                                : null,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
