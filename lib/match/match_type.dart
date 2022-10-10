@@ -1,0 +1,1 @@
+enum MatchType { standard, double }
