@@ -11,7 +11,8 @@ class DoubleMatchState with _$DoubleMatchState {
   const factory DoubleMatchState({
     required Team leftTeam,
     required Team rightTeam,
-    required Player playerServing,
+    required Player playerServingSet,
+    required Player playerServingMatch,
     required Player currentPlayerServing,
     @Default(false) bool isFinished,
     @Default(0) int leftTeamSetScore,

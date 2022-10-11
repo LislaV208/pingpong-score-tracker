@@ -18,7 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$DoubleMatchState {
   Team get leftTeam => throw _privateConstructorUsedError;
   Team get rightTeam => throw _privateConstructorUsedError;
-  Player get playerServing => throw _privateConstructorUsedError;
+  Player get playerServingSet => throw _privateConstructorUsedError;
+  Player get playerServingMatch => throw _privateConstructorUsedError;
   Player get currentPlayerServing => throw _privateConstructorUsedError;
   bool get isFinished => throw _privateConstructorUsedError;
   int get leftTeamSetScore => throw _privateConstructorUsedError;
@@ -41,7 +42,8 @@ abstract class $DoubleMatchStateCopyWith<$Res> {
   $Res call(
       {Team leftTeam,
       Team rightTeam,
-      Player playerServing,
+      Player playerServingSet,
+      Player playerServingMatch,
       Player currentPlayerServing,
       bool isFinished,
       int leftTeamSetScore,
@@ -53,7 +55,8 @@ abstract class $DoubleMatchStateCopyWith<$Res> {
 
   $TeamCopyWith<$Res> get leftTeam;
   $TeamCopyWith<$Res> get rightTeam;
-  $PlayerCopyWith<$Res> get playerServing;
+  $PlayerCopyWith<$Res> get playerServingSet;
+  $PlayerCopyWith<$Res> get playerServingMatch;
   $PlayerCopyWith<$Res> get currentPlayerServing;
 }
 
@@ -70,7 +73,8 @@ class _$DoubleMatchStateCopyWithImpl<$Res>
   $Res call({
     Object? leftTeam = freezed,
     Object? rightTeam = freezed,
-    Object? playerServing = freezed,
+    Object? playerServingSet = freezed,
+    Object? playerServingMatch = freezed,
     Object? currentPlayerServing = freezed,
     Object? isFinished = freezed,
     Object? leftTeamSetScore = freezed,
@@ -89,9 +93,13 @@ class _$DoubleMatchStateCopyWithImpl<$Res>
           ? _value.rightTeam
           : rightTeam // ignore: cast_nullable_to_non_nullable
               as Team,
-      playerServing: playerServing == freezed
-          ? _value.playerServing
-          : playerServing // ignore: cast_nullable_to_non_nullable
+      playerServingSet: playerServingSet == freezed
+          ? _value.playerServingSet
+          : playerServingSet // ignore: cast_nullable_to_non_nullable
+              as Player,
+      playerServingMatch: playerServingMatch == freezed
+          ? _value.playerServingMatch
+          : playerServingMatch // ignore: cast_nullable_to_non_nullable
               as Player,
       currentPlayerServing: currentPlayerServing == freezed
           ? _value.currentPlayerServing
@@ -143,9 +151,16 @@ class _$DoubleMatchStateCopyWithImpl<$Res>
   }
 
   @override
-  $PlayerCopyWith<$Res> get playerServing {
-    return $PlayerCopyWith<$Res>(_value.playerServing, (value) {
-      return _then(_value.copyWith(playerServing: value));
+  $PlayerCopyWith<$Res> get playerServingSet {
+    return $PlayerCopyWith<$Res>(_value.playerServingSet, (value) {
+      return _then(_value.copyWith(playerServingSet: value));
+    });
+  }
+
+  @override
+  $PlayerCopyWith<$Res> get playerServingMatch {
+    return $PlayerCopyWith<$Res>(_value.playerServingMatch, (value) {
+      return _then(_value.copyWith(playerServingMatch: value));
     });
   }
 
@@ -167,7 +182,8 @@ abstract class _$$_DoubleMatchStateCopyWith<$Res>
   $Res call(
       {Team leftTeam,
       Team rightTeam,
-      Player playerServing,
+      Player playerServingSet,
+      Player playerServingMatch,
       Player currentPlayerServing,
       bool isFinished,
       int leftTeamSetScore,
@@ -182,7 +198,9 @@ abstract class _$$_DoubleMatchStateCopyWith<$Res>
   @override
   $TeamCopyWith<$Res> get rightTeam;
   @override
-  $PlayerCopyWith<$Res> get playerServing;
+  $PlayerCopyWith<$Res> get playerServingSet;
+  @override
+  $PlayerCopyWith<$Res> get playerServingMatch;
   @override
   $PlayerCopyWith<$Res> get currentPlayerServing;
 }
@@ -202,7 +220,8 @@ class __$$_DoubleMatchStateCopyWithImpl<$Res>
   $Res call({
     Object? leftTeam = freezed,
     Object? rightTeam = freezed,
-    Object? playerServing = freezed,
+    Object? playerServingSet = freezed,
+    Object? playerServingMatch = freezed,
     Object? currentPlayerServing = freezed,
     Object? isFinished = freezed,
     Object? leftTeamSetScore = freezed,
@@ -221,9 +240,13 @@ class __$$_DoubleMatchStateCopyWithImpl<$Res>
           ? _value.rightTeam
           : rightTeam // ignore: cast_nullable_to_non_nullable
               as Team,
-      playerServing: playerServing == freezed
-          ? _value.playerServing
-          : playerServing // ignore: cast_nullable_to_non_nullable
+      playerServingSet: playerServingSet == freezed
+          ? _value.playerServingSet
+          : playerServingSet // ignore: cast_nullable_to_non_nullable
+              as Player,
+      playerServingMatch: playerServingMatch == freezed
+          ? _value.playerServingMatch
+          : playerServingMatch // ignore: cast_nullable_to_non_nullable
               as Player,
       currentPlayerServing: currentPlayerServing == freezed
           ? _value.currentPlayerServing
@@ -267,7 +290,8 @@ class _$_DoubleMatchState implements _DoubleMatchState {
   const _$_DoubleMatchState(
       {required this.leftTeam,
       required this.rightTeam,
-      required this.playerServing,
+      required this.playerServingSet,
+      required this.playerServingMatch,
       required this.currentPlayerServing,
       this.isFinished = false,
       this.leftTeamSetScore = 0,
@@ -282,7 +306,9 @@ class _$_DoubleMatchState implements _DoubleMatchState {
   @override
   final Team rightTeam;
   @override
-  final Player playerServing;
+  final Player playerServingSet;
+  @override
+  final Player playerServingMatch;
   @override
   final Player currentPlayerServing;
   @override
@@ -309,7 +335,7 @@ class _$_DoubleMatchState implements _DoubleMatchState {
 
   @override
   String toString() {
-    return 'DoubleMatchState(leftTeam: $leftTeam, rightTeam: $rightTeam, playerServing: $playerServing, currentPlayerServing: $currentPlayerServing, isFinished: $isFinished, leftTeamSetScore: $leftTeamSetScore, rightTeamSetScore: $rightTeamSetScore, leftTeamMatchScore: $leftTeamMatchScore, rightTeamMatchScore: $rightTeamMatchScore, playerServesCount: $playerServesCount, canUndo: $canUndo)';
+    return 'DoubleMatchState(leftTeam: $leftTeam, rightTeam: $rightTeam, playerServingSet: $playerServingSet, playerServingMatch: $playerServingMatch, currentPlayerServing: $currentPlayerServing, isFinished: $isFinished, leftTeamSetScore: $leftTeamSetScore, rightTeamSetScore: $rightTeamSetScore, leftTeamMatchScore: $leftTeamMatchScore, rightTeamMatchScore: $rightTeamMatchScore, playerServesCount: $playerServesCount, canUndo: $canUndo)';
   }
 
   @override
@@ -320,7 +346,9 @@ class _$_DoubleMatchState implements _DoubleMatchState {
             const DeepCollectionEquality().equals(other.leftTeam, leftTeam) &&
             const DeepCollectionEquality().equals(other.rightTeam, rightTeam) &&
             const DeepCollectionEquality()
-                .equals(other.playerServing, playerServing) &&
+                .equals(other.playerServingSet, playerServingSet) &&
+            const DeepCollectionEquality()
+                .equals(other.playerServingMatch, playerServingMatch) &&
             const DeepCollectionEquality()
                 .equals(other.currentPlayerServing, currentPlayerServing) &&
             const DeepCollectionEquality()
@@ -343,7 +371,8 @@ class _$_DoubleMatchState implements _DoubleMatchState {
       runtimeType,
       const DeepCollectionEquality().hash(leftTeam),
       const DeepCollectionEquality().hash(rightTeam),
-      const DeepCollectionEquality().hash(playerServing),
+      const DeepCollectionEquality().hash(playerServingSet),
+      const DeepCollectionEquality().hash(playerServingMatch),
       const DeepCollectionEquality().hash(currentPlayerServing),
       const DeepCollectionEquality().hash(isFinished),
       const DeepCollectionEquality().hash(leftTeamSetScore),
@@ -363,7 +392,8 @@ abstract class _DoubleMatchState implements DoubleMatchState {
   const factory _DoubleMatchState(
       {required final Team leftTeam,
       required final Team rightTeam,
-      required final Player playerServing,
+      required final Player playerServingSet,
+      required final Player playerServingMatch,
       required final Player currentPlayerServing,
       final bool isFinished,
       final int leftTeamSetScore,
@@ -378,7 +408,9 @@ abstract class _DoubleMatchState implements DoubleMatchState {
   @override
   Team get rightTeam;
   @override
-  Player get playerServing;
+  Player get playerServingSet;
+  @override
+  Player get playerServingMatch;
   @override
   Player get currentPlayerServing;
   @override

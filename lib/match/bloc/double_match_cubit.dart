@@ -4,86 +4,201 @@ import 'package:pingpong_score_tracker/config.dart';
 import 'package:pingpong_score_tracker/match/bloc/double_match_state.dart';
 import 'package:pingpong_score_tracker/match/models/team.dart';
 import 'package:pingpong_score_tracker/players/models/player.dart';
+import 'package:stack/stack.dart';
 
 @injectable
 class DoubleMatchCubit extends Cubit<DoubleMatchState> {
   DoubleMatchCubit(super.initialState);
 
-  void givePointToTeam(Team team) {}
+  final _stateStack = Stack<DoubleMatchState>();
 
-  void givePointToPlayer(String player) {
-    // var leftPlayerSetScore = state.leftPlayerSetScore;
-    // var rightPlayerSetScore = state.rightPlayerSetScore;
-    // var currentServesCount = state.playerServesCount;
-    // var currentPlayerServing = state.currentPlayerServing;
-    // var leftPlayerMatchScore = state.leftPlayerMatchScore;
-    // var rightPlayerMatchScore = state.rightPlayerMatchScore;
-    // var playerServing = state.playerServing;
-    // var isFinished = state.isFinished;
+  Player _computePlayerServing() {
+    if (state.playerServingSet == state.leftTeam.topPlayer) {
+      if (state.currentPlayerServing == state.leftTeam.topPlayer) {
+        return state.rightTeam.bottomPlayer;
+      }
+      if (state.currentPlayerServing == state.leftTeam.bottomPlayer) {
+        return state.rightTeam.topPlayer;
+      }
+      if (state.currentPlayerServing == state.rightTeam.topPlayer) {
+        return state.leftTeam.topPlayer;
+      }
+      return state.leftTeam.bottomPlayer;
+    }
 
-    // var setScore =
-    //     player == state.leftPlayer ? leftPlayerSetScore : rightPlayerSetScore;
-    // var matchScore = player == state.leftPlayer
-    //     ? leftPlayerMatchScore
-    //     : rightPlayerMatchScore;
+    if (state.playerServingSet == state.leftTeam.bottomPlayer) {
+      if (state.currentPlayerServing == state.leftTeam.bottomPlayer) {
+        return state.rightTeam.topPlayer;
+      }
+      if (state.currentPlayerServing == state.leftTeam.topPlayer) {
+        return state.rightTeam.bottomPlayer;
+      }
+      if (state.currentPlayerServing == state.rightTeam.topPlayer) {
+        return state.leftTeam.topPlayer;
+      }
+      return state.leftTeam.bottomPlayer;
+    }
 
-    // setScore += 1;
-    // currentServesCount += 1;
+    if (state.playerServingSet == state.rightTeam.topPlayer) {
+      if (state.currentPlayerServing == state.rightTeam.topPlayer) {
+        return state.leftTeam.bottomPlayer;
+      }
+      if (state.currentPlayerServing == state.rightTeam.bottomPlayer) {
+        return state.leftTeam.topPlayer;
+      }
+      if (state.currentPlayerServing == state.leftTeam.topPlayer) {
+        return state.rightTeam.topPlayer;
+      }
+      return state.rightTeam.bottomPlayer;
+    }
 
-    // if (currentServesCount >= Config.servesPerPlayer) {
-    //   currentPlayerServing = currentPlayerServing == state.leftPlayer
-    //       ? state.rightPlayer
-    //       : state.leftPlayer;
+    if (state.currentPlayerServing == state.rightTeam.bottomPlayer) {
+      return state.leftTeam.topPlayer;
+    }
+    if (state.currentPlayerServing == state.rightTeam.topPlayer) {
+      return state.leftTeam.bottomPlayer;
+    }
+    if (state.currentPlayerServing == state.leftTeam.topPlayer) {
+      return state.rightTeam.topPlayer;
+    }
+    return state.rightTeam.bottomPlayer;
+  }
 
-    //   currentServesCount = 0;
-    // }
+  Player _computePlayerServingAfterSet() {
+    if (state.playerServingMatch == state.leftTeam.topPlayer) {
+      if (state.playerServingSet == state.leftTeam.topPlayer) {
+        return state.rightTeam.bottomPlayer;
+      }
+      if (state.playerServingSet == state.leftTeam.bottomPlayer) {
+        return state.rightTeam.topPlayer;
+      }
+      if (state.playerServingSet == state.rightTeam.topPlayer) {
+        return state.leftTeam.topPlayer;
+      }
+      return state.leftTeam.bottomPlayer;
+    }
 
-    // leftPlayerSetScore =
-    //     player == state.leftPlayer ? setScore : leftPlayerSetScore;
+    if (state.playerServingMatch == state.leftTeam.bottomPlayer) {
+      if (state.playerServingSet == state.leftTeam.bottomPlayer) {
+        return state.rightTeam.topPlayer;
+      }
+      if (state.playerServingSet == state.leftTeam.topPlayer) {
+        return state.rightTeam.bottomPlayer;
+      }
+      if (state.playerServingSet == state.rightTeam.topPlayer) {
+        return state.leftTeam.topPlayer;
+      }
+      return state.leftTeam.bottomPlayer;
+    }
 
-    // rightPlayerSetScore =
-    //     player == state.rightPlayer ? setScore : rightPlayerSetScore;
+    if (state.playerServingMatch == state.rightTeam.topPlayer) {
+      if (state.playerServingSet == state.rightTeam.topPlayer) {
+        return state.leftTeam.bottomPlayer;
+      }
+      if (state.playerServingSet == state.rightTeam.bottomPlayer) {
+        return state.leftTeam.topPlayer;
+      }
+      if (state.playerServingSet == state.leftTeam.topPlayer) {
+        return state.rightTeam.topPlayer;
+      }
+      return state.rightTeam.bottomPlayer;
+    }
 
-    // if (setScore >= Config.setWinningPoints) {
-    //   if ((leftPlayerSetScore - rightPlayerSetScore).abs() >= 2) {
-    //     matchScore += 1;
+    if (state.playerServingSet == state.rightTeam.bottomPlayer) {
+      return state.leftTeam.topPlayer;
+    }
+    if (state.playerServingSet == state.rightTeam.topPlayer) {
+      return state.leftTeam.bottomPlayer;
+    }
+    if (state.playerServingSet == state.leftTeam.topPlayer) {
+      return state.rightTeam.topPlayer;
+    }
+    return state.rightTeam.bottomPlayer;
+  }
 
-    //     leftPlayerMatchScore =
-    //         player == state.leftPlayer ? matchScore : leftPlayerMatchScore;
-    //     rightPlayerMatchScore =
-    //         player == state.rightPlayer ? matchScore : rightPlayerMatchScore;
+  void givePointToTeam(Team team) {
+    var leftTeamSetScore = state.leftTeamSetScore;
+    var rightTeamSetScore = state.rightTeamSetScore;
+    var currentServesCount = state.playerServesCount;
+    var currentPlayerServing = state.currentPlayerServing;
+    var leftTeamMatchScore = state.leftTeamMatchScore;
+    var rightTeamMatchScore = state.rightTeamMatchScore;
+    var playerServingSet = state.playerServingSet;
+    var isFinished = state.isFinished;
 
-    //     leftPlayerSetScore = 0;
-    //     rightPlayerSetScore = 0;
-    //     currentServesCount = 0;
+    var setScore =
+        team == state.leftTeam ? leftTeamSetScore : rightTeamSetScore;
+    var matchScore =
+        team == state.leftTeam ? leftTeamMatchScore : rightTeamMatchScore;
 
-    //     currentPlayerServing = state.playerServing == state.leftPlayer
-    //         ? state.rightPlayer
-    //         : state.leftPlayer;
-    //     playerServing = currentPlayerServing;
+    setScore += 1;
+    currentServesCount += 1;
 
-    //     if (matchScore >= Config.matchWinningPoints) {
-    //       isFinished = true;
-    //     }
-    //   }
-    // }
+    if (currentServesCount >= Config.servesPerPlayer) {
+      currentPlayerServing = _computePlayerServing();
 
-    // emit(state.copyWith(
-    //   leftPlayerSetScore: leftPlayerSetScore,
-    //   rightPlayerSetScore: rightPlayerSetScore,
-    //   playerServesCount: currentServesCount,
-    //   currentPlayerServing: currentPlayerServing,
-    //   leftPlayerMatchScore: leftPlayerMatchScore,
-    //   rightPlayerMatchScore: rightPlayerMatchScore,
-    //   playerServing: playerServing,
-    //   isFinished: isFinished,
-    // ));
+      currentServesCount = 0;
+    }
+
+    leftTeamSetScore = team == state.leftTeam ? setScore : leftTeamSetScore;
+    rightTeamSetScore = team == state.rightTeam ? setScore : rightTeamSetScore;
+
+    if (setScore >= Config.setWinningPoints) {
+      if ((leftTeamSetScore - rightTeamSetScore).abs() >= 2) {
+        matchScore += 1;
+
+        leftTeamMatchScore =
+            team == state.leftTeam ? matchScore : leftTeamMatchScore;
+        rightTeamMatchScore =
+            team == state.rightTeam ? matchScore : rightTeamMatchScore;
+
+        leftTeamSetScore = 0;
+        rightTeamSetScore = 0;
+        currentServesCount = 0;
+
+        currentPlayerServing = _computePlayerServingAfterSet();
+        playerServingSet = currentPlayerServing;
+
+        // _flipTeams();
+
+        if (matchScore >= Config.matchWinningPoints) {
+          isFinished = true;
+        }
+      }
+    }
+
+    emit(state.copyWith(
+      leftTeamSetScore: leftTeamSetScore,
+      rightTeamSetScore: rightTeamSetScore,
+      playerServesCount: currentServesCount,
+      currentPlayerServing: currentPlayerServing,
+      leftTeamMatchScore: leftTeamMatchScore,
+      rightTeamMatchScore: rightTeamMatchScore,
+      playerServingSet: playerServingSet,
+      isFinished: isFinished,
+    ));
   }
 
   void undo() {
-    // if (_stateStack.isNotEmpty) {
-    //   final previousState = _stateStack.pop();
-    //   emit(previousState);
-    // }
+    if (_stateStack.isNotEmpty) {
+      final previousState = _stateStack.pop();
+      emit(previousState);
+    }
   }
+
+  // void _flipTeams() {
+  //   final teamLeftTemp = state.leftTeam;
+  //   final leftTeamMatchScoreTemp = state.leftTeamMatchScore;
+  //   final leftTeam = state.rightTeam;
+  //   final rightTeam = teamLeftTemp;
+  //   final leftTeamScore = state.rightTeamMatchScore;
+  //   final rightTeamScore = leftTeamMatchScoreTemp;
+
+  //   emit(state.copyWith(
+  //     leftTeam: leftTeam,
+  //     rightTeam: rightTeam,
+  //     leftTeamMatchScore: leftTeamScore,
+  //     rightTeamMatchScore: rightTeamScore,
+  //   ));
+  // }
 }

@@ -32,7 +32,8 @@ _i1.GetIt $initGetIt(
   gh.factory<_i3.DoubleMatchState>(() => _i3.DoubleMatchState(
         leftTeam: get<_i4.Team>(),
         rightTeam: get<_i4.Team>(),
-        playerServing: get<_i5.Player>(),
+        playerServingSet: get<_i5.Player>(),
+        playerServingMatch: get<_i5.Player>(),
         currentPlayerServing: get<_i5.Player>(),
         isFinished: get<bool>(),
         leftTeamSetScore: get<int>(),
