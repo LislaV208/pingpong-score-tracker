@@ -11,14 +11,7 @@ import 'package:pingpong_score_tracker/players/models/player.dart';
 import 'package:wakelock/wakelock.dart';
 
 class StandardMatchScreen extends StatefulWidget {
-  const StandardMatchScreen({
-    super.key,
-    required this.leftPlayer,
-    required this.rightPlayer,
-  });
-
-  final Player leftPlayer;
-  final Player rightPlayer;
+  const StandardMatchScreen({super.key});
 
   @override
   State<StandardMatchScreen> createState() => _StandardMatchScreenState();
@@ -50,8 +43,8 @@ class _StandardMatchScreenState extends State<StandardMatchScreen> {
             barrierDismissible: false,
             context: context,
             builder: (context) => MatchFinishedDialog(
-              leftPlayer: widget.leftPlayer,
-              rightPlayer: widget.rightPlayer,
+              leftPlayer: state.leftPlayer,
+              rightPlayer: state.rightPlayer,
               leftPlayerScore: state.leftPlayerMatchScore,
               rightPlayerScore: state.rightPlayerMatchScore,
             ),
@@ -72,8 +65,8 @@ class _StandardMatchScreenState extends State<StandardMatchScreen> {
           child: Scaffold(
             appBar: AppBar(
               title: MatchScore(
-                teamLeft: widget.leftPlayer.name,
-                teamRight: widget.rightPlayer.name,
+                teamLeft: state.leftPlayer.name,
+                teamRight: state.rightPlayer.name,
                 scoreLeft: state.leftPlayerMatchScore,
                 scoreRight: state.rightPlayerMatchScore,
               ),
@@ -93,7 +86,7 @@ class _StandardMatchScreenState extends State<StandardMatchScreen> {
                                 children: [
                                   Expanded(
                                     child: PlayerPointButton(
-                                      player: widget.leftPlayer,
+                                      player: state.leftPlayer,
                                       currentPlayerServing:
                                           state.currentPlayerServing,
                                       setScore: state.leftPlayerSetScore,
@@ -105,7 +98,7 @@ class _StandardMatchScreenState extends State<StandardMatchScreen> {
                                   ),
                                   Expanded(
                                     child: PlayerPointButton(
-                                      player: widget.rightPlayer,
+                                      player: state.rightPlayer,
                                       currentPlayerServing:
                                           state.currentPlayerServing,
                                       setScore: state.rightPlayerSetScore,

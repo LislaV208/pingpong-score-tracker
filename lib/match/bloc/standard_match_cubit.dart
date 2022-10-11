@@ -12,6 +12,8 @@ class StandardMatchCubit extends Cubit<StandardMatchState> {
   final _stateStack = Stack<StandardMatchState>();
 
   void givePointToPlayer(Player player) {
+    var leftPlayer = state.leftPlayer;
+    var rightPlayer = state.rightPlayer;
     var leftPlayerSetScore = state.leftPlayerSetScore;
     var rightPlayerSetScore = state.rightPlayerSetScore;
     var currentServesCount = state.playerServesCount;
@@ -64,6 +66,14 @@ class StandardMatchCubit extends Cubit<StandardMatchState> {
 
         if (matchScore >= Config.matchWinningPoints) {
           isFinished = true;
+        } else {
+          // flip players
+          final tempPlayer = leftPlayer;
+          leftPlayer = rightPlayer;
+          rightPlayer = tempPlayer;
+          final tempScore = leftPlayerMatchScore;
+          leftPlayerMatchScore = rightPlayerMatchScore;
+          rightPlayerMatchScore = tempScore;
         }
       }
     }
@@ -71,6 +81,8 @@ class StandardMatchCubit extends Cubit<StandardMatchState> {
     _stateStack.push(state);
 
     emit(state.copyWith(
+      leftPlayer: leftPlayer,
+      rightPlayer: rightPlayer,
       leftPlayerSetScore: leftPlayerSetScore,
       rightPlayerSetScore: rightPlayerSetScore,
       playerServesCount: currentServesCount,

@@ -108,10 +108,7 @@ class StandardMatchConfigScreen extends HookWidget {
                             currentPlayerServing: playerServing,
                           ),
                         ),
-                        child: StandardMatchScreen(
-                          leftPlayer: leftPlayer.value!,
-                          rightPlayer: rightPlayer.value!,
-                        ),
+                        child: const StandardMatchScreen(),
                       ),
                     ),
                   );
