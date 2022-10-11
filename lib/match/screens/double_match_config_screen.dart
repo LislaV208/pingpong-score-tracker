@@ -24,7 +24,7 @@ class DoubleMatchConfigScreen extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Konfiguracja meczu'),
+        title: const Text('Konfiguracja meczu'),
       ),
       body: SafeArea(
         child: Center(
@@ -38,8 +38,8 @@ class DoubleMatchConfigScreen extends HookWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Zawodnik w lewym górnym:'),
-                        SizedBox(width: 20.0),
+                        const Text('Zawodnik w lewym górnym:'),
+                        const SizedBox(width: 20.0),
                         DropdownButton<Player>(
                           value: leftTopPlayer.value,
                           items: players
@@ -61,8 +61,8 @@ class DoubleMatchConfigScreen extends HookWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Zawodnik w lewym dolnym:'),
-                        SizedBox(width: 20.0),
+                        const Text('Zawodnik w lewym dolnym:'),
+                        const SizedBox(width: 20.0),
                         DropdownButton<Player>(
                           value: leftBottomPlayer.value,
                           items: players
@@ -84,7 +84,7 @@ class DoubleMatchConfigScreen extends HookWidget {
                   ],
                 ),
               ),
-              VerticalDivider(thickness: 5.0),
+              const VerticalDivider(thickness: 5.0),
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -92,8 +92,8 @@ class DoubleMatchConfigScreen extends HookWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Zawodnik w prawym górnym:'),
-                        SizedBox(width: 20.0),
+                        const Text('Zawodnik w prawym górnym:'),
+                        const SizedBox(width: 20.0),
                         DropdownButton<Player>(
                           value: rightTopPlayer.value,
                           items: players
@@ -115,8 +115,8 @@ class DoubleMatchConfigScreen extends HookWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Zawodnik w prawym dolnym:'),
-                        SizedBox(width: 20.0),
+                        const Text('Zawodnik w prawym dolnym:'),
+                        const SizedBox(width: 20.0),
                         DropdownButton<Player>(
                           value: rightBottomPlayer.value,
                           items: players
@@ -181,16 +181,7 @@ class DoubleMatchConfigScreen extends HookWidget {
                             currentPlayerServing: playerServing,
                           ),
                         ),
-                        child: DoubleMatchScreen(
-                          leftTeam: Team(
-                            topPlayer: leftTopPlayer.value!,
-                            bottomPlayer: leftBottomPlayer.value!,
-                          ),
-                          rightTeam: Team(
-                            topPlayer: rightTopPlayer.value!,
-                            bottomPlayer: rightBottomPlayer.value!,
-                          ),
-                        ),
+                        child: const DoubleMatchScreen(),
                       ),
                     ),
                   );

@@ -13,14 +13,7 @@ import 'package:pingpong_score_tracker/players/models/player.dart';
 import 'package:wakelock/wakelock.dart';
 
 class DoubleMatchScreen extends StatefulWidget {
-  const DoubleMatchScreen({
-    super.key,
-    required this.leftTeam,
-    required this.rightTeam,
-  });
-
-  final Team leftTeam;
-  final Team rightTeam;
+  const DoubleMatchScreen({super.key});
 
   @override
   State<DoubleMatchScreen> createState() => _DoubleMatchScreenState();
@@ -52,8 +45,8 @@ class _DoubleMatchScreenState extends State<DoubleMatchScreen> {
           //   barrierDismissible: false,
           //   context: context,
           //   builder: (context) => MatchFinishedDialog(
-          //     leftPlayer: widget.leftTeam.,
-          //     rightPlayer: widget.rightTeam,
+          //     leftPlayer: state.leftTeam.,
+          //     rightPlayer: state.rightTeam,
           //     leftPlayerScore: state.leftPlayerMatchScore,
           //     rightPlayerScore: state.rightPlayerMatchScore,
           //   ),
@@ -74,8 +67,8 @@ class _DoubleMatchScreenState extends State<DoubleMatchScreen> {
           child: Scaffold(
             appBar: AppBar(
               title: MatchScore(
-                teamLeft: widget.leftTeam.name,
-                teamRight: widget.rightTeam.name,
+                teamLeft: state.leftTeam.name,
+                teamRight: state.rightTeam.name,
                 scoreLeft: state.leftTeamMatchScore,
                 scoreRight: state.rightTeamMatchScore,
               ),
@@ -95,7 +88,7 @@ class _DoubleMatchScreenState extends State<DoubleMatchScreen> {
                                 children: [
                                   Expanded(
                                     child: TeamPointButton(
-                                      team: widget.leftTeam,
+                                      team: state.leftTeam,
                                       currentPlayerServing:
                                           state.currentPlayerServing,
                                       setScore: state.leftTeamSetScore,
@@ -107,7 +100,7 @@ class _DoubleMatchScreenState extends State<DoubleMatchScreen> {
                                   ),
                                   Expanded(
                                     child: TeamPointButton(
-                                      team: widget.rightTeam,
+                                      team: state.rightTeam,
                                       currentPlayerServing:
                                           state.currentPlayerServing,
                                       setScore: state.rightTeamSetScore,

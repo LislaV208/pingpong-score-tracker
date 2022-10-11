@@ -117,6 +117,8 @@ class DoubleMatchCubit extends Cubit<DoubleMatchState> {
   }
 
   void givePointToTeam(Team team) {
+    var leftTeam = state.leftTeam;
+    var rightTeam = state.rightTeam;
     var leftTeamSetScore = state.leftTeamSetScore;
     var rightTeamSetScore = state.rightTeamSetScore;
     var currentServesCount = state.playerServesCount;
@@ -159,7 +161,31 @@ class DoubleMatchCubit extends Cubit<DoubleMatchState> {
         currentPlayerServing = _computePlayerServingAfterSet();
         playerServingSet = currentPlayerServing;
 
-        // _flipTeams();
+        // FLIP TEAMS
+        final tempLeftTeam = leftTeam;
+        leftTeam = rightTeam;
+        rightTeam = tempLeftTeam;
+
+        var teamToSwap = team == leftTeam ? rightTeam : leftTeam;
+        final tempTopPlayer = teamToSwap.topPlayer;
+        final topPlayer = teamToSwap.bottomPlayer;
+        final bottomPlayer = tempTopPlayer;
+        teamToSwap = teamToSwap.copyWith(
+          topPlayer: topPlayer,
+          bottomPlayer: bottomPlayer,
+        );
+
+        if (team == leftTeam) {
+          rightTeam = teamToSwap;
+        } else {
+          leftTeam = teamToSwap;
+        }
+
+        final tempLeftScore = leftTeamMatchScore;
+        leftTeamMatchScore = rightTeamMatchScore;
+        rightTeamMatchScore = tempLeftScore;
+
+        // ----------
 
         if (matchScore >= Config.matchWinningPoints) {
           isFinished = true;
@@ -168,6 +194,8 @@ class DoubleMatchCubit extends Cubit<DoubleMatchState> {
     }
 
     emit(state.copyWith(
+      leftTeam: leftTeam,
+      rightTeam: rightTeam,
       leftTeamSetScore: leftTeamSetScore,
       rightTeamSetScore: rightTeamSetScore,
       playerServesCount: currentServesCount,
@@ -185,20 +213,4 @@ class DoubleMatchCubit extends Cubit<DoubleMatchState> {
       emit(previousState);
     }
   }
-
-  // void _flipTeams() {
-  //   final teamLeftTemp = state.leftTeam;
-  //   final leftTeamMatchScoreTemp = state.leftTeamMatchScore;
-  //   final leftTeam = state.rightTeam;
-  //   final rightTeam = teamLeftTemp;
-  //   final leftTeamScore = state.rightTeamMatchScore;
-  //   final rightTeamScore = leftTeamMatchScoreTemp;
-
-  //   emit(state.copyWith(
-  //     leftTeam: leftTeam,
-  //     rightTeam: rightTeam,
-  //     leftTeamMatchScore: leftTeamScore,
-  //     rightTeamMatchScore: rightTeamScore,
-  //   ));
-  // }
 }

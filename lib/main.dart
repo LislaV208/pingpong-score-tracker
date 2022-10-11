@@ -51,45 +51,36 @@ class MyApp extends StatelessWidget {
       //   value: getIt.get<PlayersCubit>(),
       //   child: const PlayersScreen(),
       // ),
-      home: BlocProvider(
-        create: (context) => StandardMatchCubit(
-          StandardMatchState(
-            leftPlayer: Player(name: 'Long'),
-            rightPlayer: Player(name: 'Pong'),
-            playerServing: Player(name: 'Long'),
-            currentPlayerServing: Player(name: 'Long'),
-          ),
-        ),
-        child: const StandardMatchScreen(),
-      ),
-      // home: const MatchScreen(),
       // home: BlocProvider(
-      //   create: (context) => DoubleMatchCubit(
-      //     DoubleMatchState(
-      //       leftTeam: Team(
-      //         topPlayer: Player(name: 'Long'),
-      //         bottomPlayer: Player(name: 'Dong'),
-      //       ),
-      //       rightTeam: Team(
-      //         topPlayer: Player(name: 'Arong'),
-      //         bottomPlayer: Player(name: 'Mong'),
-      //       ),
-      //       playerServingSet: Player(name: 'Long'),
-      //       playerServingMatch: Player(name: 'Long'),
+      //   create: (context) => StandardMatchCubit(
+      //     StandardMatchState(
+      //       leftPlayer: Player(name: 'Long'),
+      //       rightPlayer: Player(name: 'Pong'),
+      //       playerServing: Player(name: 'Long'),
       //       currentPlayerServing: Player(name: 'Long'),
       //     ),
       //   ),
-      //   child: const DoubleMatchScreen(
-      //     leftTeam: Team(
-      //       topPlayer: Player(name: 'Long'),
-      //       bottomPlayer: Player(name: 'Dong'),
-      //     ),
-      //     rightTeam: Team(
-      //       topPlayer: Player(name: 'Arong'),
-      //       bottomPlayer: Player(name: 'Mong'),
-      //     ),
-      //   ),
+      //   child: const StandardMatchScreen(),
       // ),
+      // home: const MatchScreen(),
+      home: BlocProvider(
+        create: (context) => DoubleMatchCubit(
+          DoubleMatchState(
+            leftTeam: Team(
+              topPlayer: Player(name: 'Long'),
+              bottomPlayer: Player(name: 'Dong'),
+            ),
+            rightTeam: Team(
+              topPlayer: Player(name: 'Arong'),
+              bottomPlayer: Player(name: 'Mong'),
+            ),
+            playerServingSet: Player(name: 'Long'),
+            playerServingMatch: Player(name: 'Long'),
+            currentPlayerServing: Player(name: 'Long'),
+          ),
+        ),
+        child: const DoubleMatchScreen(),
+      ),
     );
   }
 }
