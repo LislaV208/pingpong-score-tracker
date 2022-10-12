@@ -12,16 +12,17 @@ class PlayerName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
+    return Stack(
+      alignment: Alignment.topCenter,
+      clipBehavior: Clip.none,
       children: [
         Text(
           name,
-          style: TextStyle(fontSize: 26),
+          style: const TextStyle(fontSize: 26),
         ),
         if (isServing)
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
+          const Positioned(
+            top: -30,
             child: Icon(Icons.sports_cricket),
           ),
       ],
