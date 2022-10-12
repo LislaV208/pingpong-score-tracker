@@ -10,8 +10,8 @@ class MatchFinishedDialog extends StatelessWidget {
     required this.rightPlayerScore,
   });
 
-  final Player leftPlayer;
-  final Player rightPlayer;
+  final String leftPlayer;
+  final String rightPlayer;
   final int leftPlayerScore;
   final int rightPlayerScore;
 
@@ -26,7 +26,7 @@ class MatchFinishedDialog extends StatelessWidget {
             title: Text('Koniec gry!'),
           ),
           Text(
-              'Wynik: ${leftPlayer.name} $leftPlayerScore : $rightPlayerScore ${rightPlayer.name}'),
+              'Wynik: $leftPlayer $leftPlayerScore : $rightPlayerScore $rightPlayer'),
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {

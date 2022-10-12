@@ -43,8 +43,8 @@ class _StandardMatchScreenState extends State<StandardMatchScreen> {
             barrierDismissible: false,
             context: context,
             builder: (context) => MatchFinishedDialog(
-              leftPlayer: state.leftPlayer,
-              rightPlayer: state.rightPlayer,
+              leftPlayer: state.leftPlayer.name,
+              rightPlayer: state.rightPlayer.name,
               leftPlayerScore: state.leftPlayerMatchScore,
               rightPlayerScore: state.rightPlayerMatchScore,
             ),

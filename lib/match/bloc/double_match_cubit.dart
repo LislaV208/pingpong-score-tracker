@@ -2,15 +2,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pingpong_score_tracker/config.dart';
 import 'package:pingpong_score_tracker/match/bloc/double_match_state.dart';
+import 'package:pingpong_score_tracker/match/match_type.dart';
 import 'package:pingpong_score_tracker/match/models/team.dart';
+import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.dart';
+import 'package:pingpong_score_tracker/match_history/models/match_history_entry.dart';
 import 'package:pingpong_score_tracker/players/models/player.dart';
 import 'package:stack/stack.dart';
 
 @injectable
 class DoubleMatchCubit extends Cubit<DoubleMatchState> {
-  DoubleMatchCubit(super.initialState);
+  DoubleMatchCubit(super.initialState, this.historyCubit) {
+    _startedAt = DateTime.now();
+  }
+
+  final MatchHistoryCubit historyCubit;
 
   final _stateStack = Stack<DoubleMatchState>();
+  late final DateTime _startedAt;
 
   Player _computePlayerServing() {
     if (state.playerServingSet == state.leftTeam.topPlayer) {
@@ -166,6 +174,17 @@ class DoubleMatchCubit extends Cubit<DoubleMatchState> {
 
         if (matchScore >= Config.matchWinningPoints) {
           isFinished = true;
+          historyCubit.addMatchHistoryEntry(
+            MatchHistoryEntry(
+              leftPlayer: leftTeam.name,
+              leftPlayerScore: leftTeamMatchScore,
+              rightPlayer: rightTeam.name,
+              rightPlayerScore: rightTeamMatchScore,
+              startedAt: _startedAt,
+              finishedAt: DateTime.now(),
+              matchType: MatchType.double,
+            ),
+          );
         }
       }
     }

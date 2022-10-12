@@ -4,6 +4,8 @@ import 'package:pingpong_score_tracker/injectable/injectable.dart';
 import 'package:pingpong_score_tracker/match/match_type.dart';
 import 'package:pingpong_score_tracker/match/screens/double_match_config_screen.dart';
 import 'package:pingpong_score_tracker/match/screens/standard_match_config_screen.dart';
+import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.dart';
+import 'package:pingpong_score_tracker/match_history/screens/match_history_screen.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
 import 'package:pingpong_score_tracker/players/models/player.dart';
@@ -96,7 +98,7 @@ class _PlayersScreenState extends State<PlayersScreen> {
                               MaterialPageRoute(
                                 builder: (context) => BlocProvider.value(
                                   value: getIt.get<PlayersCubit>(),
-                                  child: matchType == MatchType.standard
+                                  child: matchType == MatchType.single
                                       ? const StandardMatchConfigScreen()
                                       : const DoubleMatchConfigScreen(),
                                 ),
@@ -120,6 +122,17 @@ class _PlayersScreenState extends State<PlayersScreen> {
                     }
                   },
                   child: const Text('Dodaj gracza'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => BlocProvider.value(
+                        value: getIt.get<MatchHistoryCubit>(),
+                        child: const MatchHistoryScreen(),
+                      ),
+                    ));
+                  },
+                  child: const Text('Historia meczy'),
                 ),
               ],
             ),

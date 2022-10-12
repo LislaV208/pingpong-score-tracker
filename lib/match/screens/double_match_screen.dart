@@ -41,16 +41,16 @@ class _DoubleMatchScreenState extends State<DoubleMatchScreen> {
         if (state.isFinished) {
           final navigator = Navigator.of(context);
 
-          // await showDialog(
-          //   barrierDismissible: false,
-          //   context: context,
-          //   builder: (context) => MatchFinishedDialog(
-          //     leftPlayer: state.leftTeam.,
-          //     rightPlayer: state.rightTeam,
-          //     leftPlayerScore: state.leftPlayerMatchScore,
-          //     rightPlayerScore: state.rightPlayerMatchScore,
-          //   ),
-          // );
+          await showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) => MatchFinishedDialog(
+              leftPlayer: state.leftTeam.name,
+              rightPlayer: state.rightTeam.name,
+              leftPlayerScore: state.leftTeamMatchScore,
+              rightPlayerScore: state.rightTeamMatchScore,
+            ),
+          );
           navigator.popUntil(
             ModalRoute.withName('/'),
           );

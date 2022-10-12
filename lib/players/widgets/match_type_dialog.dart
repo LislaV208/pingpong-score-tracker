@@ -24,7 +24,7 @@ class MatchTypeDialog extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pop(MatchType.standard);
+                  Navigator.of(context).pop(MatchType.single);
                 },
                 child: Text('Standardowy'),
               ),

@@ -2,14 +2,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pingpong_score_tracker/config.dart';
 import 'package:pingpong_score_tracker/match/bloc/standard_match_state.dart';
+import 'package:pingpong_score_tracker/match/match_type.dart';
+import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.dart';
+import 'package:pingpong_score_tracker/match_history/models/match_history_entry.dart';
 import 'package:pingpong_score_tracker/players/models/player.dart';
 import 'package:stack/stack.dart';
 
 @injectable
 class StandardMatchCubit extends Cubit<StandardMatchState> {
-  StandardMatchCubit(super.initialState);
+  StandardMatchCubit(super.initialState, this.historyCubit) {
+    _startedAt = DateTime.now();
+  }
+
+  final MatchHistoryCubit historyCubit;
 
   final _stateStack = Stack<StandardMatchState>();
+  late final DateTime _startedAt;
 
   void givePointToPlayer(Player player) {
     var leftPlayer = state.leftPlayer;
@@ -66,6 +74,17 @@ class StandardMatchCubit extends Cubit<StandardMatchState> {
 
         if (matchScore >= Config.matchWinningPoints) {
           isFinished = true;
+          historyCubit.addMatchHistoryEntry(
+            MatchHistoryEntry(
+              leftPlayer: leftPlayer.name,
+              leftPlayerScore: leftPlayerMatchScore,
+              rightPlayer: rightPlayer.name,
+              rightPlayerScore: rightPlayerMatchScore,
+              startedAt: _startedAt,
+              finishedAt: DateTime.now(),
+              matchType: MatchType.single,
+            ),
+          );
         } else {
           // flip players
           final tempPlayer = leftPlayer;
