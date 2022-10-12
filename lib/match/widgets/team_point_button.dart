@@ -4,7 +4,6 @@ import 'package:pingpong_score_tracker/match/bloc/double_match_cubit.dart';
 import 'package:pingpong_score_tracker/match/models/team.dart';
 import 'package:pingpong_score_tracker/match/widgets/player_name.dart';
 import 'package:pingpong_score_tracker/match/widgets/player_score.dart';
-import 'package:pingpong_score_tracker/players/models/player.dart';
 
 class TeamPointButton extends StatelessWidget {
   const TeamPointButton({
@@ -15,7 +14,7 @@ class TeamPointButton extends StatelessWidget {
   });
 
   final Team team;
-  final Player currentPlayerServing;
+  final String currentPlayerServing;
   final int setScore;
 
   @override
@@ -35,7 +34,7 @@ class TeamPointButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   PlayerName(
-                    name: team.topPlayer.name,
+                    name: team.topPlayer,
                     isServing: currentPlayerServing == team.topPlayer,
                   ),
                   Padding(
@@ -43,7 +42,7 @@ class TeamPointButton extends StatelessWidget {
                     child: PlayerScore(score: setScore),
                   ),
                   PlayerName(
-                    name: team.bottomPlayer.name,
+                    name: team.bottomPlayer,
                     isServing: currentPlayerServing == team.bottomPlayer,
                   ),
                 ],

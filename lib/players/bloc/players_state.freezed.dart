@@ -20,7 +20,7 @@ PlayersState _$PlayersStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PlayersState {
-  List<Player> get players => throw _privateConstructorUsedError;
+  List<String> get players => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +33,7 @@ abstract class $PlayersStateCopyWith<$Res> {
   factory $PlayersStateCopyWith(
           PlayersState value, $Res Function(PlayersState) then) =
       _$PlayersStateCopyWithImpl<$Res>;
-  $Res call({List<Player> players});
+  $Res call({List<String> players});
 }
 
 /// @nodoc
@@ -52,7 +52,7 @@ class _$PlayersStateCopyWithImpl<$Res> implements $PlayersStateCopyWith<$Res> {
       players: players == freezed
           ? _value.players
           : players // ignore: cast_nullable_to_non_nullable
-              as List<Player>,
+              as List<String>,
     ));
   }
 }
@@ -64,7 +64,7 @@ abstract class _$$_PlayersStateCopyWith<$Res>
           _$_PlayersState value, $Res Function(_$_PlayersState) then) =
       __$$_PlayersStateCopyWithImpl<$Res>;
   @override
-  $Res call({List<Player> players});
+  $Res call({List<String> players});
 }
 
 /// @nodoc
@@ -86,7 +86,7 @@ class __$$_PlayersStateCopyWithImpl<$Res>
       players: players == freezed
           ? _value._players
           : players // ignore: cast_nullable_to_non_nullable
-              as List<Player>,
+              as List<String>,
     ));
   }
 }
@@ -94,16 +94,16 @@ class __$$_PlayersStateCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_PlayersState implements _PlayersState {
-  const _$_PlayersState({final List<Player> players = const []})
+  const _$_PlayersState({final List<String> players = const []})
       : _players = players;
 
   factory _$_PlayersState.fromJson(Map<String, dynamic> json) =>
       _$$_PlayersStateFromJson(json);
 
-  final List<Player> _players;
+  final List<String> _players;
   @override
   @JsonKey()
-  List<Player> get players {
+  List<String> get players {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_players);
   }
@@ -140,13 +140,13 @@ class _$_PlayersState implements _PlayersState {
 }
 
 abstract class _PlayersState implements PlayersState {
-  const factory _PlayersState({final List<Player> players}) = _$_PlayersState;
+  const factory _PlayersState({final List<String> players}) = _$_PlayersState;
 
   factory _PlayersState.fromJson(Map<String, dynamic> json) =
       _$_PlayersState.fromJson;
 
   @override
-  List<Player> get players;
+  List<String> get players;
   @override
   @JsonKey(ignore: true)
   _$$_PlayersStateCopyWith<_$_PlayersState> get copyWith =>

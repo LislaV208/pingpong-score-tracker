@@ -7,7 +7,6 @@ import 'package:pingpong_score_tracker/match/widgets/match_finished_dialog.dart'
 import 'package:pingpong_score_tracker/match/widgets/match_score.dart';
 import 'package:pingpong_score_tracker/match/widgets/player_point_button.dart';
 import 'package:pingpong_score_tracker/match/widgets/undo_button.dart';
-import 'package:pingpong_score_tracker/players/models/player.dart';
 import 'package:wakelock/wakelock.dart';
 
 class StandardMatchScreen extends StatefulWidget {
@@ -43,8 +42,8 @@ class _StandardMatchScreenState extends State<StandardMatchScreen> {
             barrierDismissible: false,
             context: context,
             builder: (context) => MatchFinishedDialog(
-              leftPlayer: state.leftPlayer.name,
-              rightPlayer: state.rightPlayer.name,
+              leftPlayer: state.leftPlayer,
+              rightPlayer: state.rightPlayer,
               leftPlayerScore: state.leftPlayerMatchScore,
               rightPlayerScore: state.rightPlayerMatchScore,
             ),
@@ -65,8 +64,8 @@ class _StandardMatchScreenState extends State<StandardMatchScreen> {
           child: Scaffold(
             appBar: AppBar(
               title: MatchScore(
-                teamLeft: state.leftPlayer.name,
-                teamRight: state.rightPlayer.name,
+                teamLeft: state.leftPlayer,
+                teamRight: state.rightPlayer,
                 scoreLeft: state.leftPlayerMatchScore,
                 scoreRight: state.rightPlayerMatchScore,
               ),

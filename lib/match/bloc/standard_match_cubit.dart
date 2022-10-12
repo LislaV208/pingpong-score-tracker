@@ -5,7 +5,6 @@ import 'package:pingpong_score_tracker/match/bloc/standard_match_state.dart';
 import 'package:pingpong_score_tracker/match/match_type.dart';
 import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.dart';
 import 'package:pingpong_score_tracker/match_history/models/match_history_entry.dart';
-import 'package:pingpong_score_tracker/players/models/player.dart';
 import 'package:stack/stack.dart';
 
 @injectable
@@ -19,7 +18,7 @@ class StandardMatchCubit extends Cubit<StandardMatchState> {
   final _stateStack = Stack<StandardMatchState>();
   late final DateTime _startedAt;
 
-  void givePointToPlayer(Player player) {
+  void givePointToPlayer(String player) {
     var leftPlayer = state.leftPlayer;
     var rightPlayer = state.rightPlayer;
     var leftPlayerSetScore = state.leftPlayerSetScore;
@@ -76,9 +75,9 @@ class StandardMatchCubit extends Cubit<StandardMatchState> {
           isFinished = true;
           historyCubit.addMatchHistoryEntry(
             MatchHistoryEntry(
-              leftPlayer: leftPlayer.name,
+              leftPlayer: leftPlayer,
               leftPlayerScore: leftPlayerMatchScore,
-              rightPlayer: rightPlayer.name,
+              rightPlayer: rightPlayer,
               rightPlayerScore: rightPlayerMatchScore,
               startedAt: _startedAt,
               finishedAt: DateTime.now(),

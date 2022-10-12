@@ -16,10 +16,10 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$StandardMatchState {
-  Player get leftPlayer => throw _privateConstructorUsedError;
-  Player get rightPlayer => throw _privateConstructorUsedError;
-  Player get playerServing => throw _privateConstructorUsedError;
-  Player get currentPlayerServing => throw _privateConstructorUsedError;
+  String get leftPlayer => throw _privateConstructorUsedError;
+  String get rightPlayer => throw _privateConstructorUsedError;
+  String get playerServing => throw _privateConstructorUsedError;
+  String get currentPlayerServing => throw _privateConstructorUsedError;
   bool get isFinished => throw _privateConstructorUsedError;
   int get leftPlayerSetScore => throw _privateConstructorUsedError;
   int get rightPlayerSetScore => throw _privateConstructorUsedError;
@@ -39,10 +39,10 @@ abstract class $StandardMatchStateCopyWith<$Res> {
           StandardMatchState value, $Res Function(StandardMatchState) then) =
       _$StandardMatchStateCopyWithImpl<$Res>;
   $Res call(
-      {Player leftPlayer,
-      Player rightPlayer,
-      Player playerServing,
-      Player currentPlayerServing,
+      {String leftPlayer,
+      String rightPlayer,
+      String playerServing,
+      String currentPlayerServing,
       bool isFinished,
       int leftPlayerSetScore,
       int rightPlayerSetScore,
@@ -50,11 +50,6 @@ abstract class $StandardMatchStateCopyWith<$Res> {
       int rightPlayerMatchScore,
       int playerServesCount,
       bool canUndo});
-
-  $PlayerCopyWith<$Res> get leftPlayer;
-  $PlayerCopyWith<$Res> get rightPlayer;
-  $PlayerCopyWith<$Res> get playerServing;
-  $PlayerCopyWith<$Res> get currentPlayerServing;
 }
 
 /// @nodoc
@@ -84,19 +79,19 @@ class _$StandardMatchStateCopyWithImpl<$Res>
       leftPlayer: leftPlayer == freezed
           ? _value.leftPlayer
           : leftPlayer // ignore: cast_nullable_to_non_nullable
-              as Player,
+              as String,
       rightPlayer: rightPlayer == freezed
           ? _value.rightPlayer
           : rightPlayer // ignore: cast_nullable_to_non_nullable
-              as Player,
+              as String,
       playerServing: playerServing == freezed
           ? _value.playerServing
           : playerServing // ignore: cast_nullable_to_non_nullable
-              as Player,
+              as String,
       currentPlayerServing: currentPlayerServing == freezed
           ? _value.currentPlayerServing
           : currentPlayerServing // ignore: cast_nullable_to_non_nullable
-              as Player,
+              as String,
       isFinished: isFinished == freezed
           ? _value.isFinished
           : isFinished // ignore: cast_nullable_to_non_nullable
@@ -127,34 +122,6 @@ class _$StandardMatchStateCopyWithImpl<$Res>
               as bool,
     ));
   }
-
-  @override
-  $PlayerCopyWith<$Res> get leftPlayer {
-    return $PlayerCopyWith<$Res>(_value.leftPlayer, (value) {
-      return _then(_value.copyWith(leftPlayer: value));
-    });
-  }
-
-  @override
-  $PlayerCopyWith<$Res> get rightPlayer {
-    return $PlayerCopyWith<$Res>(_value.rightPlayer, (value) {
-      return _then(_value.copyWith(rightPlayer: value));
-    });
-  }
-
-  @override
-  $PlayerCopyWith<$Res> get playerServing {
-    return $PlayerCopyWith<$Res>(_value.playerServing, (value) {
-      return _then(_value.copyWith(playerServing: value));
-    });
-  }
-
-  @override
-  $PlayerCopyWith<$Res> get currentPlayerServing {
-    return $PlayerCopyWith<$Res>(_value.currentPlayerServing, (value) {
-      return _then(_value.copyWith(currentPlayerServing: value));
-    });
-  }
 }
 
 /// @nodoc
@@ -165,10 +132,10 @@ abstract class _$$_StandardMatchStateCopyWith<$Res>
       __$$_StandardMatchStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {Player leftPlayer,
-      Player rightPlayer,
-      Player playerServing,
-      Player currentPlayerServing,
+      {String leftPlayer,
+      String rightPlayer,
+      String playerServing,
+      String currentPlayerServing,
       bool isFinished,
       int leftPlayerSetScore,
       int rightPlayerSetScore,
@@ -176,15 +143,6 @@ abstract class _$$_StandardMatchStateCopyWith<$Res>
       int rightPlayerMatchScore,
       int playerServesCount,
       bool canUndo});
-
-  @override
-  $PlayerCopyWith<$Res> get leftPlayer;
-  @override
-  $PlayerCopyWith<$Res> get rightPlayer;
-  @override
-  $PlayerCopyWith<$Res> get playerServing;
-  @override
-  $PlayerCopyWith<$Res> get currentPlayerServing;
 }
 
 /// @nodoc
@@ -216,19 +174,19 @@ class __$$_StandardMatchStateCopyWithImpl<$Res>
       leftPlayer: leftPlayer == freezed
           ? _value.leftPlayer
           : leftPlayer // ignore: cast_nullable_to_non_nullable
-              as Player,
+              as String,
       rightPlayer: rightPlayer == freezed
           ? _value.rightPlayer
           : rightPlayer // ignore: cast_nullable_to_non_nullable
-              as Player,
+              as String,
       playerServing: playerServing == freezed
           ? _value.playerServing
           : playerServing // ignore: cast_nullable_to_non_nullable
-              as Player,
+              as String,
       currentPlayerServing: currentPlayerServing == freezed
           ? _value.currentPlayerServing
           : currentPlayerServing // ignore: cast_nullable_to_non_nullable
-              as Player,
+              as String,
       isFinished: isFinished == freezed
           ? _value.isFinished
           : isFinished // ignore: cast_nullable_to_non_nullable
@@ -278,13 +236,13 @@ class _$_StandardMatchState implements _StandardMatchState {
       this.canUndo = false});
 
   @override
-  final Player leftPlayer;
+  final String leftPlayer;
   @override
-  final Player rightPlayer;
+  final String rightPlayer;
   @override
-  final Player playerServing;
+  final String playerServing;
   @override
-  final Player currentPlayerServing;
+  final String currentPlayerServing;
   @override
   @JsonKey()
   final bool isFinished;
@@ -364,10 +322,10 @@ class _$_StandardMatchState implements _StandardMatchState {
 
 abstract class _StandardMatchState implements StandardMatchState {
   const factory _StandardMatchState(
-      {required final Player leftPlayer,
-      required final Player rightPlayer,
-      required final Player playerServing,
-      required final Player currentPlayerServing,
+      {required final String leftPlayer,
+      required final String rightPlayer,
+      required final String playerServing,
+      required final String currentPlayerServing,
       final bool isFinished,
       final int leftPlayerSetScore,
       final int rightPlayerSetScore,
@@ -377,13 +335,13 @@ abstract class _StandardMatchState implements StandardMatchState {
       final bool canUndo}) = _$_StandardMatchState;
 
   @override
-  Player get leftPlayer;
+  String get leftPlayer;
   @override
-  Player get rightPlayer;
+  String get rightPlayer;
   @override
-  Player get playerServing;
+  String get playerServing;
   @override
-  Player get currentPlayerServing;
+  String get currentPlayerServing;
   @override
   bool get isFinished;
   @override

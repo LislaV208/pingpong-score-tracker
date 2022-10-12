@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pingpong_score_tracker/players/models/player.dart';
 
 class MatchFinishedDialog extends StatelessWidget {
   const MatchFinishedDialog({

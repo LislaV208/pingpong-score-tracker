@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pingpong_score_tracker/players/models/player.dart';
 
 class StandardServeDialog extends StatelessWidget {
   const StandardServeDialog({
@@ -8,8 +7,8 @@ class StandardServeDialog extends StatelessWidget {
     required this.rightPlayer,
   });
 
-  final Player leftPlayer;
-  final Player rightPlayer;
+  final String leftPlayer;
+  final String rightPlayer;
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +27,13 @@ class StandardServeDialog extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pop(leftPlayer);
                 },
-                child: Text(leftPlayer.name),
+                child: Text(leftPlayer),
               ),
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pop(rightPlayer);
                 },
-                child: Text(rightPlayer.name),
+                child: Text(rightPlayer),
               ),
             ],
           )

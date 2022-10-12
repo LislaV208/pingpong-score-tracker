@@ -10,20 +10,19 @@ import 'package:pingpong_score_tracker/match/widgets/circle_button.dart';
 import 'package:pingpong_score_tracker/match/widgets/double_serve_dialog.dart';
 import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
-import 'package:pingpong_score_tracker/players/models/player.dart';
 
 class DoubleMatchConfigScreen extends HookWidget {
   const DoubleMatchConfigScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final leftTopPlayer = useState<Player?>(null);
-    final leftBottomPlayer = useState<Player?>(null);
-    final rightTopPlayer = useState<Player?>(null);
-    final rightBottomPlayer = useState<Player?>(null);
+    final leftTopPlayer = useState<String?>(null);
+    final leftBottomPlayer = useState<String?>(null);
+    final rightTopPlayer = useState<String?>(null);
+    final rightBottomPlayer = useState<String?>(null);
 
     final players = context
-        .select<PlayersCubit, List<Player>>((cubit) => cubit.state.players);
+        .select<PlayersCubit, List<String>>((cubit) => cubit.state.players);
 
     return Scaffold(
       appBar: AppBar(
@@ -43,13 +42,13 @@ class DoubleMatchConfigScreen extends HookWidget {
                       children: [
                         const Text('Zawodnik w lewym górnym:'),
                         const SizedBox(width: 20.0),
-                        DropdownButton<Player>(
+                        DropdownButton<String>(
                           value: leftTopPlayer.value,
                           items: players
                               .map(
-                                (item) => DropdownMenuItem<Player>(
+                                (item) => DropdownMenuItem<String>(
                                   value: item,
-                                  child: Text(item.name),
+                                  child: Text(item),
                                 ),
                               )
                               .toList()
@@ -89,13 +88,13 @@ class DoubleMatchConfigScreen extends HookWidget {
                       children: [
                         const Text('Zawodnik w lewym dolnym:'),
                         const SizedBox(width: 20.0),
-                        DropdownButton<Player>(
+                        DropdownButton<String>(
                           value: leftBottomPlayer.value,
                           items: players
                               .map(
-                                (item) => DropdownMenuItem<Player>(
+                                (item) => DropdownMenuItem<String>(
                                   value: item,
-                                  child: Text(item.name),
+                                  child: Text(item),
                                 ),
                               )
                               .toList()
@@ -148,13 +147,13 @@ class DoubleMatchConfigScreen extends HookWidget {
                       children: [
                         const Text('Zawodnik w prawym górnym:'),
                         const SizedBox(width: 20.0),
-                        DropdownButton<Player>(
+                        DropdownButton<String>(
                           value: rightTopPlayer.value,
                           items: players
                               .map(
-                                (item) => DropdownMenuItem<Player>(
+                                (item) => DropdownMenuItem<String>(
                                   value: item,
-                                  child: Text(item.name),
+                                  child: Text(item),
                                 ),
                               )
                               .toList()
@@ -195,13 +194,13 @@ class DoubleMatchConfigScreen extends HookWidget {
                       children: [
                         const Text('Zawodnik w prawym dolnym:'),
                         const SizedBox(width: 20.0),
-                        DropdownButton<Player>(
+                        DropdownButton<String>(
                           value: rightBottomPlayer.value,
                           items: players
                               .map(
-                                (item) => DropdownMenuItem<Player>(
+                                (item) => DropdownMenuItem<String>(
                                   value: item,
-                                  child: Text(item.name),
+                                  child: Text(item),
                                 ),
                               )
                               .toList()
@@ -235,7 +234,7 @@ class DoubleMatchConfigScreen extends HookWidget {
         )
             ? () async {
                 final navigator = Navigator.of(context);
-                final playerServing = await showDialog<Player>(
+                final playerServing = await showDialog<String>(
                   barrierDismissible: false,
                   context: context,
                   builder: (context) => DoubleServeDialog(
@@ -286,8 +285,8 @@ class DoubleMatchConfigScreen extends HookWidget {
     );
   }
 
-  bool canProceed(Player? leftTop, Player? leftBottom, Player? rightTop,
-          Player? rightBottom) =>
+  bool canProceed(String? leftTop, String? leftBottom, String? rightTop,
+          String? rightBottom) =>
       leftTop != null &&
       leftBottom != null &&
       rightTop != null &&

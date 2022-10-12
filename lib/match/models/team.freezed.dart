@@ -16,8 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Team {
-  Player get topPlayer => throw _privateConstructorUsedError;
-  Player get bottomPlayer => throw _privateConstructorUsedError;
+  String get topPlayer => throw _privateConstructorUsedError;
+  String get bottomPlayer => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TeamCopyWith<Team> get copyWith => throw _privateConstructorUsedError;
@@ -27,10 +27,7 @@ mixin _$Team {
 abstract class $TeamCopyWith<$Res> {
   factory $TeamCopyWith(Team value, $Res Function(Team) then) =
       _$TeamCopyWithImpl<$Res>;
-  $Res call({Player topPlayer, Player bottomPlayer});
-
-  $PlayerCopyWith<$Res> get topPlayer;
-  $PlayerCopyWith<$Res> get bottomPlayer;
+  $Res call({String topPlayer, String bottomPlayer});
 }
 
 /// @nodoc
@@ -50,26 +47,12 @@ class _$TeamCopyWithImpl<$Res> implements $TeamCopyWith<$Res> {
       topPlayer: topPlayer == freezed
           ? _value.topPlayer
           : topPlayer // ignore: cast_nullable_to_non_nullable
-              as Player,
+              as String,
       bottomPlayer: bottomPlayer == freezed
           ? _value.bottomPlayer
           : bottomPlayer // ignore: cast_nullable_to_non_nullable
-              as Player,
+              as String,
     ));
-  }
-
-  @override
-  $PlayerCopyWith<$Res> get topPlayer {
-    return $PlayerCopyWith<$Res>(_value.topPlayer, (value) {
-      return _then(_value.copyWith(topPlayer: value));
-    });
-  }
-
-  @override
-  $PlayerCopyWith<$Res> get bottomPlayer {
-    return $PlayerCopyWith<$Res>(_value.bottomPlayer, (value) {
-      return _then(_value.copyWith(bottomPlayer: value));
-    });
   }
 }
 
@@ -78,12 +61,7 @@ abstract class _$$_TeamCopyWith<$Res> implements $TeamCopyWith<$Res> {
   factory _$$_TeamCopyWith(_$_Team value, $Res Function(_$_Team) then) =
       __$$_TeamCopyWithImpl<$Res>;
   @override
-  $Res call({Player topPlayer, Player bottomPlayer});
-
-  @override
-  $PlayerCopyWith<$Res> get topPlayer;
-  @override
-  $PlayerCopyWith<$Res> get bottomPlayer;
+  $Res call({String topPlayer, String bottomPlayer});
 }
 
 /// @nodoc
@@ -104,11 +82,11 @@ class __$$_TeamCopyWithImpl<$Res> extends _$TeamCopyWithImpl<$Res>
       topPlayer: topPlayer == freezed
           ? _value.topPlayer
           : topPlayer // ignore: cast_nullable_to_non_nullable
-              as Player,
+              as String,
       bottomPlayer: bottomPlayer == freezed
           ? _value.bottomPlayer
           : bottomPlayer // ignore: cast_nullable_to_non_nullable
-              as Player,
+              as String,
     ));
   }
 }
@@ -120,9 +98,9 @@ class _$_Team extends _Team {
       : super._();
 
   @override
-  final Player topPlayer;
+  final String topPlayer;
   @override
-  final Player bottomPlayer;
+  final String bottomPlayer;
 
   @override
   String toString() {
@@ -153,14 +131,14 @@ class _$_Team extends _Team {
 
 abstract class _Team extends Team {
   const factory _Team(
-      {required final Player topPlayer,
-      required final Player bottomPlayer}) = _$_Team;
+      {required final String topPlayer,
+      required final String bottomPlayer}) = _$_Team;
   const _Team._() : super._();
 
   @override
-  Player get topPlayer;
+  String get topPlayer;
   @override
-  Player get bottomPlayer;
+  String get bottomPlayer;
   @override
   @JsonKey(ignore: true)
   _$$_TeamCopyWith<_$_Team> get copyWith => throw _privateConstructorUsedError;

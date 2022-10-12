@@ -26,7 +26,7 @@ class MatchTypeDialog extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pop(MatchType.single);
                 },
-                child: Text('Standardowy'),
+                child: Text('Singiel'),
               ),
               ElevatedButton(
                 onPressed: canPlayDouble
@@ -34,7 +34,7 @@ class MatchTypeDialog extends StatelessWidget {
                         Navigator.of(context).pop(MatchType.double);
                       }
                     : null,
-                child: Text('Double'),
+                child: Text('Debel'),
               ),
             ],
           )

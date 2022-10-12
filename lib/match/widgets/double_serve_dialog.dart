@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pingpong_score_tracker/players/models/player.dart';
 
 class DoubleServeDialog extends StatelessWidget {
   const DoubleServeDialog({
@@ -10,10 +9,10 @@ class DoubleServeDialog extends StatelessWidget {
     required this.rightBottomPlayer,
   });
 
-  final Player leftTopPlayer;
-  final Player leftBottomPlayer;
-  final Player rightTopPlayer;
-  final Player rightBottomPlayer;
+  final String leftTopPlayer;
+  final String leftBottomPlayer;
+  final String rightTopPlayer;
+  final String rightBottomPlayer;
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +33,13 @@ class DoubleServeDialog extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pop(leftTopPlayer);
                     },
-                    child: Text(leftTopPlayer.name),
+                    child: Text(leftTopPlayer),
                   ),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pop(rightTopPlayer);
                     },
-                    child: Text(rightTopPlayer.name),
+                    child: Text(rightTopPlayer),
                   ),
                 ],
               ),
@@ -51,13 +50,13 @@ class DoubleServeDialog extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pop(leftBottomPlayer);
                     },
-                    child: Text(leftBottomPlayer.name),
+                    child: Text(leftBottomPlayer),
                   ),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pop(rightBottomPlayer);
                     },
-                    child: Text(rightBottomPlayer.name),
+                    child: Text(rightBottomPlayer),
                   ),
                 ],
               ),

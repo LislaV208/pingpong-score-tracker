@@ -6,7 +6,6 @@ import 'package:pingpong_score_tracker/match/match_type.dart';
 import 'package:pingpong_score_tracker/match/models/team.dart';
 import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.dart';
 import 'package:pingpong_score_tracker/match_history/models/match_history_entry.dart';
-import 'package:pingpong_score_tracker/players/models/player.dart';
 import 'package:stack/stack.dart';
 
 @injectable
@@ -20,7 +19,7 @@ class DoubleMatchCubit extends Cubit<DoubleMatchState> {
   final _stateStack = Stack<DoubleMatchState>();
   late final DateTime _startedAt;
 
-  Player _computePlayerServing() {
+  String _computePlayerServing() {
     if (state.playerServingSet == state.leftTeam.topPlayer) {
       if (state.currentPlayerServing == state.leftTeam.topPlayer) {
         return state.rightTeam.bottomPlayer;
@@ -72,7 +71,7 @@ class DoubleMatchCubit extends Cubit<DoubleMatchState> {
     return state.rightTeam.bottomPlayer;
   }
 
-  Player _computePlayerServingAfterSet() {
+  String _computePlayerServingAfterSet() {
     if (state.playerServingMatch == state.playerServingSet) {
       if (state.playerServingSet == state.leftTeam.topPlayer) {
         return state.rightTeam.bottomPlayer;

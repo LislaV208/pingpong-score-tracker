@@ -18,9 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$DoubleMatchState {
   Team get leftTeam => throw _privateConstructorUsedError;
   Team get rightTeam => throw _privateConstructorUsedError;
-  Player get playerServingSet => throw _privateConstructorUsedError;
-  Player get playerServingMatch => throw _privateConstructorUsedError;
-  Player get currentPlayerServing => throw _privateConstructorUsedError;
+  String get playerServingSet => throw _privateConstructorUsedError;
+  String get playerServingMatch => throw _privateConstructorUsedError;
+  String get currentPlayerServing => throw _privateConstructorUsedError;
   bool get isFinished => throw _privateConstructorUsedError;
   int get leftTeamSetScore => throw _privateConstructorUsedError;
   int get rightTeamSetScore => throw _privateConstructorUsedError;
@@ -42,9 +42,9 @@ abstract class $DoubleMatchStateCopyWith<$Res> {
   $Res call(
       {Team leftTeam,
       Team rightTeam,
-      Player playerServingSet,
-      Player playerServingMatch,
-      Player currentPlayerServing,
+      String playerServingSet,
+      String playerServingMatch,
+      String currentPlayerServing,
       bool isFinished,
       int leftTeamSetScore,
       int rightTeamSetScore,
@@ -55,9 +55,6 @@ abstract class $DoubleMatchStateCopyWith<$Res> {
 
   $TeamCopyWith<$Res> get leftTeam;
   $TeamCopyWith<$Res> get rightTeam;
-  $PlayerCopyWith<$Res> get playerServingSet;
-  $PlayerCopyWith<$Res> get playerServingMatch;
-  $PlayerCopyWith<$Res> get currentPlayerServing;
 }
 
 /// @nodoc
@@ -96,15 +93,15 @@ class _$DoubleMatchStateCopyWithImpl<$Res>
       playerServingSet: playerServingSet == freezed
           ? _value.playerServingSet
           : playerServingSet // ignore: cast_nullable_to_non_nullable
-              as Player,
+              as String,
       playerServingMatch: playerServingMatch == freezed
           ? _value.playerServingMatch
           : playerServingMatch // ignore: cast_nullable_to_non_nullable
-              as Player,
+              as String,
       currentPlayerServing: currentPlayerServing == freezed
           ? _value.currentPlayerServing
           : currentPlayerServing // ignore: cast_nullable_to_non_nullable
-              as Player,
+              as String,
       isFinished: isFinished == freezed
           ? _value.isFinished
           : isFinished // ignore: cast_nullable_to_non_nullable
@@ -149,27 +146,6 @@ class _$DoubleMatchStateCopyWithImpl<$Res>
       return _then(_value.copyWith(rightTeam: value));
     });
   }
-
-  @override
-  $PlayerCopyWith<$Res> get playerServingSet {
-    return $PlayerCopyWith<$Res>(_value.playerServingSet, (value) {
-      return _then(_value.copyWith(playerServingSet: value));
-    });
-  }
-
-  @override
-  $PlayerCopyWith<$Res> get playerServingMatch {
-    return $PlayerCopyWith<$Res>(_value.playerServingMatch, (value) {
-      return _then(_value.copyWith(playerServingMatch: value));
-    });
-  }
-
-  @override
-  $PlayerCopyWith<$Res> get currentPlayerServing {
-    return $PlayerCopyWith<$Res>(_value.currentPlayerServing, (value) {
-      return _then(_value.copyWith(currentPlayerServing: value));
-    });
-  }
 }
 
 /// @nodoc
@@ -182,9 +158,9 @@ abstract class _$$_DoubleMatchStateCopyWith<$Res>
   $Res call(
       {Team leftTeam,
       Team rightTeam,
-      Player playerServingSet,
-      Player playerServingMatch,
-      Player currentPlayerServing,
+      String playerServingSet,
+      String playerServingMatch,
+      String currentPlayerServing,
       bool isFinished,
       int leftTeamSetScore,
       int rightTeamSetScore,
@@ -197,12 +173,6 @@ abstract class _$$_DoubleMatchStateCopyWith<$Res>
   $TeamCopyWith<$Res> get leftTeam;
   @override
   $TeamCopyWith<$Res> get rightTeam;
-  @override
-  $PlayerCopyWith<$Res> get playerServingSet;
-  @override
-  $PlayerCopyWith<$Res> get playerServingMatch;
-  @override
-  $PlayerCopyWith<$Res> get currentPlayerServing;
 }
 
 /// @nodoc
@@ -243,15 +213,15 @@ class __$$_DoubleMatchStateCopyWithImpl<$Res>
       playerServingSet: playerServingSet == freezed
           ? _value.playerServingSet
           : playerServingSet // ignore: cast_nullable_to_non_nullable
-              as Player,
+              as String,
       playerServingMatch: playerServingMatch == freezed
           ? _value.playerServingMatch
           : playerServingMatch // ignore: cast_nullable_to_non_nullable
-              as Player,
+              as String,
       currentPlayerServing: currentPlayerServing == freezed
           ? _value.currentPlayerServing
           : currentPlayerServing // ignore: cast_nullable_to_non_nullable
-              as Player,
+              as String,
       isFinished: isFinished == freezed
           ? _value.isFinished
           : isFinished // ignore: cast_nullable_to_non_nullable
@@ -306,11 +276,11 @@ class _$_DoubleMatchState implements _DoubleMatchState {
   @override
   final Team rightTeam;
   @override
-  final Player playerServingSet;
+  final String playerServingSet;
   @override
-  final Player playerServingMatch;
+  final String playerServingMatch;
   @override
-  final Player currentPlayerServing;
+  final String currentPlayerServing;
   @override
   @JsonKey()
   final bool isFinished;
@@ -392,9 +362,9 @@ abstract class _DoubleMatchState implements DoubleMatchState {
   const factory _DoubleMatchState(
       {required final Team leftTeam,
       required final Team rightTeam,
-      required final Player playerServingSet,
-      required final Player playerServingMatch,
-      required final Player currentPlayerServing,
+      required final String playerServingSet,
+      required final String playerServingMatch,
+      required final String currentPlayerServing,
       final bool isFinished,
       final int leftTeamSetScore,
       final int rightTeamSetScore,
@@ -408,11 +378,11 @@ abstract class _DoubleMatchState implements DoubleMatchState {
   @override
   Team get rightTeam;
   @override
-  Player get playerServingSet;
+  String get playerServingSet;
   @override
-  Player get playerServingMatch;
+  String get playerServingMatch;
   @override
-  Player get currentPlayerServing;
+  String get currentPlayerServing;
   @override
   bool get isFinished;
   @override

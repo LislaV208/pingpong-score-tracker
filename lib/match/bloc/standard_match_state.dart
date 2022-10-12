@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:pingpong_score_tracker/players/models/player.dart';
 
 part 'standard_match_state.freezed.dart';
 
@@ -8,10 +7,10 @@ part 'standard_match_state.freezed.dart';
 @injectable
 class StandardMatchState with _$StandardMatchState {
   const factory StandardMatchState({
-    required Player leftPlayer,
-    required Player rightPlayer,
-    required Player playerServing,
-    required Player currentPlayerServing,
+    required String leftPlayer,
+    required String rightPlayer,
+    required String playerServing,
+    required String currentPlayerServing,
     @Default(false) bool isFinished,
     @Default(0) int leftPlayerSetScore,
     @Default(0) int rightPlayerSetScore,

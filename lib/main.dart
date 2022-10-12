@@ -12,7 +12,6 @@ import 'package:pingpong_score_tracker/match/models/team.dart';
 import 'package:pingpong_score_tracker/match/screens/double_match_screen.dart';
 import 'package:pingpong_score_tracker/match/screens/standard_match_screen.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
-import 'package:pingpong_score_tracker/players/models/player.dart';
 import 'package:pingpong_score_tracker/players/screens/players_screen.dart';
 
 void main() async {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pingpong_score_tracker/players/models/player.dart';
 
 class AddPlayerDialog extends StatelessWidget {
   const AddPlayerDialog({super.key});
@@ -24,7 +23,7 @@ class AddPlayerDialog extends StatelessWidget {
               ),
               onSubmitted: (value) {
                 Navigator.of(context).pop(
-                  value.isEmpty ? null : Player(name: value),
+                  value.isEmpty ? null : value,
                 );
               },
             ),

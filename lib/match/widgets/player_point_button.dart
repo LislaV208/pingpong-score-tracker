@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pingpong_score_tracker/match/bloc/standard_match_cubit.dart';
 import 'package:pingpong_score_tracker/match/widgets/player_name.dart';
 import 'package:pingpong_score_tracker/match/widgets/player_score.dart';
-import 'package:pingpong_score_tracker/players/models/player.dart';
 
 class PlayerPointButton extends StatelessWidget {
   const PlayerPointButton({
@@ -13,8 +12,8 @@ class PlayerPointButton extends StatelessWidget {
     required this.setScore,
   });
 
-  final Player player;
-  final Player currentPlayerServing;
+  final String player;
+  final String currentPlayerServing;
   final int setScore;
 
   @override
@@ -34,7 +33,7 @@ class PlayerPointButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   PlayerName(
-                    name: player.name,
+                    name: player,
                     isServing: currentPlayerServing == player,
                   ),
                   PlayerScore(score: setScore),

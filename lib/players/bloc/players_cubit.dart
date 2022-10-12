@@ -1,7 +1,6 @@
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
-import 'package:pingpong_score_tracker/players/models/player.dart';
 
 @singleton
 class PlayersCubit extends HydratedCubit<PlayersState> {
@@ -14,15 +13,15 @@ class PlayersCubit extends HydratedCubit<PlayersState> {
   @override
   Map<String, dynamic>? toJson(PlayersState state) => state.toJson();
 
-  void addPlayer(Player player) {
+  void addPlayer(String playerName) {
     final players = [...state.players];
-    players.add(player);
+    players.add(playerName);
     emit(state.copyWith(players: players));
   }
 
-  void removePlayer(Player player) {
+  void removePlayer(String playerName) {
     final players = [...state.players];
-    players.remove(player);
+    players.remove(playerName);
     emit(state.copyWith(players: players));
   }
 }

@@ -9,7 +9,7 @@ part of 'players_state.dart';
 _$_PlayersState _$$_PlayersStateFromJson(Map<String, dynamic> json) =>
     _$_PlayersState(
       players: (json['players'] as List<dynamic>?)
-              ?.map((e) => Player.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => e as String)
               .toList() ??
           const [],
     );

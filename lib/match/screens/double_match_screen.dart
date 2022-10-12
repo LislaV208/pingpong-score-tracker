@@ -9,7 +9,6 @@ import 'package:pingpong_score_tracker/match/widgets/match_score.dart';
 import 'package:pingpong_score_tracker/match/widgets/player_point_button.dart';
 import 'package:pingpong_score_tracker/match/widgets/team_point_button.dart';
 import 'package:pingpong_score_tracker/match/widgets/undo_button.dart';
-import 'package:pingpong_score_tracker/players/models/player.dart';
 import 'package:wakelock/wakelock.dart';
 
 class DoubleMatchScreen extends StatefulWidget {

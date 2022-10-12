@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pingpong_score_tracker/match/match_type.dart';
 import 'package:pingpong_score_tracker/match_history/models/match_history_entry.dart';
-import 'package:pingpong_score_tracker/players/models/player.dart';
 
 class MatchHistoryListItem extends StatelessWidget {
   const MatchHistoryListItem({

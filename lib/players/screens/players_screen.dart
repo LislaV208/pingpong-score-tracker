@@ -8,7 +8,6 @@ import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.d
 import 'package:pingpong_score_tracker/match_history/screens/match_history_screen.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
-import 'package:pingpong_score_tracker/players/models/player.dart';
 import 'package:pingpong_score_tracker/players/widgets/add_player_dialog.dart';
 import 'package:pingpong_score_tracker/players/widgets/match_type_dialog.dart';
 import 'package:wakelock/wakelock.dart';
@@ -47,7 +46,7 @@ class _PlayersScreenState extends State<PlayersScreen> {
                   final players = state.players;
                   if (players.isEmpty) {
                     return const Center(
-                      child: Text('Brak graczy!'),
+                      child: Text('Brak graczy'),
                     );
                   }
 
@@ -62,7 +61,7 @@ class _PlayersScreenState extends State<PlayersScreen> {
                                 Text('${players.indexOf(item) + 1}.'),
                               ],
                             ),
-                            title: Text(item.name),
+                            title: Text(item),
                             trailing: IconButton(
                               icon: const Icon(Icons.close),
                               onPressed: () {
@@ -111,14 +110,14 @@ class _PlayersScreenState extends State<PlayersScreen> {
                 ElevatedButton(
                   onPressed: () async {
                     final cubit = context.read<PlayersCubit>();
-                    final player = await showDialog<Player>(
+                    final playerName = await showDialog<String>(
                       context: context,
                       builder: (context) => const AddPlayerDialog(),
                       barrierDismissible: false,
                     );
 
-                    if (player != null) {
-                      cubit.addPlayer(player);
+                    if (playerName != null) {
+                      cubit.addPlayer(playerName);
                     }
                   },
                   child: const Text('Dodaj gracza'),
