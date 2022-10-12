@@ -27,6 +27,5 @@ class PlayerName extends StatelessWidget {
           ),
       ],
     );
-    ;
   }
 }
