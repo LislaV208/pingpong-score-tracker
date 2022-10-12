@@ -47,10 +47,10 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
       ),
       themeMode: ThemeMode.dark,
-      // home: BlocProvider.value(
-      //   value: getIt.get<PlayersCubit>(),
-      //   child: const PlayersScreen(),
-      // ),
+      home: BlocProvider.value(
+        value: getIt.get<PlayersCubit>(),
+        child: const PlayersScreen(),
+      ),
       // home: BlocProvider(
       //   create: (context) => StandardMatchCubit(
       //     StandardMatchState(
@@ -63,24 +63,24 @@ class MyApp extends StatelessWidget {
       //   child: const StandardMatchScreen(),
       // ),
       // home: const MatchScreen(),
-      home: BlocProvider(
-        create: (context) => DoubleMatchCubit(
-          DoubleMatchState(
-            leftTeam: Team(
-              topPlayer: Player(name: 'Long'),
-              bottomPlayer: Player(name: 'Dong'),
-            ),
-            rightTeam: Team(
-              topPlayer: Player(name: 'Arong'),
-              bottomPlayer: Player(name: 'Mong'),
-            ),
-            playerServingSet: Player(name: 'Dong'),
-            playerServingMatch: Player(name: 'Dong'),
-            currentPlayerServing: Player(name: 'Dong'),
-          ),
-        ),
-        child: const DoubleMatchScreen(),
-      ),
+      // home: BlocProvider(
+      //   create: (context) => DoubleMatchCubit(
+      //     DoubleMatchState(
+      //       leftTeam: Team(
+      //         topPlayer: Player(name: 'Long'),
+      //         bottomPlayer: Player(name: 'Dong'),
+      //       ),
+      //       rightTeam: Team(
+      //         topPlayer: Player(name: 'Arong'),
+      //         bottomPlayer: Player(name: 'Mong'),
+      //       ),
+      //       playerServingSet: Player(name: 'Dong'),
+      //       playerServingMatch: Player(name: 'Dong'),
+      //       currentPlayerServing: Player(name: 'Dong'),
+      //     ),
+      //   ),
+      //   child: const DoubleMatchScreen(),
+      // ),
     );
   }
 }

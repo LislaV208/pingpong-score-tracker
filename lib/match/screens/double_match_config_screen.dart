@@ -5,6 +5,7 @@ import 'package:pingpong_score_tracker/match/bloc/double_match_cubit.dart';
 import 'package:pingpong_score_tracker/match/bloc/double_match_state.dart';
 import 'package:pingpong_score_tracker/match/models/team.dart';
 import 'package:pingpong_score_tracker/match/screens/double_match_screen.dart';
+import 'package:pingpong_score_tracker/match/widgets/circle_button.dart';
 import 'package:pingpong_score_tracker/match/widgets/double_serve_dialog.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/models/player.dart';
@@ -33,7 +34,7 @@ class DoubleMatchConfigScreen extends HookWidget {
             children: [
               Expanded(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -49,7 +50,13 @@ class DoubleMatchConfigScreen extends HookWidget {
                                   child: Text(item.name),
                                 ),
                               )
-                              .toList(),
+                              .toList()
+                            ..removeWhere(
+                              (element) =>
+                                  element.value == leftBottomPlayer.value ||
+                                  element.value == rightTopPlayer.value ||
+                                  element.value == rightBottomPlayer.value,
+                            ),
                           onChanged: (value) {
                             if (value != null) {
                               leftTopPlayer.value = value;
@@ -57,6 +64,23 @@ class DoubleMatchConfigScreen extends HookWidget {
                           },
                         ),
                       ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20.0),
+                      child: RotatedBox(
+                        quarterTurns: 1,
+                        child: CircleButton(
+                          onPressed: leftTopPlayer.value != null &&
+                                  leftBottomPlayer.value != null
+                              ? () {
+                                  final temp = leftTopPlayer.value;
+                                  leftTopPlayer.value = leftBottomPlayer.value;
+                                  leftBottomPlayer.value = temp;
+                                }
+                              : null,
+                          child: const Icon(Icons.compare_arrows),
+                        ),
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -72,7 +96,13 @@ class DoubleMatchConfigScreen extends HookWidget {
                                   child: Text(item.name),
                                 ),
                               )
-                              .toList(),
+                              .toList()
+                            ..removeWhere(
+                              (element) =>
+                                  element.value == leftTopPlayer.value ||
+                                  element.value == rightTopPlayer.value ||
+                                  element.value == rightBottomPlayer.value,
+                            ),
                           onChanged: (value) {
                             if (value != null) {
                               leftBottomPlayer.value = value;
@@ -84,10 +114,32 @@ class DoubleMatchConfigScreen extends HookWidget {
                   ],
                 ),
               ),
-              const VerticalDivider(thickness: 5.0),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  const VerticalDivider(thickness: 5.0),
+                  CircleButton(
+                    onPressed: leftTopPlayer.value != null &&
+                            leftBottomPlayer.value != null &&
+                            rightTopPlayer.value != null &&
+                            rightBottomPlayer.value != null
+                        ? () {
+                            final tempLeftTop = leftTopPlayer.value;
+                            leftTopPlayer.value = rightTopPlayer.value;
+                            rightTopPlayer.value = tempLeftTop;
+
+                            final tempLeftBottom = leftBottomPlayer.value;
+                            leftBottomPlayer.value = rightBottomPlayer.value;
+                            rightBottomPlayer.value = tempLeftBottom;
+                          }
+                        : null,
+                    child: const Icon(Icons.compare_arrows),
+                  ),
+                ],
+              ),
               Expanded(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -103,7 +155,13 @@ class DoubleMatchConfigScreen extends HookWidget {
                                   child: Text(item.name),
                                 ),
                               )
-                              .toList(),
+                              .toList()
+                            ..removeWhere(
+                              (element) =>
+                                  element.value == leftBottomPlayer.value ||
+                                  element.value == leftTopPlayer.value ||
+                                  element.value == rightBottomPlayer.value,
+                            ),
                           onChanged: (value) {
                             if (value != null) {
                               rightTopPlayer.value = value;
@@ -111,6 +169,24 @@ class DoubleMatchConfigScreen extends HookWidget {
                           },
                         ),
                       ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20.0),
+                      child: RotatedBox(
+                        quarterTurns: 1,
+                        child: CircleButton(
+                          onPressed: rightTopPlayer.value != null &&
+                                  rightBottomPlayer.value != null
+                              ? () {
+                                  final temp = rightTopPlayer.value;
+                                  rightTopPlayer.value =
+                                      rightBottomPlayer.value;
+                                  rightBottomPlayer.value = temp;
+                                }
+                              : null,
+                          child: const Icon(Icons.compare_arrows),
+                        ),
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -126,7 +202,13 @@ class DoubleMatchConfigScreen extends HookWidget {
                                   child: Text(item.name),
                                 ),
                               )
-                              .toList(),
+                              .toList()
+                            ..removeWhere(
+                              (element) =>
+                                  element.value == leftBottomPlayer.value ||
+                                  element.value == leftTopPlayer.value ||
+                                  element.value == rightTopPlayer.value,
+                            ),
                           onChanged: (value) {
                             if (value != null) {
                               rightBottomPlayer.value = value;
