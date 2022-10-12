@@ -65,7 +65,7 @@ class DoubleMatchCubit extends Cubit<DoubleMatchState> {
   }
 
   Player _computePlayerServingAfterSet() {
-    if (state.playerServingMatch == state.leftTeam.topPlayer) {
+    if (state.playerServingMatch == state.playerServingSet) {
       if (state.playerServingSet == state.leftTeam.topPlayer) {
         return state.rightTeam.bottomPlayer;
       }
@@ -73,47 +73,24 @@ class DoubleMatchCubit extends Cubit<DoubleMatchState> {
         return state.rightTeam.topPlayer;
       }
       if (state.playerServingSet == state.rightTeam.topPlayer) {
-        return state.leftTeam.topPlayer;
+        return state.leftTeam.bottomPlayer;
       }
+      return state.leftTeam.topPlayer;
+    }
+
+    if (state.playerServingMatch == state.leftTeam.topPlayer) {
       return state.leftTeam.bottomPlayer;
     }
 
     if (state.playerServingMatch == state.leftTeam.bottomPlayer) {
-      if (state.playerServingSet == state.leftTeam.bottomPlayer) {
-        return state.rightTeam.topPlayer;
-      }
-      if (state.playerServingSet == state.leftTeam.topPlayer) {
-        return state.rightTeam.bottomPlayer;
-      }
-      if (state.playerServingSet == state.rightTeam.topPlayer) {
-        return state.leftTeam.topPlayer;
-      }
-      return state.leftTeam.bottomPlayer;
+      return state.leftTeam.topPlayer;
     }
 
     if (state.playerServingMatch == state.rightTeam.topPlayer) {
-      if (state.playerServingSet == state.rightTeam.topPlayer) {
-        return state.leftTeam.bottomPlayer;
-      }
-      if (state.playerServingSet == state.rightTeam.bottomPlayer) {
-        return state.leftTeam.topPlayer;
-      }
-      if (state.playerServingSet == state.leftTeam.topPlayer) {
-        return state.rightTeam.topPlayer;
-      }
       return state.rightTeam.bottomPlayer;
     }
 
-    if (state.playerServingSet == state.rightTeam.bottomPlayer) {
-      return state.leftTeam.topPlayer;
-    }
-    if (state.playerServingSet == state.rightTeam.topPlayer) {
-      return state.leftTeam.bottomPlayer;
-    }
-    if (state.playerServingSet == state.leftTeam.topPlayer) {
-      return state.rightTeam.topPlayer;
-    }
-    return state.rightTeam.bottomPlayer;
+    return state.rightTeam.topPlayer;
   }
 
   void givePointToTeam(Team team) {
