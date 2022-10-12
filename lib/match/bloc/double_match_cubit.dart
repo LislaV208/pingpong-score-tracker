@@ -170,6 +170,8 @@ class DoubleMatchCubit extends Cubit<DoubleMatchState> {
       }
     }
 
+    _stateStack.push(state);
+
     emit(state.copyWith(
       leftTeam: leftTeam,
       rightTeam: rightTeam,
@@ -181,6 +183,7 @@ class DoubleMatchCubit extends Cubit<DoubleMatchState> {
       rightTeamMatchScore: rightTeamMatchScore,
       playerServingSet: playerServingSet,
       isFinished: isFinished,
+      canUndo: _stateStack.isNotEmpty,
     ));
   }
 
