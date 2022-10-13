@@ -10,6 +10,7 @@ import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
 import 'package:pingpong_score_tracker/players/widgets/add_player_dialog.dart';
 import 'package:pingpong_score_tracker/players/widgets/match_type_dialog.dart';
+import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_players_screen.dart';
 import 'package:wakelock/wakelock.dart';
 
 class PlayersScreen extends StatefulWidget {
@@ -132,6 +133,21 @@ class _PlayersScreenState extends State<PlayersScreen> {
                     ));
                   },
                   child: const Text('Historia meczy'),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => BlocProvider.value(
+                        value: getIt.get<PlayersCubit>(),
+                        child: const BracketPlayersScreen(),
+                      ),
+                    ));
+                  },
+                  icon: Icon(Icons.star),
+                  label: Text('Turniej'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                  ),
                 ),
               ],
             ),
