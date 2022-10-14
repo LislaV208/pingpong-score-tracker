@@ -25,9 +25,19 @@ class BracketGraph extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 ..._generateColumns(state),
-                const Icon(
-                  Icons.emoji_events,
-                  size: 100,
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.emoji_events,
+                        size: 100,
+                        color: state.isFinished ? Colors.amber : null,
+                      ),
+                      if (state.isFinished) Text(state.matches.last.winner!),
+                    ],
+                  ),
                 ),
               ],
             );
@@ -44,6 +54,8 @@ class BracketGraph extends StatelessWidget {
     double logBase(num x, num base) => log(x) / log(base);
     double log2(num x) => logBase(x, 2);
 
+    var matchesGeneratedCount = 0;
+
     final columns = List.generate(
       log2(players.length).toInt(),
       (indexOut) {
@@ -52,8 +64,9 @@ class BracketGraph extends StatelessWidget {
           children: List.generate(
             (players.length / 2) ~/ (pow(2, indexOut)).toInt(),
             (indexIn) {
-              final sum = indexOut * players.length ~/ 2;
-              final index = sum + indexIn;
+              final index = matchesGeneratedCount;
+              matchesGeneratedCount++;
+
               return MatchContainer(
                 match: index < matches.length
                     ? matches[index]
@@ -84,8 +97,20 @@ class MatchContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final player1 = match.player1.isEmpty ? '???' : match.player1;
     final player2 = match.player2.isEmpty ? '???' : match.player2;
-    final score1 = match.player1.isEmpty ? '' : match.player1Score;
-    final score2 = match.player2.isEmpty ? '' : match.player2Score;
+    final score1 = match.player1.isEmpty ? '' : match.player1Score.toString();
+    final score2 = match.player2.isEmpty ? '' : match.player2Score.toString();
+
+    TextStyle getScoreStyle(int scoreLeft, int scoreRight) {
+      if (scoreLeft > scoreRight) {
+        return const TextStyle(
+          color: Colors.green,
+          fontWeight: FontWeight.bold,
+        );
+      }
+
+      return const TextStyle();
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Container(
@@ -96,7 +121,24 @@ class MatchContainer extends StatelessWidget {
         alignment: Alignment.center,
         height: 50,
         width: 150,
-        child: Text('$player1 $score1 : $score2 $player2'),
+        child: RichText(
+          text: TextSpan(
+            children: <TextSpan>[
+              TextSpan(
+                text: '$player1 $score1',
+                style: getScoreStyle(match.player1Score, match.player2Score),
+              ),
+              const TextSpan(
+                text: ' : ',
+                style: TextStyle(),
+              ),
+              TextSpan(
+                text: '$score2 $player2',
+                style: getScoreStyle(match.player2Score, match.player1Score),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
