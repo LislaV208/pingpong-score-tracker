@@ -101,11 +101,12 @@ class __$$_BracketTournamentStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_BracketTournamentState implements _BracketTournamentState {
+class _$_BracketTournamentState extends _BracketTournamentState {
   const _$_BracketTournamentState(
       {required final List<TournamentMatch> matches,
       this.matchesPlayedCount = 0})
-      : _matches = matches;
+      : _matches = matches,
+        super._();
 
   final List<TournamentMatch> _matches;
   @override
@@ -146,10 +147,11 @@ class _$_BracketTournamentState implements _BracketTournamentState {
           this, _$identity);
 }
 
-abstract class _BracketTournamentState implements BracketTournamentState {
+abstract class _BracketTournamentState extends BracketTournamentState {
   const factory _BracketTournamentState(
       {required final List<TournamentMatch> matches,
       final int matchesPlayedCount}) = _$_BracketTournamentState;
+  const _BracketTournamentState._() : super._();
 
   @override
   List<TournamentMatch> get matches;

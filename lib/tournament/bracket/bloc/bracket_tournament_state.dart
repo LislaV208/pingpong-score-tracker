@@ -5,6 +5,8 @@ part 'bracket_tournament_state.freezed.dart';
 
 @freezed
 class BracketTournamentState with _$BracketTournamentState {
+  const BracketTournamentState._();
+
   const factory BracketTournamentState({
     required List<TournamentMatch> matches,
     @Default(0) int matchesPlayedCount,
@@ -23,4 +25,8 @@ class BracketTournamentState with _$BracketTournamentState {
 
     return BracketTournamentState(matches: matches);
   }
+
+  bool get isFinished => matchesPlayedCount >= matches.length;
+  TournamentMatch? get upcomingMatch =>
+      matchesPlayedCount < matches.length ? matches[matchesPlayedCount] : null;
 }

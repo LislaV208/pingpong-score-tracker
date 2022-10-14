@@ -138,7 +138,13 @@ class StandardMatchConfigScreen extends HookWidget {
                           ),
                           getIt.get<MatchHistoryCubit>(),
                         ),
-                        child: const StandardMatchScreen(),
+                        child: StandardMatchScreen(
+                          onFinished: (navigator, _) {
+                            navigator.popUntil(
+                              ModalRoute.withName('/'),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   );

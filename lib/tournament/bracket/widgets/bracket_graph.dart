@@ -50,9 +50,9 @@ class BracketGraph extends StatelessWidget {
         return Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: List.generate(
-            matches.length ~/ (pow(2, indexOut)).toInt(),
+            (players.length / 2) ~/ (pow(2, indexOut)).toInt(),
             (indexIn) {
-              final sum = indexOut * matches.length;
+              final sum = indexOut * players.length ~/ 2;
               final index = sum + indexIn;
               return MatchContainer(
                 match: index < matches.length

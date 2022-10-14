@@ -9,8 +9,18 @@ import 'package:pingpong_score_tracker/match/widgets/player_point_button.dart';
 import 'package:pingpong_score_tracker/match/widgets/undo_button.dart';
 import 'package:wakelock/wakelock.dart';
 
+typedef OnFinishedCallback = void Function(
+  NavigatorState navigator,
+  StandardMatchState state,
+);
+
 class StandardMatchScreen extends StatefulWidget {
-  const StandardMatchScreen({super.key});
+  const StandardMatchScreen({
+    super.key,
+    required this.onFinished,
+  });
+
+  final OnFinishedCallback onFinished;
 
   @override
   State<StandardMatchScreen> createState() => _StandardMatchScreenState();
@@ -48,9 +58,8 @@ class _StandardMatchScreenState extends State<StandardMatchScreen> {
               rightPlayerScore: state.rightPlayerMatchScore,
             ),
           );
-          navigator.popUntil(
-            ModalRoute.withName('/'),
-          );
+
+          widget.onFinished(navigator, state);
         }
       },
       builder: (context, state) {

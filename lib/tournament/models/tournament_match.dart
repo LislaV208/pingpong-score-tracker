@@ -15,6 +15,8 @@ class TournamentMatch with _$TournamentMatch {
   factory TournamentMatch.empty() =>
       const TournamentMatch(player1: '', player2: '');
 
+  bool get hasWinner => player1Score > 0 || player2Score > 0;
+
   String? get winner => player1Score > player2Score
       ? player1
       : player2Score > player1Score
@@ -22,8 +24,20 @@ class TournamentMatch with _$TournamentMatch {
           : null;
 
   String? get looser => player1 == winner
-      ? player1
+      ? player2
       : player2 == winner
-          ? player2
+          ? player1
+          : null;
+
+  int? get winnerScore => player1 == winner
+      ? player1Score
+      : player2 == winner
+          ? player2Score
+          : null;
+
+  int? get looserScore => player1 == looser
+      ? player1Score
+      : player2 == looser
+          ? player2Score
           : null;
 }
