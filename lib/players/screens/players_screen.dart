@@ -143,7 +143,7 @@ class _PlayersScreenState extends State<PlayersScreen> {
                       ),
                     ));
                   },
-                  icon: Icon(Icons.star),
+                  icon: Icon(Icons.emoji_events),
                   label: Text('Turniej'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange,

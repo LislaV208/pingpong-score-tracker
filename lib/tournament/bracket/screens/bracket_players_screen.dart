@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
+import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_cubit.dart';
+import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_tournament_screen.dart';
 
 class BracketPlayersScreen extends HookWidget {
   const BracketPlayersScreen({super.key});
@@ -116,7 +118,19 @@ class BracketPlayersScreen extends HookWidget {
         duration: Duration(milliseconds: 300),
         offset: missingPlayersCount <= 0 ? Offset.zero : Offset(0, 2),
         child: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => BlocProvider(
+                  create: (context) =>
+                      BracketTournamentCubit(selectedPlayers.value),
+                  child: BracketTournamentScreen(
+                    players: selectedPlayers.value,
+                  ),
+                ),
+              ),
+            );
+          },
           child: const Icon(Icons.arrow_forward),
         ),
       ),
