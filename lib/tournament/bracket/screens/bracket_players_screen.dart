@@ -19,6 +19,19 @@ class BracketPlayersScreen extends HookWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Wybierz graczy do turnieju'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              final players = context.read<PlayersCubit>().state.players;
+
+              selectedPlayers.value =
+                  selectedPlayers.value.length == players.length
+                      ? []
+                      : [...players];
+            },
+            icon: const Icon(Icons.select_all),
+          ),
+        ],
       ),
       body: SafeArea(
         child: Stack(
@@ -37,7 +50,6 @@ class BracketPlayersScreen extends HookWidget {
                   }
 
                   return ListView(
-                    // shrinkWrap: true,
                     children: players
                         .map(
                           (item) => CheckboxListTile(
