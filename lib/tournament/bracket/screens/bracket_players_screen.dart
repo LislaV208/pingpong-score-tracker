@@ -37,7 +37,7 @@ class BracketPlayersScreen extends HookWidget {
                   }
 
                   return ListView(
-                    shrinkWrap: true,
+                    // shrinkWrap: true,
                     children: players
                         .map(
                           (item) => CheckboxListTile(
