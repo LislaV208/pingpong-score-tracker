@@ -8,7 +8,7 @@ import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.d
 import 'package:pingpong_score_tracker/match_history/screens/match_history_screen.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
-import 'package:pingpong_score_tracker/players/widgets/add_player_dialog.dart';
+import 'package:pingpong_score_tracker/players/screens/add_edit_player_screen.dart';
 import 'package:pingpong_score_tracker/players/widgets/match_type_dialog.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_players_screen.dart';
 import 'package:wakelock/wakelock.dart';
@@ -63,11 +63,31 @@ class _PlayersScreenState extends State<PlayersScreen> {
                               ],
                             ),
                             title: Text(item),
-                            trailing: IconButton(
-                              icon: const Icon(Icons.close),
-                              onPressed: () {
-                                context.read<PlayersCubit>().removePlayer(item);
-                              },
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(Icons.edit),
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => BlocProvider.value(
+                                        value: getIt.get<PlayersCubit>(),
+                                        child:
+                                            AddEditPlayerScreen(player: item),
+                                      ),
+                                    ));
+                                  },
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.close),
+                                  onPressed: () {
+                                    context
+                                        .read<PlayersCubit>()
+                                        .removePlayer(item);
+                                  },
+                                ),
+                              ],
                             ),
                           ),
                         )
@@ -110,16 +130,12 @@ class _PlayersScreenState extends State<PlayersScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    final cubit = context.read<PlayersCubit>();
-                    final playerName = await showDialog<String>(
-                      context: context,
-                      builder: (context) => const AddPlayerDialog(),
-                      barrierDismissible: false,
-                    );
-
-                    if (playerName != null) {
-                      cubit.addPlayer(playerName);
-                    }
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => BlocProvider.value(
+                        value: getIt.get<PlayersCubit>(),
+                        child: const AddEditPlayerScreen(),
+                      ),
+                    ));
                   },
                   child: const Text('Dodaj gracza'),
                 ),
