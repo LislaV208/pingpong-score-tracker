@@ -10,7 +10,10 @@ import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
 import 'package:pingpong_score_tracker/players/screens/add_edit_player_screen.dart';
 import 'package:pingpong_score_tracker/players/widgets/match_type_dialog.dart';
+import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_cubit.dart';
+import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_state.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_players_screen.dart';
+import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_tournament_screen.dart';
 import 'package:wakelock/wakelock.dart';
 
 class PlayersScreen extends StatefulWidget {
@@ -153,10 +156,21 @@ class _PlayersScreenState extends State<PlayersScreen> {
                 ElevatedButton.icon(
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => BlocProvider.value(
-                        value: getIt.get<PlayersCubit>(),
-                        child: const BracketPlayersScreen(),
-                      ),
+                      builder: (context) {
+                        final tournamentState =
+                            getIt.get<BracketTournamentCubit>().state;
+                        if (tournamentState ==
+                            BracketTournamentState.notStarted()) {
+                          return BlocProvider.value(
+                            value: getIt.get<PlayersCubit>(),
+                            child: const BracketPlayersScreen(),
+                          );
+                        }
+                        return BlocProvider.value(
+                          value: getIt.get<BracketTournamentCubit>(),
+                          child: const BracketTournamentScreen(),
+                        );
+                      },
                     ));
                   },
                   icon: Icon(Icons.emoji_events),

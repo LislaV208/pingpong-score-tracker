@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pingpong_score_tracker/tournament/models/tournament_match.dart';
 
 part 'bracket_tournament_state.freezed.dart';
+part 'bracket_tournament_state.g.dart';
 
 @freezed
 class BracketTournamentState with _$BracketTournamentState {
@@ -11,6 +12,12 @@ class BracketTournamentState with _$BracketTournamentState {
     required List<TournamentMatch> matches,
     @Default(0) int matchesPlayedCount,
   }) = _BracketTournamentState;
+
+  factory BracketTournamentState.notStarted() =>
+      const BracketTournamentState(matches: []);
+
+  factory BracketTournamentState.fromJson(Map<String, dynamic> json) =>
+      _$BracketTournamentStateFromJson(json);
 
   factory BracketTournamentState.fromPlayersList(List<String> players) {
     players.shuffle();
@@ -26,7 +33,8 @@ class BracketTournamentState with _$BracketTournamentState {
     return BracketTournamentState(matches: matches);
   }
 
-  bool get isFinished => matchesPlayedCount >= matches.length;
+  bool get isFinished =>
+      matches.isNotEmpty && matchesPlayedCount >= matches.length;
   TournamentMatch? get upcomingMatch =>
       matchesPlayedCount < matches.length ? matches[matchesPlayedCount] : null;
 }

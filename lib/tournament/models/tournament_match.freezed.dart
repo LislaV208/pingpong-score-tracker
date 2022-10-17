@@ -14,6 +14,10 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+TournamentMatch _$TournamentMatchFromJson(Map<String, dynamic> json) {
+  return _TournamentMatch.fromJson(json);
+}
+
 /// @nodoc
 mixin _$TournamentMatch {
   String get player1 => throw _privateConstructorUsedError;
@@ -21,6 +25,7 @@ mixin _$TournamentMatch {
   int get player1Score => throw _privateConstructorUsedError;
   int get player2Score => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $TournamentMatchCopyWith<TournamentMatch> get copyWith =>
       throw _privateConstructorUsedError;
@@ -123,7 +128,7 @@ class __$$_TournamentMatchCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_TournamentMatch extends _TournamentMatch {
   const _$_TournamentMatch(
       {required this.player1,
@@ -131,6 +136,9 @@ class _$_TournamentMatch extends _TournamentMatch {
       this.player1Score = 0,
       this.player2Score = 0})
       : super._();
+
+  factory _$_TournamentMatch.fromJson(Map<String, dynamic> json) =>
+      _$$_TournamentMatchFromJson(json);
 
   @override
   final String player1;
@@ -161,6 +169,7 @@ class _$_TournamentMatch extends _TournamentMatch {
                 .equals(other.player2Score, player2Score));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -173,6 +182,13 @@ class _$_TournamentMatch extends _TournamentMatch {
   @override
   _$$_TournamentMatchCopyWith<_$_TournamentMatch> get copyWith =>
       __$$_TournamentMatchCopyWithImpl<_$_TournamentMatch>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_TournamentMatchToJson(
+      this,
+    );
+  }
 }
 
 abstract class _TournamentMatch extends TournamentMatch {
@@ -182,6 +198,9 @@ abstract class _TournamentMatch extends TournamentMatch {
       final int player1Score,
       final int player2Score}) = _$_TournamentMatch;
   const _TournamentMatch._() : super._();
+
+  factory _TournamentMatch.fromJson(Map<String, dynamic> json) =
+      _$_TournamentMatch.fromJson;
 
   @override
   String get player1;

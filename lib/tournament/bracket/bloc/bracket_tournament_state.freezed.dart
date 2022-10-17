@@ -14,11 +14,17 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+BracketTournamentState _$BracketTournamentStateFromJson(
+    Map<String, dynamic> json) {
+  return _BracketTournamentState.fromJson(json);
+}
+
 /// @nodoc
 mixin _$BracketTournamentState {
   List<TournamentMatch> get matches => throw _privateConstructorUsedError;
   int get matchesPlayedCount => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $BracketTournamentStateCopyWith<BracketTournamentState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -100,13 +106,16 @@ class __$$_BracketTournamentStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_BracketTournamentState extends _BracketTournamentState {
   const _$_BracketTournamentState(
       {required final List<TournamentMatch> matches,
       this.matchesPlayedCount = 0})
       : _matches = matches,
         super._();
+
+  factory _$_BracketTournamentState.fromJson(Map<String, dynamic> json) =>
+      _$$_BracketTournamentStateFromJson(json);
 
   final List<TournamentMatch> _matches;
   @override
@@ -134,6 +143,7 @@ class _$_BracketTournamentState extends _BracketTournamentState {
                 .equals(other.matchesPlayedCount, matchesPlayedCount));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -145,6 +155,13 @@ class _$_BracketTournamentState extends _BracketTournamentState {
   _$$_BracketTournamentStateCopyWith<_$_BracketTournamentState> get copyWith =>
       __$$_BracketTournamentStateCopyWithImpl<_$_BracketTournamentState>(
           this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_BracketTournamentStateToJson(
+      this,
+    );
+  }
 }
 
 abstract class _BracketTournamentState extends BracketTournamentState {
@@ -152,6 +169,9 @@ abstract class _BracketTournamentState extends BracketTournamentState {
       {required final List<TournamentMatch> matches,
       final int matchesPlayedCount}) = _$_BracketTournamentState;
   const _BracketTournamentState._() : super._();
+
+  factory _BracketTournamentState.fromJson(Map<String, dynamic> json) =
+      _$_BracketTournamentState.fromJson;
 
   @override
   List<TournamentMatch> get matches;

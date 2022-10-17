@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:pingpong_score_tracker/injectable/injectable.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_cubit.dart';
@@ -133,12 +134,10 @@ class BracketPlayersScreen extends HookWidget {
           onPressed: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => BlocProvider(
-                  create: (context) =>
-                      BracketTournamentCubit(selectedPlayers.value),
-                  child: BracketTournamentScreen(
-                    players: selectedPlayers.value,
-                  ),
+                builder: (context) => BlocProvider.value(
+                  value: getIt.get<BracketTournamentCubit>()
+                    ..start(selectedPlayers.value),
+                  child: const BracketTournamentScreen(),
                 ),
               ),
             );

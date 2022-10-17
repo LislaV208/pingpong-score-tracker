@@ -7,12 +7,7 @@ import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournamen
 import 'package:pingpong_score_tracker/tournament/models/tournament_match.dart';
 
 class BracketGraph extends StatelessWidget {
-  const BracketGraph({
-    super.key,
-    required this.players,
-  });
-
-  final List<String> players;
+  const BracketGraph({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +44,7 @@ class BracketGraph extends StatelessWidget {
 
   List<Widget> _generateColumns(BracketTournamentState state) {
     final matches = state.matches;
+    final playersCount = matches.length * 2;
 
     if (matches.isEmpty) return [];
     double logBase(num x, num base) => log(x) / log(base);
@@ -57,12 +53,12 @@ class BracketGraph extends StatelessWidget {
     var matchesGeneratedCount = 0;
 
     final columns = List.generate(
-      log2(players.length).toInt(),
+      log2(playersCount).toInt(),
       (indexOut) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: List.generate(
-            (players.length / 2) ~/ (pow(2, indexOut)).toInt(),
+            (playersCount / 2) ~/ (pow(2, indexOut)).toInt(),
             (indexIn) {
               final index = matchesGeneratedCount;
               matchesGeneratedCount++;

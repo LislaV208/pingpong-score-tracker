@@ -9,83 +9,102 @@ import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/screens/players_screen.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_cubit.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/widgets/bracket_graph.dart';
+import 'package:pingpong_score_tracker/tournament/bracket/widgets/exit_tournament_dialog.dart';
 
 import '../../../match_history/cubit/match_history_cubit.dart';
 
 class BracketTournamentScreen extends StatelessWidget {
-  const BracketTournamentScreen({
-    super.key,
-    required this.players,
-  });
-
-  final List<String> players;
+  const BracketTournamentScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final state = context.watch<BracketTournamentCubit>().state;
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Turniej')),
-      body: SafeArea(
-        child: BracketGraph(players: players),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final navigator = Navigator.of(context);
-          final cubit = context.read<BracketTournamentCubit>();
+    return WillPopScope(
+      onWillPop: () async {
+        final cubit = context.read<BracketTournamentCubit>();
+        final navigator = Navigator.of(context);
+        final result = await showDialog<ExitTournamentDialogResult>(
+              context: context,
+              builder: (context) => const ExitTournamentDialog(),
+            ) ??
+            ExitTournamentDialogResult.continueTournament;
 
-          if (state.isFinished) {
-            navigator.pushAndRemoveUntil(
-              MaterialPageRoute(
-                builder: (context) => BlocProvider.value(
-                  value: getIt.get<PlayersCubit>(),
-                  child: const PlayersScreen(),
-                ),
-              ),
-              (route) => false,
-            );
-
-            return;
+        if (result != ExitTournamentDialogResult.continueTournament) {
+          if (result == ExitTournamentDialogResult.cancel) {
+            cubit.cancel();
           }
 
-          final playerServing = await showDialog<String>(
-            barrierDismissible: false,
-            context: context,
-            builder: (context) => StandardServeDialog(
-              leftPlayer: state.upcomingMatch!.player1,
-              rightPlayer: state.upcomingMatch!.player2,
-            ),
+          navigator.popUntil(
+            ModalRoute.withName('/'),
           );
+        }
 
-          if (playerServing != null) {
-            final playedMatchState = await navigator.push<StandardMatchState>(
-              MaterialPageRoute(
-                builder: (context) => BlocProvider(
-                  create: (context) => StandardMatchCubit(
-                    StandardMatchState(
-                      leftPlayer: state.upcomingMatch!.player1,
-                      rightPlayer: state.upcomingMatch!.player2,
-                      playerServing: playerServing,
-                      currentPlayerServing: playerServing,
-                    ),
-                    getIt.get<MatchHistoryCubit>(),
-                  ),
-                  child: StandardMatchScreen(
-                    onFinished: (navigator, state) {
-                      navigator.pop(state);
-                    },
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(title: const Text('Turniej')),
+        body: const SafeArea(
+          child: BracketGraph(),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            final navigator = Navigator.of(context);
+            final cubit = context.read<BracketTournamentCubit>();
+
+            if (state.isFinished) {
+              navigator.pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (context) => BlocProvider.value(
+                    value: getIt.get<PlayersCubit>(),
+                    child: const PlayersScreen(),
                   ),
                 ),
+                (route) => false,
+              );
+
+              return;
+            }
+
+            final playerServing = await showDialog<String>(
+              barrierDismissible: false,
+              context: context,
+              builder: (context) => StandardServeDialog(
+                leftPlayer: state.upcomingMatch!.player1,
+                rightPlayer: state.upcomingMatch!.player2,
               ),
             );
 
-            cubit.onMatchFinished(
-              playedMatchState!.leftPlayerMatchScore,
-              playedMatchState.rightPlayerMatchScore,
-            );
-          }
-        },
-        child: Icon(state.isFinished ? Icons.done : Icons.arrow_forward),
+            if (playerServing != null) {
+              final playedMatchState = await navigator.push<StandardMatchState>(
+                MaterialPageRoute(
+                  builder: (context) => BlocProvider(
+                    create: (context) => StandardMatchCubit(
+                      StandardMatchState(
+                        leftPlayer: state.upcomingMatch!.player1,
+                        rightPlayer: state.upcomingMatch!.player2,
+                        playerServing: playerServing,
+                        currentPlayerServing: playerServing,
+                      ),
+                      getIt.get<MatchHistoryCubit>(),
+                    ),
+                    child: StandardMatchScreen(
+                      onFinished: (navigator, state) {
+                        navigator.pop(state);
+                      },
+                    ),
+                  ),
+                ),
+              );
+
+              cubit.onMatchFinished(
+                playedMatchState!.leftPlayerMatchScore,
+                playedMatchState.rightPlayerMatchScore,
+              );
+            }
+          },
+          child: Icon(state.isFinished ? Icons.done : Icons.arrow_forward),
+        ),
       ),
     );
   }

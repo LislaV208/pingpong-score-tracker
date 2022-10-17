@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'tournament_match.freezed.dart';
+part 'tournament_match.g.dart';
 
 @freezed
 class TournamentMatch with _$TournamentMatch {
@@ -40,4 +41,7 @@ class TournamentMatch with _$TournamentMatch {
       : player2 == looser
           ? player2Score
           : null;
+
+  factory TournamentMatch.fromJson(Map<String, dynamic> json) =>
+      _$TournamentMatchFromJson(json);
 }

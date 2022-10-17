@@ -1,12 +1,22 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_state.dart';
 import 'package:pingpong_score_tracker/tournament/models/tournament_match.dart';
 
-class BracketTournamentCubit extends Cubit<BracketTournamentState> {
-  BracketTournamentCubit(List<String> players)
-      : super(
-          BracketTournamentState.fromPlayersList(players),
-        );
+@singleton
+class BracketTournamentCubit extends HydratedCubit<BracketTournamentState> {
+  BracketTournamentCubit() : super(BracketTournamentState.notStarted());
+
+  @override
+  BracketTournamentState? fromJson(Map<String, dynamic> json) =>
+      BracketTournamentState.fromJson(json);
+
+  @override
+  Map<String, dynamic>? toJson(BracketTournamentState state) => state.toJson();
+
+  void start(List<String> players) {
+    emit(BracketTournamentState.fromPlayersList(players));
+  }
 
   void onMatchFinished(int score1, int score2) {
     final matchesPlayedCount = state.matchesPlayedCount;
@@ -50,5 +60,11 @@ class BracketTournamentCubit extends Cubit<BracketTournamentState> {
       matches: matches,
       matchesPlayedCount: updatedMatchesPlayedCount,
     ));
+
+    if (state.isFinished) cancel();
+  }
+
+  void cancel() {
+    emit(BracketTournamentState.notStarted());
   }
 }
