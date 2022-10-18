@@ -14,6 +14,7 @@ import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournamen
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_state.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_players_screen.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_tournament_screen.dart';
+import 'package:pingpong_score_tracker/widgets/decision_dialog.dart';
 import 'package:wakelock/wakelock.dart';
 
 class PlayersScreen extends StatefulWidget {
@@ -84,10 +85,18 @@ class _PlayersScreenState extends State<PlayersScreen> {
                                 ),
                                 IconButton(
                                   icon: const Icon(Icons.close),
-                                  onPressed: () {
-                                    context
-                                        .read<PlayersCubit>()
-                                        .removePlayer(item);
+                                  onPressed: () async {
+                                    final cubit = context.read<PlayersCubit>();
+                                    final doRemove = await showDecisionDialog(
+                                          context,
+                                          title:
+                                              'Czy chcesz usunąć gracza $item?',
+                                        ) ??
+                                        false;
+
+                                    if (doRemove) {
+                                      cubit.removePlayer(item);
+                                    }
                                   },
                                 ),
                               ],
