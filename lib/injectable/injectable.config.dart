@@ -10,7 +10,6 @@ import 'package:injectable/injectable.dart' as _i2;
 
 import '../match/bloc/double_match_cubit.dart' as _i9;
 import '../match/bloc/double_match_state.dart' as _i4;
-import '../match/bloc/standard_match_cubit.dart' as _i10;
 import '../match/bloc/standard_match_state.dart' as _i8;
 import '../match/models/team.dart' as _i5;
 import '../match_history/cubit/match_history_cubit.dart' as _i6;
@@ -62,10 +61,6 @@ _i1.GetIt $initGetIt(
       ));
   gh.factory<_i9.DoubleMatchCubit>(() => _i9.DoubleMatchCubit(
         get<_i4.DoubleMatchState>(),
-        get<_i6.MatchHistoryCubit>(),
-      ));
-  gh.factory<_i10.StandardMatchCubit>(() => _i10.StandardMatchCubit(
-        get<_i8.StandardMatchState>(),
         get<_i6.MatchHistoryCubit>(),
       ));
   return get;

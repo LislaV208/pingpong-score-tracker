@@ -49,7 +49,7 @@ class MatchHistoryListItem extends StatelessWidget {
                               : Colors.red,
                         ),
                       ),
-                      TextSpan(text: ' : '),
+                      const TextSpan(text: ' : '),
                       TextSpan(
                         text: '${entry.rightPlayerScore} ${entry.rightPlayer}',
                         style: TextStyle(
@@ -62,9 +62,9 @@ class MatchHistoryListItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 DefaultTextStyle(
-                  style: TextStyle(),
+                  style: const TextStyle(),
                   textAlign: TextAlign.center,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -85,11 +85,18 @@ class MatchHistoryListItem extends StatelessWidget {
         Positioned(
           left: 5,
           top: -5,
-          child: Chip(
-            label:
-                Text(entry.matchType == MatchType.single ? 'Singiel' : 'Debel'),
-            backgroundColor: Colors.blueGrey,
-          ),
+          child: entry.matchType != MatchType.tournament
+              ? Chip(
+                  label: Text(entry.matchType == MatchType.single
+                      ? 'Singiel'
+                      : 'Debel'),
+                  backgroundColor: Colors.blueGrey,
+                )
+              : const Chip(
+                  avatar: Icon(Icons.emoji_events),
+                  label: Text('Turniej'),
+                  backgroundColor: Colors.orange,
+                ),
         ),
       ],
     );

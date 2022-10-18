@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:pingpong_score_tracker/injectable/injectable.dart';
 import 'package:pingpong_score_tracker/match/bloc/standard_match_cubit.dart';
 import 'package:pingpong_score_tracker/match/bloc/standard_match_state.dart';
+import 'package:pingpong_score_tracker/match/match_type.dart';
 import 'package:pingpong_score_tracker/match/screens/standard_match_screen.dart';
 import 'package:pingpong_score_tracker/match/widgets/standard_serve_dialog.dart';
 import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.dart';
@@ -136,7 +137,8 @@ class StandardMatchConfigScreen extends HookWidget {
                             playerServing: playerServing,
                             currentPlayerServing: playerServing,
                           ),
-                          getIt.get<MatchHistoryCubit>(),
+                          historyCubit: getIt.get<MatchHistoryCubit>(),
+                          matchType: MatchType.single,
                         ),
                         child: StandardMatchScreen(
                           onFinished: (navigator, _) {

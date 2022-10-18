@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pingpong_score_tracker/injectable/injectable.dart';
 import 'package:pingpong_score_tracker/match/bloc/standard_match_cubit.dart';
 import 'package:pingpong_score_tracker/match/bloc/standard_match_state.dart';
+import 'package:pingpong_score_tracker/match/match_type.dart';
 import 'package:pingpong_score_tracker/match/screens/standard_match_screen.dart';
 import 'package:pingpong_score_tracker/match/widgets/standard_serve_dialog.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
@@ -86,7 +87,8 @@ class BracketTournamentScreen extends StatelessWidget {
                         playerServing: playerServing,
                         currentPlayerServing: playerServing,
                       ),
-                      getIt.get<MatchHistoryCubit>(),
+                      historyCubit: getIt.get<MatchHistoryCubit>(),
+                      matchType: MatchType.tournament,
                     ),
                     child: StandardMatchScreen(
                       onFinished: (navigator, state) {

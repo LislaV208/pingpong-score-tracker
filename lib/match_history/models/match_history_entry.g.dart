@@ -32,4 +32,5 @@ Map<String, dynamic> _$$_MatchHistoryEntryToJson(
 const _$MatchTypeEnumMap = {
   MatchType.single: 'single',
   MatchType.double: 'double',
+  MatchType.tournament: 'tournament',
 };

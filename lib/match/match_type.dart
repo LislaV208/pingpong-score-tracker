@@ -1,1 +1,1 @@
-enum MatchType { single, double }
+enum MatchType { single, double, tournament }
