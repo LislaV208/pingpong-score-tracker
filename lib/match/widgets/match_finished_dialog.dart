@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:pingpong_score_tracker/match/widgets/undo_button.dart';
+import 'package:pingpong_score_tracker/widgets/colored_score.dart';
 
 class MatchFinishedDialog extends StatelessWidget {
   const MatchFinishedDialog({
     super.key,
     required this.leftPlayer,
     required this.rightPlayer,
-    required this.leftPlayerScore,
-    required this.rightPlayerScore,
+    required this.leftScore,
+    required this.rightScore,
+    required this.undo,
   });
 
   final String leftPlayer;
   final String rightPlayer;
-  final int leftPlayerScore;
-  final int rightPlayerScore;
+  final int leftScore;
+  final int rightScore;
+  final VoidCallback undo;
 
   @override
   Widget build(BuildContext context) {
@@ -24,16 +28,43 @@ class MatchFinishedDialog extends StatelessWidget {
           const ListTile(
             title: Text('Koniec gry!'),
           ),
-          Text(
-              'Wynik: $leftPlayer $leftPlayerScore : $rightPlayerScore $rightPlayer'),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('Koniec'),
+          ColoredScore(
+            leftPlayer: leftPlayer,
+            rightPlayer: rightPlayer,
+            leftScore: leftScore,
+            rightScore: rightScore,
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.all(0.0),
+            child: ButtonBar(
+              alignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Visibility(
+                  maintainAnimation: true,
+                  maintainSize: true,
+                  maintainState: true,
+                  visible: false,
+                  child: TextButton(
+                    onPressed: () {},
+                    child: const Text('Koniec'),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  child: const Text('Koniec'),
+                ),
+                UndoButton(
+                  onPressed: () {
+                    undo();
+                    Navigator.of(context).pop(false);
+                  },
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

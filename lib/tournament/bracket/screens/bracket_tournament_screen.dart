@@ -99,9 +99,9 @@ class BracketTournamentScreen extends StatelessWidget {
                         currentPlayerServing: playerServing,
                       ),
                       historyCubit: getIt.get<MatchHistoryCubit>(),
-                      matchType: MatchType.tournament,
                     ),
                     child: StandardMatchScreen(
+                      matchType: MatchType.tournament,
                       onFinished: (navigator, state) {
                         navigator.pop(state);
                       },

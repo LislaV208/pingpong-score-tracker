@@ -16,21 +16,28 @@ class DoubleMatchScreen extends StatelessWidget {
     return BlocConsumer<DoubleMatchCubit, DoubleMatchState>(
       listener: (context, state) async {
         if (state.isFinished) {
+          final cubit = context.read<DoubleMatchCubit>();
           final navigator = Navigator.of(context);
 
-          await showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (context) => MatchFinishedDialog(
-              leftPlayer: state.leftTeam.name,
-              rightPlayer: state.rightTeam.name,
-              leftPlayerScore: state.leftTeamMatchScore,
-              rightPlayerScore: state.rightTeamMatchScore,
-            ),
-          );
-          navigator.popUntil(
-            ModalRoute.withName('/'),
-          );
+          final isFinished = await showDialog<bool>(
+                barrierDismissible: false,
+                context: context,
+                builder: (_) => MatchFinishedDialog(
+                  leftPlayer: state.leftTeam.name,
+                  rightPlayer: state.rightTeam.name,
+                  leftScore: state.leftTeamMatchScore,
+                  rightScore: state.rightTeamMatchScore,
+                  undo: () => context.read<DoubleMatchCubit>().undo(),
+                ),
+              ) ??
+              false;
+
+          if (isFinished) {
+            cubit.addMatchHistoryEntry();
+            navigator.popUntil(
+              ModalRoute.withName('/'),
+            );
+          }
         }
       },
       builder: (context, state) {

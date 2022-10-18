@@ -173,17 +173,6 @@ class DoubleMatchCubit extends Cubit<DoubleMatchState> {
 
         if (matchScore >= Config.matchWinningPoints) {
           isFinished = true;
-          historyCubit.addMatchHistoryEntry(
-            MatchHistoryEntry(
-              leftPlayer: leftTeam.name,
-              leftPlayerScore: leftTeamMatchScore,
-              rightPlayer: rightTeam.name,
-              rightPlayerScore: rightTeamMatchScore,
-              startedAt: _startedAt,
-              finishedAt: DateTime.now(),
-              matchType: MatchType.double,
-            ),
-          );
         }
       }
     }
@@ -210,5 +199,19 @@ class DoubleMatchCubit extends Cubit<DoubleMatchState> {
       final previousState = _stateStack.pop();
       emit(previousState);
     }
+  }
+
+  void addMatchHistoryEntry() {
+    historyCubit.addMatchHistoryEntry(
+      MatchHistoryEntry(
+        leftPlayer: state.leftTeam.name,
+        leftPlayerScore: state.leftTeamMatchScore,
+        rightPlayer: state.rightTeam.name,
+        rightPlayerScore: state.rightTeamMatchScore,
+        startedAt: _startedAt,
+        finishedAt: DateTime.now(),
+        matchType: MatchType.double,
+      ),
+    );
   }
 }

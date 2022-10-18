@@ -138,9 +138,9 @@ class StandardMatchConfigScreen extends HookWidget {
                             currentPlayerServing: playerServing,
                           ),
                           historyCubit: getIt.get<MatchHistoryCubit>(),
-                          matchType: MatchType.single,
                         ),
                         child: StandardMatchScreen(
+                          matchType: MatchType.single,
                           onFinished: (navigator, _) {
                             navigator.popUntil(
                               ModalRoute.withName('/'),

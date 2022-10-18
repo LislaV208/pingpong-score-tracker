@@ -10,16 +10,11 @@ class StandardMatchCubit extends Cubit<StandardMatchState> {
   StandardMatchCubit(
     super.initialState, {
     required this.historyCubit,
-    required this.matchType,
   }) {
-    assert(matchType != MatchType.double,
-        "Match type can be only 'single' or 'tournament'");
-
     _startedAt = DateTime.now();
   }
 
   final MatchHistoryCubit historyCubit;
-  final MatchType matchType;
 
   final _stateStack = Stack<StandardMatchState>();
   late final DateTime _startedAt;
@@ -79,17 +74,6 @@ class StandardMatchCubit extends Cubit<StandardMatchState> {
 
         if (matchScore >= Config.matchWinningPoints) {
           isFinished = true;
-          historyCubit.addMatchHistoryEntry(
-            MatchHistoryEntry(
-              leftPlayer: leftPlayer,
-              leftPlayerScore: leftPlayerMatchScore,
-              rightPlayer: rightPlayer,
-              rightPlayerScore: rightPlayerMatchScore,
-              startedAt: _startedAt,
-              finishedAt: DateTime.now(),
-              matchType: matchType,
-            ),
-          );
         } else {
           // flip players
           final tempPlayer = leftPlayer;
@@ -124,5 +108,21 @@ class StandardMatchCubit extends Cubit<StandardMatchState> {
       final previousState = _stateStack.pop();
       emit(previousState);
     }
+  }
+
+  void addMatchHistoryEntry(MatchType matchType) {
+    assert(matchType != MatchType.double,
+        "Match type can be only 'single' or 'tournament'");
+    historyCubit.addMatchHistoryEntry(
+      MatchHistoryEntry(
+        leftPlayer: state.leftPlayer,
+        leftPlayerScore: state.leftPlayerMatchScore,
+        rightPlayer: state.rightPlayer,
+        rightPlayerScore: state.rightPlayerMatchScore,
+        startedAt: _startedAt,
+        finishedAt: DateTime.now(),
+        matchType: matchType,
+      ),
+    );
   }
 }

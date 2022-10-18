@@ -21,7 +21,7 @@ class StandardServeDialog extends StatelessWidget {
             title: Text('Kto serwuje?'),
           ),
           ButtonBar(
-            alignment: MainAxisAlignment.center,
+            alignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
                 onPressed: () {
