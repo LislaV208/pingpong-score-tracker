@@ -13,6 +13,7 @@ import 'package:pingpong_score_tracker/match/screens/double_match_screen.dart';
 import 'package:pingpong_score_tracker/match/screens/standard_match_screen.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/screens/players_screen.dart';
+import 'package:wakelock/wakelock.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +27,7 @@ void main() async {
   HydratedBlocOverrides.runZoned(
     () {
       configureDependencies();
+      Wakelock.enable();
       runApp(const MyApp());
     },
     storage: storage,

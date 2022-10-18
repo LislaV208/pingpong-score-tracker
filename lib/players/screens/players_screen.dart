@@ -15,28 +15,9 @@ import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournamen
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_players_screen.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_tournament_screen.dart';
 import 'package:pingpong_score_tracker/widgets/decision_dialog.dart';
-import 'package:wakelock/wakelock.dart';
 
-class PlayersScreen extends StatefulWidget {
+class PlayersScreen extends StatelessWidget {
   const PlayersScreen({super.key});
-
-  @override
-  State<PlayersScreen> createState() => _PlayersScreenState();
-}
-
-class _PlayersScreenState extends State<PlayersScreen> {
-  @override
-  void initState() {
-    super.initState();
-
-    Wakelock.enable();
-  }
-
-  @override
-  void dispose() {
-    Wakelock.disable();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

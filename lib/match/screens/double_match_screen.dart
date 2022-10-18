@@ -2,36 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pingpong_score_tracker/match/bloc/double_match_cubit.dart';
 import 'package:pingpong_score_tracker/match/bloc/double_match_state.dart';
-import 'package:pingpong_score_tracker/match/models/team.dart';
 import 'package:pingpong_score_tracker/match/widgets/end_match_dialog.dart';
 import 'package:pingpong_score_tracker/match/widgets/match_finished_dialog.dart';
 import 'package:pingpong_score_tracker/match/widgets/match_score.dart';
-import 'package:pingpong_score_tracker/match/widgets/player_point_button.dart';
 import 'package:pingpong_score_tracker/match/widgets/team_point_button.dart';
 import 'package:pingpong_score_tracker/match/widgets/undo_button.dart';
-import 'package:wakelock/wakelock.dart';
 
-class DoubleMatchScreen extends StatefulWidget {
+class DoubleMatchScreen extends StatelessWidget {
   const DoubleMatchScreen({super.key});
-
-  @override
-  State<DoubleMatchScreen> createState() => _DoubleMatchScreenState();
-}
-
-class _DoubleMatchScreenState extends State<DoubleMatchScreen> {
-  @override
-  void initState() {
-    super.initState();
-
-    Wakelock.enable();
-  }
-
-  @override
-  void dispose() {
-    Wakelock.disable();
-
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

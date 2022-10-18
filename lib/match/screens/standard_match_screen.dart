@@ -7,39 +7,19 @@ import 'package:pingpong_score_tracker/match/widgets/match_finished_dialog.dart'
 import 'package:pingpong_score_tracker/match/widgets/match_score.dart';
 import 'package:pingpong_score_tracker/match/widgets/player_point_button.dart';
 import 'package:pingpong_score_tracker/match/widgets/undo_button.dart';
-import 'package:wakelock/wakelock.dart';
 
 typedef OnFinishedCallback = void Function(
   NavigatorState navigator,
   StandardMatchState state,
 );
 
-class StandardMatchScreen extends StatefulWidget {
+class StandardMatchScreen extends StatelessWidget {
   const StandardMatchScreen({
     super.key,
     required this.onFinished,
   });
 
   final OnFinishedCallback onFinished;
-
-  @override
-  State<StandardMatchScreen> createState() => _StandardMatchScreenState();
-}
-
-class _StandardMatchScreenState extends State<StandardMatchScreen> {
-  @override
-  void initState() {
-    super.initState();
-
-    Wakelock.enable();
-  }
-
-  @override
-  void dispose() {
-    Wakelock.disable();
-
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +39,7 @@ class _StandardMatchScreenState extends State<StandardMatchScreen> {
             ),
           );
 
-          widget.onFinished(navigator, state);
+          onFinished(navigator, state);
         }
       },
       builder: (context, state) {
