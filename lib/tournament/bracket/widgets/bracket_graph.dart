@@ -44,7 +44,7 @@ class BracketGraph extends StatelessWidget {
 
   List<Widget> _generateColumns(BracketTournamentState state) {
     final matches = state.matches;
-    final playersCount = matches.length * 2;
+    final playersCount = state.playersCount;
 
     if (matches.isEmpty) return [];
     double logBase(num x, num base) => log(x) / log(base);

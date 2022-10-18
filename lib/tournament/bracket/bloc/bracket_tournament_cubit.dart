@@ -60,11 +60,9 @@ class BracketTournamentCubit extends HydratedCubit<BracketTournamentState> {
       matches: matches,
       matchesPlayedCount: updatedMatchesPlayedCount,
     ));
-
-    if (state.isFinished) cancel();
   }
 
-  void cancel() {
+  void setToNotStarted() {
     emit(BracketTournamentState.notStarted());
   }
 }

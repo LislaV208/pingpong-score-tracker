@@ -13,6 +13,7 @@ _$_BracketTournamentState _$$_BracketTournamentStateFromJson(
           .map((e) => TournamentMatch.fromJson(e as Map<String, dynamic>))
           .toList(),
       matchesPlayedCount: json['matchesPlayedCount'] as int? ?? 0,
+      playersCount: json['playersCount'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$$_BracketTournamentStateToJson(
@@ -20,4 +21,5 @@ Map<String, dynamic> _$$_BracketTournamentStateToJson(
     <String, dynamic>{
       'matches': instance.matches,
       'matchesPlayedCount': instance.matchesPlayedCount,
+      'playersCount': instance.playersCount,
     };

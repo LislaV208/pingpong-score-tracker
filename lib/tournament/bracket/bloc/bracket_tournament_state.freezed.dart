@@ -23,6 +23,7 @@ BracketTournamentState _$BracketTournamentStateFromJson(
 mixin _$BracketTournamentState {
   List<TournamentMatch> get matches => throw _privateConstructorUsedError;
   int get matchesPlayedCount => throw _privateConstructorUsedError;
+  int get playersCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +36,10 @@ abstract class $BracketTournamentStateCopyWith<$Res> {
   factory $BracketTournamentStateCopyWith(BracketTournamentState value,
           $Res Function(BracketTournamentState) then) =
       _$BracketTournamentStateCopyWithImpl<$Res>;
-  $Res call({List<TournamentMatch> matches, int matchesPlayedCount});
+  $Res call(
+      {List<TournamentMatch> matches,
+      int matchesPlayedCount,
+      int playersCount});
 }
 
 /// @nodoc
@@ -51,6 +55,7 @@ class _$BracketTournamentStateCopyWithImpl<$Res>
   $Res call({
     Object? matches = freezed,
     Object? matchesPlayedCount = freezed,
+    Object? playersCount = freezed,
   }) {
     return _then(_value.copyWith(
       matches: matches == freezed
@@ -60,6 +65,10 @@ class _$BracketTournamentStateCopyWithImpl<$Res>
       matchesPlayedCount: matchesPlayedCount == freezed
           ? _value.matchesPlayedCount
           : matchesPlayedCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      playersCount: playersCount == freezed
+          ? _value.playersCount
+          : playersCount // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -72,7 +81,10 @@ abstract class _$$_BracketTournamentStateCopyWith<$Res>
           $Res Function(_$_BracketTournamentState) then) =
       __$$_BracketTournamentStateCopyWithImpl<$Res>;
   @override
-  $Res call({List<TournamentMatch> matches, int matchesPlayedCount});
+  $Res call(
+      {List<TournamentMatch> matches,
+      int matchesPlayedCount,
+      int playersCount});
 }
 
 /// @nodoc
@@ -91,6 +103,7 @@ class __$$_BracketTournamentStateCopyWithImpl<$Res>
   $Res call({
     Object? matches = freezed,
     Object? matchesPlayedCount = freezed,
+    Object? playersCount = freezed,
   }) {
     return _then(_$_BracketTournamentState(
       matches: matches == freezed
@@ -101,6 +114,10 @@ class __$$_BracketTournamentStateCopyWithImpl<$Res>
           ? _value.matchesPlayedCount
           : matchesPlayedCount // ignore: cast_nullable_to_non_nullable
               as int,
+      playersCount: playersCount == freezed
+          ? _value.playersCount
+          : playersCount // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -110,7 +127,8 @@ class __$$_BracketTournamentStateCopyWithImpl<$Res>
 class _$_BracketTournamentState extends _BracketTournamentState {
   const _$_BracketTournamentState(
       {required final List<TournamentMatch> matches,
-      this.matchesPlayedCount = 0})
+      this.matchesPlayedCount = 0,
+      this.playersCount = 0})
       : _matches = matches,
         super._();
 
@@ -127,10 +145,13 @@ class _$_BracketTournamentState extends _BracketTournamentState {
   @override
   @JsonKey()
   final int matchesPlayedCount;
+  @override
+  @JsonKey()
+  final int playersCount;
 
   @override
   String toString() {
-    return 'BracketTournamentState(matches: $matches, matchesPlayedCount: $matchesPlayedCount)';
+    return 'BracketTournamentState(matches: $matches, matchesPlayedCount: $matchesPlayedCount, playersCount: $playersCount)';
   }
 
   @override
@@ -140,7 +161,9 @@ class _$_BracketTournamentState extends _BracketTournamentState {
             other is _$_BracketTournamentState &&
             const DeepCollectionEquality().equals(other._matches, _matches) &&
             const DeepCollectionEquality()
-                .equals(other.matchesPlayedCount, matchesPlayedCount));
+                .equals(other.matchesPlayedCount, matchesPlayedCount) &&
+            const DeepCollectionEquality()
+                .equals(other.playersCount, playersCount));
   }
 
   @JsonKey(ignore: true)
@@ -148,7 +171,8 @@ class _$_BracketTournamentState extends _BracketTournamentState {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_matches),
-      const DeepCollectionEquality().hash(matchesPlayedCount));
+      const DeepCollectionEquality().hash(matchesPlayedCount),
+      const DeepCollectionEquality().hash(playersCount));
 
   @JsonKey(ignore: true)
   @override
@@ -167,7 +191,8 @@ class _$_BracketTournamentState extends _BracketTournamentState {
 abstract class _BracketTournamentState extends BracketTournamentState {
   const factory _BracketTournamentState(
       {required final List<TournamentMatch> matches,
-      final int matchesPlayedCount}) = _$_BracketTournamentState;
+      final int matchesPlayedCount,
+      final int playersCount}) = _$_BracketTournamentState;
   const _BracketTournamentState._() : super._();
 
   factory _BracketTournamentState.fromJson(Map<String, dynamic> json) =
@@ -177,6 +202,8 @@ abstract class _BracketTournamentState extends BracketTournamentState {
   List<TournamentMatch> get matches;
   @override
   int get matchesPlayedCount;
+  @override
+  int get playersCount;
   @override
   @JsonKey(ignore: true)
   _$$_BracketTournamentStateCopyWith<_$_BracketTournamentState> get copyWith =>

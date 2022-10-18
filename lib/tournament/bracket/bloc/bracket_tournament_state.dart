@@ -11,6 +11,7 @@ class BracketTournamentState with _$BracketTournamentState {
   const factory BracketTournamentState({
     required List<TournamentMatch> matches,
     @Default(0) int matchesPlayedCount,
+    @Default(0) int playersCount,
   }) = _BracketTournamentState;
 
   factory BracketTournamentState.notStarted() =>
@@ -30,7 +31,10 @@ class BracketTournamentState with _$BracketTournamentState {
       matches.add(match);
     }
 
-    return BracketTournamentState(matches: matches);
+    return BracketTournamentState(
+      matches: matches,
+      playersCount: players.length,
+    );
   }
 
   bool get isFinished =>

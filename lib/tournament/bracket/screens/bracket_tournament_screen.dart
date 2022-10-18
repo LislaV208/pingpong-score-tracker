@@ -25,6 +25,16 @@ class BracketTournamentScreen extends StatelessWidget {
       onWillPop: () async {
         final cubit = context.read<BracketTournamentCubit>();
         final navigator = Navigator.of(context);
+
+        if (cubit.state.isFinished == true) {
+          cubit.setToNotStarted();
+          navigator.popUntil(
+            ModalRoute.withName('/'),
+          );
+
+          return false;
+        }
+
         final result = await showDialog<ExitTournamentDialogResult>(
               context: context,
               builder: (context) => const ExitTournamentDialog(),
@@ -33,7 +43,7 @@ class BracketTournamentScreen extends StatelessWidget {
 
         if (result != ExitTournamentDialogResult.continueTournament) {
           if (result == ExitTournamentDialogResult.cancel) {
-            cubit.cancel();
+            cubit.setToNotStarted();
           }
 
           navigator.popUntil(
@@ -54,6 +64,7 @@ class BracketTournamentScreen extends StatelessWidget {
             final cubit = context.read<BracketTournamentCubit>();
 
             if (state.isFinished) {
+              cubit.setToNotStarted();
               navigator.pushAndRemoveUntil(
                 MaterialPageRoute(
                   builder: (context) => BlocProvider.value(
