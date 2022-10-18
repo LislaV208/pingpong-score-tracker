@@ -20,7 +20,7 @@ class MatchScore extends StatelessWidget {
       padding: const EdgeInsets.only(top: 10.0, bottom: 10.0, left: 4),
       child: Text(
         '$teamLeft $scoreLeft : $scoreRight $teamRight',
-        style: TextStyle(fontSize: 20),
+        style: const TextStyle(fontSize: 20),
       ),
     );
   }

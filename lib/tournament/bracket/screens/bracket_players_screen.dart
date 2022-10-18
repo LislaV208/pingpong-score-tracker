@@ -80,7 +80,7 @@ class BracketPlayersScreen extends HookWidget {
               bottom: -20,
               child: Container(
                 height: 96,
-                color: Color.fromARGB(255, 54, 54, 54),
+                color: const Color.fromARGB(255, 54, 54, 54),
                 width: MediaQuery.of(context).size.width,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 30.0, bottom: 12.0),
@@ -92,7 +92,8 @@ class BracketPlayersScreen extends HookWidget {
                           children: <TextSpan>[
                             TextSpan(
                               text: '${selectedPlayers.value.length}',
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -106,7 +107,7 @@ class BracketPlayersScreen extends HookWidget {
                                 text: _calculateMissingPlayers(
                                         selectedPlayers.value.length)
                                     .toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.red),
                               ),
@@ -128,8 +129,8 @@ class BracketPlayersScreen extends HookWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: AnimatedSlide(
-        duration: Duration(milliseconds: 300),
-        offset: missingPlayersCount <= 0 ? Offset.zero : Offset(0, 2),
+        duration: const Duration(milliseconds: 300),
+        offset: missingPlayersCount <= 0 ? Offset.zero : const Offset(0, 2),
         child: FloatingActionButton(
           onPressed: () {
             Navigator.of(context).push(

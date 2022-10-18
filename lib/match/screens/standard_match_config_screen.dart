@@ -23,7 +23,7 @@ class StandardMatchConfigScreen extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Konfiguracja meczu'),
+        title: const Text('Konfiguracja meczu'),
       ),
       body: SafeArea(
         child: Stack(
@@ -36,8 +36,8 @@ class StandardMatchConfigScreen extends HookWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Zawodnik z lewej:'),
-                      SizedBox(width: 20.0),
+                      const Text('Zawodnik z lewej:'),
+                      const SizedBox(width: 20.0),
                       DropdownButton<String>(
                         value: leftPlayer.value,
                         items: players
@@ -60,13 +60,13 @@ class StandardMatchConfigScreen extends HookWidget {
                     ],
                   ),
                 ),
-                VerticalDivider(thickness: 5.0),
+                const VerticalDivider(thickness: 5.0),
                 Expanded(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Zawodnik z prawej:'),
-                      SizedBox(width: 20.0),
+                      const Text('Zawodnik z prawej:'),
+                      const SizedBox(width: 20.0),
                       DropdownButton<String>(
                         value: rightPlayer.value,
                         items: players

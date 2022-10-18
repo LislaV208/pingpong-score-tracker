@@ -10,7 +10,7 @@ class AddPlayerDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          ListTile(
+          const ListTile(
             title: Text('Dodaj gracza'),
           ),
           Padding(
@@ -18,7 +18,7 @@ class AddPlayerDialog extends StatelessWidget {
                 const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             child: TextField(
               autofocus: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Nazwa',
               ),
               onSubmitted: (value) {

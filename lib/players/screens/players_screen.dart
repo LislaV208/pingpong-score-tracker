@@ -163,8 +163,8 @@ class PlayersScreen extends StatelessWidget {
                       },
                     ));
                   },
-                  icon: Icon(Icons.emoji_events),
-                  label: Text('Turniej'),
+                  icon: const Icon(Icons.emoji_events),
+                  label: const Text('Turniej'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange,
                   ),

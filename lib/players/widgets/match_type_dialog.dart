@@ -16,7 +16,7 @@ class MatchTypeDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          ListTile(
+          const ListTile(
             title: Text('Wybierz tryb gry'),
           ),
           ButtonBar(
@@ -26,7 +26,7 @@ class MatchTypeDialog extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pop(MatchType.single);
                 },
-                child: Text('Singiel'),
+                child: const Text('Singiel'),
               ),
               ElevatedButton(
                 onPressed: canPlayDouble
@@ -34,13 +34,12 @@ class MatchTypeDialog extends StatelessWidget {
                         Navigator.of(context).pop(MatchType.double);
                       }
                     : null,
-                child: Text('Debel'),
+                child: const Text('Debel'),
               ),
             ],
           )
         ],
       ),
     );
-    ;
   }
 }

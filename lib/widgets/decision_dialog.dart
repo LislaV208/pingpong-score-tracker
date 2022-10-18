@@ -32,13 +32,13 @@ class DecisionDialog extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pop(true);
                 },
-                child: Text('Tak'),
+                child: const Text('Tak'),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(false);
                 },
-                child: Text('Nie'),
+                child: const Text('Nie'),
               )
             ],
           )

@@ -15,7 +15,7 @@ class ExitTournamentDialog extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ListTile(
+          const ListTile(
             title: Text('Czy anulować turniej?'),
           ),
           ButtonBar(
@@ -24,20 +24,20 @@ class ExitTournamentDialog extends StatelessWidget {
                 onPressed: () {
                   pop(context, ExitTournamentDialogResult.cancel);
                 },
-                child: Text('Anuluj'),
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                child: const Text('Anuluj'),
               ),
               ElevatedButton(
                 onPressed: () {
                   pop(context, ExitTournamentDialogResult.saveAndExit);
                 },
-                child: Text('Zapisz i wyjdź'),
+                child: const Text('Zapisz i wyjdź'),
               ),
               TextButton(
                 onPressed: () {
                   pop(context, ExitTournamentDialogResult.continueTournament);
                 },
-                child: Text('Wróć'),
+                child: const Text('Wróć'),
               ),
             ],
           ),

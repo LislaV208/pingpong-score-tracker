@@ -26,14 +26,14 @@ class MatchFinishedDialog extends StatelessWidget {
           ),
           Text(
               'Wynik: $leftPlayer $leftPlayerScore : $rightPlayerScore $rightPlayer'),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
             child: const Text('Koniec'),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
         ],
       ),
     );

@@ -12,7 +12,7 @@ class PlayerScore extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       '$score',
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 26,
       ),
     );
