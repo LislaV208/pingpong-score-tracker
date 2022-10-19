@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pingpong_score_tracker/match/bloc/standard_match_cubit.dart';
-import 'package:pingpong_score_tracker/match/bloc/standard_match_state.dart';
+import 'package:pingpong_score_tracker/match/bloc/single_match_cubit.dart';
+import 'package:pingpong_score_tracker/match/bloc/single_match_state.dart';
 import 'package:pingpong_score_tracker/match/match_type.dart';
 import 'package:pingpong_score_tracker/match/widgets/end_match_dialog.dart';
 import 'package:pingpong_score_tracker/match/widgets/match_finished_dialog.dart';
@@ -11,11 +11,11 @@ import 'package:pingpong_score_tracker/match/widgets/undo_button.dart';
 
 typedef OnFinishedCallback = void Function(
   NavigatorState navigator,
-  StandardMatchState state,
+  SingleMatchState state,
 );
 
-class StandardMatchScreen extends StatelessWidget {
-  const StandardMatchScreen({
+class SingleMatchScreen extends StatelessWidget {
+  const SingleMatchScreen({
     super.key,
     required this.onFinished,
     required this.matchType,
@@ -26,10 +26,10 @@ class StandardMatchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<StandardMatchCubit, StandardMatchState>(
+    return BlocConsumer<SingleMatchCubit, SingleMatchState>(
       listener: (context, state) async {
         if (state.isFinished) {
-          final cubit = context.read<StandardMatchCubit>();
+          final cubit = context.read<SingleMatchCubit>();
           final navigator = Navigator.of(context);
 
           final isFinished = await showDialog<bool>(
@@ -40,7 +40,7 @@ class StandardMatchScreen extends StatelessWidget {
                   rightPlayer: state.rightPlayer,
                   leftScore: state.leftPlayerMatchScore,
                   rightScore: state.rightPlayerMatchScore,
-                  undo: () => context.read<StandardMatchCubit>().undo(),
+                  undo: () => context.read<SingleMatchCubit>().undo(),
                 ),
               ) ??
               false;
@@ -56,9 +56,10 @@ class StandardMatchScreen extends StatelessWidget {
         return WillPopScope(
           onWillPop: () async {
             return await showDialog(
-              context: context,
-              builder: (context) => const EndMatchDialog(),
-            );
+                  context: context,
+                  builder: (context) => const EndMatchDialog(),
+                ) ??
+                false;
           },
           child: Scaffold(
             appBar: AppBar(
@@ -112,7 +113,7 @@ class StandardMatchScreen extends StatelessWidget {
                           child: UndoButton(
                             onPressed: state.canUndo
                                 ? () {
-                                    context.read<StandardMatchCubit>().undo();
+                                    context.read<SingleMatchCubit>().undo();
                                   }
                                 : null,
                           ),

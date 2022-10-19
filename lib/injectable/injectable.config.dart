@@ -10,7 +10,7 @@ import 'package:injectable/injectable.dart' as _i2;
 
 import '../match/bloc/double_match_cubit.dart' as _i9;
 import '../match/bloc/double_match_state.dart' as _i4;
-import '../match/bloc/standard_match_state.dart' as _i8;
+import '../match/bloc/single_match_state.dart' as _i8;
 import '../match/models/team.dart' as _i5;
 import '../match_history/cubit/match_history_cubit.dart' as _i6;
 import '../players/bloc/players_cubit.dart' as _i7;
@@ -46,7 +46,7 @@ _i1.GetIt $initGetIt(
       ));
   gh.singleton<_i6.MatchHistoryCubit>(_i6.MatchHistoryCubit());
   gh.singleton<_i7.PlayersCubit>(_i7.PlayersCubit());
-  gh.factory<_i8.StandardMatchState>(() => _i8.StandardMatchState(
+  gh.factory<_i8.SingleMatchState>(() => _i8.SingleMatchState(
         leftPlayer: get<String>(),
         rightPlayer: get<String>(),
         playerServing: get<String>(),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class StandardServeDialog extends StatelessWidget {
-  const StandardServeDialog({
+class SingleServeDialog extends StatelessWidget {
+  const SingleServeDialog({
     super.key,
     required this.leftPlayer,
     required this.rightPlayer,

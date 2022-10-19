@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pingpong_score_tracker/match/bloc/standard_match_cubit.dart';
+import 'package:pingpong_score_tracker/match/bloc/single_match_cubit.dart';
 import 'package:pingpong_score_tracker/match/widgets/player_name.dart';
 import 'package:pingpong_score_tracker/match/widgets/player_score.dart';
 
@@ -27,7 +27,7 @@ class PlayerPointButton extends StatelessWidget {
             color: Colors.white.withOpacity(0.05),
             child: InkWell(
               onTap: () {
-                context.read<StandardMatchCubit>().givePointToPlayer(player);
+                context.read<SingleMatchCubit>().givePointToPlayer(player);
               },
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

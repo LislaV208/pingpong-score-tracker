@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'standard_match_state.dart';
+part of 'single_match_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$StandardMatchState {
+mixin _$SingleMatchState {
   String get leftPlayer => throw _privateConstructorUsedError;
   String get rightPlayer => throw _privateConstructorUsedError;
   String get playerServing => throw _privateConstructorUsedError;
@@ -29,15 +29,15 @@ mixin _$StandardMatchState {
   bool get canUndo => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $StandardMatchStateCopyWith<StandardMatchState> get copyWith =>
+  $SingleMatchStateCopyWith<SingleMatchState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $StandardMatchStateCopyWith<$Res> {
-  factory $StandardMatchStateCopyWith(
-          StandardMatchState value, $Res Function(StandardMatchState) then) =
-      _$StandardMatchStateCopyWithImpl<$Res>;
+abstract class $SingleMatchStateCopyWith<$Res> {
+  factory $SingleMatchStateCopyWith(
+          SingleMatchState value, $Res Function(SingleMatchState) then) =
+      _$SingleMatchStateCopyWithImpl<$Res>;
   $Res call(
       {String leftPlayer,
       String rightPlayer,
@@ -53,13 +53,13 @@ abstract class $StandardMatchStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$StandardMatchStateCopyWithImpl<$Res>
-    implements $StandardMatchStateCopyWith<$Res> {
-  _$StandardMatchStateCopyWithImpl(this._value, this._then);
+class _$SingleMatchStateCopyWithImpl<$Res>
+    implements $SingleMatchStateCopyWith<$Res> {
+  _$SingleMatchStateCopyWithImpl(this._value, this._then);
 
-  final StandardMatchState _value;
+  final SingleMatchState _value;
   // ignore: unused_field
-  final $Res Function(StandardMatchState) _then;
+  final $Res Function(SingleMatchState) _then;
 
   @override
   $Res call({
@@ -125,11 +125,11 @@ class _$StandardMatchStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$$_StandardMatchStateCopyWith<$Res>
-    implements $StandardMatchStateCopyWith<$Res> {
-  factory _$$_StandardMatchStateCopyWith(_$_StandardMatchState value,
-          $Res Function(_$_StandardMatchState) then) =
-      __$$_StandardMatchStateCopyWithImpl<$Res>;
+abstract class _$$_SingleMatchStateCopyWith<$Res>
+    implements $SingleMatchStateCopyWith<$Res> {
+  factory _$$_SingleMatchStateCopyWith(
+          _$_SingleMatchState value, $Res Function(_$_SingleMatchState) then) =
+      __$$_SingleMatchStateCopyWithImpl<$Res>;
   @override
   $Res call(
       {String leftPlayer,
@@ -146,15 +146,15 @@ abstract class _$$_StandardMatchStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_StandardMatchStateCopyWithImpl<$Res>
-    extends _$StandardMatchStateCopyWithImpl<$Res>
-    implements _$$_StandardMatchStateCopyWith<$Res> {
-  __$$_StandardMatchStateCopyWithImpl(
-      _$_StandardMatchState _value, $Res Function(_$_StandardMatchState) _then)
-      : super(_value, (v) => _then(v as _$_StandardMatchState));
+class __$$_SingleMatchStateCopyWithImpl<$Res>
+    extends _$SingleMatchStateCopyWithImpl<$Res>
+    implements _$$_SingleMatchStateCopyWith<$Res> {
+  __$$_SingleMatchStateCopyWithImpl(
+      _$_SingleMatchState _value, $Res Function(_$_SingleMatchState) _then)
+      : super(_value, (v) => _then(v as _$_SingleMatchState));
 
   @override
-  _$_StandardMatchState get _value => super._value as _$_StandardMatchState;
+  _$_SingleMatchState get _value => super._value as _$_SingleMatchState;
 
   @override
   $Res call({
@@ -170,7 +170,7 @@ class __$$_StandardMatchStateCopyWithImpl<$Res>
     Object? playerServesCount = freezed,
     Object? canUndo = freezed,
   }) {
-    return _then(_$_StandardMatchState(
+    return _then(_$_SingleMatchState(
       leftPlayer: leftPlayer == freezed
           ? _value.leftPlayer
           : leftPlayer // ignore: cast_nullable_to_non_nullable
@@ -221,8 +221,8 @@ class __$$_StandardMatchStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StandardMatchState implements _StandardMatchState {
-  const _$_StandardMatchState(
+class _$_SingleMatchState implements _SingleMatchState {
+  const _$_SingleMatchState(
       {required this.leftPlayer,
       required this.rightPlayer,
       required this.playerServing,
@@ -267,14 +267,14 @@ class _$_StandardMatchState implements _StandardMatchState {
 
   @override
   String toString() {
-    return 'StandardMatchState(leftPlayer: $leftPlayer, rightPlayer: $rightPlayer, playerServing: $playerServing, currentPlayerServing: $currentPlayerServing, isFinished: $isFinished, leftPlayerSetScore: $leftPlayerSetScore, rightPlayerSetScore: $rightPlayerSetScore, leftPlayerMatchScore: $leftPlayerMatchScore, rightPlayerMatchScore: $rightPlayerMatchScore, playerServesCount: $playerServesCount, canUndo: $canUndo)';
+    return 'SingleMatchState(leftPlayer: $leftPlayer, rightPlayer: $rightPlayer, playerServing: $playerServing, currentPlayerServing: $currentPlayerServing, isFinished: $isFinished, leftPlayerSetScore: $leftPlayerSetScore, rightPlayerSetScore: $rightPlayerSetScore, leftPlayerMatchScore: $leftPlayerMatchScore, rightPlayerMatchScore: $rightPlayerMatchScore, playerServesCount: $playerServesCount, canUndo: $canUndo)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_StandardMatchState &&
+            other is _$_SingleMatchState &&
             const DeepCollectionEquality()
                 .equals(other.leftPlayer, leftPlayer) &&
             const DeepCollectionEquality()
@@ -315,13 +315,12 @@ class _$_StandardMatchState implements _StandardMatchState {
 
   @JsonKey(ignore: true)
   @override
-  _$$_StandardMatchStateCopyWith<_$_StandardMatchState> get copyWith =>
-      __$$_StandardMatchStateCopyWithImpl<_$_StandardMatchState>(
-          this, _$identity);
+  _$$_SingleMatchStateCopyWith<_$_SingleMatchState> get copyWith =>
+      __$$_SingleMatchStateCopyWithImpl<_$_SingleMatchState>(this, _$identity);
 }
 
-abstract class _StandardMatchState implements StandardMatchState {
-  const factory _StandardMatchState(
+abstract class _SingleMatchState implements SingleMatchState {
+  const factory _SingleMatchState(
       {required final String leftPlayer,
       required final String rightPlayer,
       required final String playerServing,
@@ -332,7 +331,7 @@ abstract class _StandardMatchState implements StandardMatchState {
       final int leftPlayerMatchScore,
       final int rightPlayerMatchScore,
       final int playerServesCount,
-      final bool canUndo}) = _$_StandardMatchState;
+      final bool canUndo}) = _$_SingleMatchState;
 
   @override
   String get leftPlayer;
@@ -358,6 +357,6 @@ abstract class _StandardMatchState implements StandardMatchState {
   bool get canUndo;
   @override
   @JsonKey(ignore: true)
-  _$$_StandardMatchStateCopyWith<_$_StandardMatchState> get copyWith =>
+  _$$_SingleMatchStateCopyWith<_$_SingleMatchState> get copyWith =>
       throw _privateConstructorUsedError;
 }

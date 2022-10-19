@@ -118,6 +118,7 @@ class MatchContainer extends StatelessWidget {
         height: 50,
         width: 150,
         child: RichText(
+          textAlign: TextAlign.center,
           text: TextSpan(
             children: <TextSpan>[
               TextSpan(

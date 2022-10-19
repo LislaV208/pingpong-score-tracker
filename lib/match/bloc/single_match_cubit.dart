@@ -1,13 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pingpong_score_tracker/config.dart';
-import 'package:pingpong_score_tracker/match/bloc/standard_match_state.dart';
+import 'package:pingpong_score_tracker/match/bloc/single_match_state.dart';
 import 'package:pingpong_score_tracker/match/match_type.dart';
 import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.dart';
 import 'package:pingpong_score_tracker/match_history/models/match_history_entry.dart';
 import 'package:stack/stack.dart';
 
-class StandardMatchCubit extends Cubit<StandardMatchState> {
-  StandardMatchCubit(
+class SingleMatchCubit extends Cubit<SingleMatchState> {
+  SingleMatchCubit(
     super.initialState, {
     required this.historyCubit,
   }) {
@@ -16,7 +16,7 @@ class StandardMatchCubit extends Cubit<StandardMatchState> {
 
   final MatchHistoryCubit historyCubit;
 
-  final _stateStack = Stack<StandardMatchState>();
+  final _stateStack = Stack<SingleMatchState>();
   late final DateTime _startedAt;
 
   void givePointToPlayer(String player) {

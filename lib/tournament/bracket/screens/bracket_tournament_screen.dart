@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pingpong_score_tracker/injectable/injectable.dart';
-import 'package:pingpong_score_tracker/match/bloc/standard_match_cubit.dart';
-import 'package:pingpong_score_tracker/match/bloc/standard_match_state.dart';
+import 'package:pingpong_score_tracker/match/bloc/single_match_cubit.dart';
+import 'package:pingpong_score_tracker/match/bloc/single_match_state.dart';
 import 'package:pingpong_score_tracker/match/match_type.dart';
-import 'package:pingpong_score_tracker/match/screens/standard_match_screen.dart';
-import 'package:pingpong_score_tracker/match/widgets/standard_serve_dialog.dart';
+import 'package:pingpong_score_tracker/match/screens/single_match_screen.dart';
+import 'package:pingpong_score_tracker/match/widgets/single_serve_dialog.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/screens/players_screen.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_cubit.dart';
@@ -81,18 +81,18 @@ class BracketTournamentScreen extends StatelessWidget {
             final playerServing = await showDialog<String>(
               barrierDismissible: false,
               context: context,
-              builder: (context) => StandardServeDialog(
+              builder: (context) => SingleServeDialog(
                 leftPlayer: state.upcomingMatch!.player1,
                 rightPlayer: state.upcomingMatch!.player2,
               ),
             );
 
             if (playerServing != null) {
-              final playedMatchState = await navigator.push<StandardMatchState>(
+              final playedMatchState = await navigator.push<SingleMatchState>(
                 MaterialPageRoute(
                   builder: (context) => BlocProvider(
-                    create: (context) => StandardMatchCubit(
-                      StandardMatchState(
+                    create: (context) => SingleMatchCubit(
+                      SingleMatchState(
                         leftPlayer: state.upcomingMatch!.player1,
                         rightPlayer: state.upcomingMatch!.player2,
                         playerServing: playerServing,
@@ -100,7 +100,7 @@ class BracketTournamentScreen extends StatelessWidget {
                       ),
                       historyCubit: getIt.get<MatchHistoryCubit>(),
                     ),
-                    child: StandardMatchScreen(
+                    child: SingleMatchScreen(
                       matchType: MatchType.tournament,
                       onFinished: (navigator, state) {
                         navigator.pop(state);

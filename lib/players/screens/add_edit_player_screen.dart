@@ -8,7 +8,7 @@ class AddEditPlayerScreen extends HookWidget {
 
   final String? player;
 
-  static const maxNameLength = 15;
+  static const maxNameLength = 20;
 
   bool get isAddingMode => player == null;
 
@@ -39,7 +39,9 @@ class AddEditPlayerScreen extends HookWidget {
                 errorText: isValid ? null : validationText.value,
                 errorStyle: const TextStyle(fontSize: 14),
               ),
-              onChanged: (value) => counter.value = value.length,
+              onChanged: (value) {
+                counter.value = value.length;
+              },
               onSubmitted: (value) => _onSave(
                 context,
                 playerName: value,
@@ -67,6 +69,7 @@ class AddEditPlayerScreen extends HookWidget {
   }) {
     final cubit = context.read<PlayersCubit>();
     try {
+      playerName = playerName.trim();
       if (isAddingMode) {
         cubit.addPlayer(playerName);
       } else {

@@ -1,12 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
-part 'standard_match_state.freezed.dart';
+part 'single_match_state.freezed.dart';
 
 @freezed
 @injectable
-class StandardMatchState with _$StandardMatchState {
-  const factory StandardMatchState({
+class SingleMatchState with _$SingleMatchState {
+  const factory SingleMatchState({
     required String leftPlayer,
     required String rightPlayer,
     required String playerServing,
@@ -18,5 +18,5 @@ class StandardMatchState with _$StandardMatchState {
     @Default(0) int rightPlayerMatchScore,
     @Default(0) int playerServesCount,
     @Default(false) bool canUndo,
-  }) = _StandardMatchState;
+  }) = _SingleMatchState;
 }

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pingpong_score_tracker/injectable/injectable.dart';
 import 'package:pingpong_score_tracker/match/match_type.dart';
 import 'package:pingpong_score_tracker/match/screens/double_match_config_screen.dart';
-import 'package:pingpong_score_tracker/match/screens/standard_match_config_screen.dart';
+import 'package:pingpong_score_tracker/match/screens/single_match_config_screen.dart';
 import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.dart';
 import 'package:pingpong_score_tracker/match_history/screens/match_history_screen.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
@@ -112,7 +112,7 @@ class PlayersScreen extends StatelessWidget {
                                 builder: (context) => BlocProvider.value(
                                   value: getIt.get<PlayersCubit>(),
                                   child: matchType == MatchType.single
-                                      ? const StandardMatchConfigScreen()
+                                      ? const SingledMatchConfigScreen()
                                       : const DoubleMatchConfigScreen(),
                                 ),
                               ),

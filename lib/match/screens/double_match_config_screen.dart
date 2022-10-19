@@ -8,9 +8,9 @@ import 'package:pingpong_score_tracker/match/bloc/double_match_cubit.dart';
 import 'package:pingpong_score_tracker/match/bloc/double_match_state.dart';
 import 'package:pingpong_score_tracker/match/models/team.dart';
 import 'package:pingpong_score_tracker/match/screens/double_match_screen.dart';
-import 'package:pingpong_score_tracker/match/widgets/circle_button.dart';
-import 'package:pingpong_score_tracker/match/widgets/double_player_dropdown_button.dart';
+import 'package:pingpong_score_tracker/match/screens/match_config_screen.dart';
 import 'package:pingpong_score_tracker/match/widgets/double_serve_dialog.dart';
+import 'package:pingpong_score_tracker/match/widgets/player_dropdown_button/double_player_dropdown_button.dart';
 import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/widgets/elevated_circle_button.dart';
@@ -28,249 +28,100 @@ class DoubleMatchConfigScreen extends HookWidget {
     final players = context
         .select<PlayersCubit, List<String>>((cubit) => cubit.state.players);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Konfiguracja meczu'),
-      ),
-      body: SafeArea(
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text('Zawodnik w lewym górnym:'),
-                          const SizedBox(width: 20.0),
-                          DoublePlayerDropdownButton(
-                            players: players,
-                            playerNotifier: leftTopPlayer,
-                            otherPlayerNotifiers: [
-                              leftBottomPlayer,
-                              rightTopPlayer,
-                              rightBottomPlayer
-                            ],
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20.0),
-                        child: RotatedBox(
-                          quarterTurns: 1,
-                          child: CircleButton(
-                            onPressed: leftTopPlayer.value != null ||
-                                    leftBottomPlayer.value != null
-                                ? () {
-                                    final temp = leftTopPlayer.value;
-                                    leftTopPlayer.value =
-                                        leftBottomPlayer.value;
-                                    leftBottomPlayer.value = temp;
-                                  }
-                                : null,
-                            child: const Icon(Icons.compare_arrows),
-                          ),
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text('Zawodnik w lewym dolnym:'),
-                          const SizedBox(width: 20.0),
-                          DoublePlayerDropdownButton(
-                            players: players,
-                            playerNotifier: leftBottomPlayer,
-                            otherPlayerNotifiers: [
-                              leftTopPlayer,
-                              rightTopPlayer,
-                              rightBottomPlayer
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                const VerticalDivider(thickness: 5.0),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text('Zawodnik w prawym górnym:'),
-                          const SizedBox(width: 20.0),
-                          DoublePlayerDropdownButton(
-                            players: players,
-                            playerNotifier: rightTopPlayer,
-                            otherPlayerNotifiers: [
-                              leftTopPlayer,
-                              leftBottomPlayer,
-                              rightBottomPlayer
-                            ],
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20.0),
-                        child: RotatedBox(
-                          quarterTurns: 1,
-                          child: CircleButton(
-                            onPressed: rightTopPlayer.value != null ||
-                                    rightBottomPlayer.value != null
-                                ? () {
-                                    final temp = rightTopPlayer.value;
-                                    rightTopPlayer.value =
-                                        rightBottomPlayer.value;
-                                    rightBottomPlayer.value = temp;
-                                  }
-                                : null,
-                            child: const Icon(Icons.compare_arrows),
-                          ),
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text('Zawodnik w prawym dolnym:'),
-                          const SizedBox(width: 20.0),
-                          DoublePlayerDropdownButton(
-                            players: players,
-                            playerNotifier: rightBottomPlayer,
-                            otherPlayerNotifiers: [
-                              leftTopPlayer,
-                              leftBottomPlayer,
-                              rightTopPlayer
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+    return MatchConfigScreen(
+      centerFab: true,
+      matchScreenBuilder: (playerServing) => BlocProvider(
+        create: (context) => DoubleMatchCubit(
+          DoubleMatchState(
+            leftTeam: Team(
+              topPlayer: leftTopPlayer.value!,
+              bottomPlayer: leftBottomPlayer.value!,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedCircleButton(
-                    onPressed: () => _selectRandomPlayers(
-                      players: players,
-                      leftTopPlayer: leftTopPlayer,
-                      leftBottomPlayer: leftBottomPlayer,
-                      rightTopPlayer: rightTopPlayer,
-                      rightBottomPlayer: rightBottomPlayer,
-                    ),
-                    child: const Icon(
-                      Icons.question_mark,
-                      color: Colors.white,
-                    ),
-                  ),
-                  ElevatedCircleButton(
-                    onPressed: leftTopPlayer.value != null ||
-                            leftBottomPlayer.value != null ||
-                            rightTopPlayer.value != null ||
-                            rightBottomPlayer.value != null
-                        ? () => _swapPlayers(
-                              leftTopPlayer,
-                              leftBottomPlayer,
-                              rightTopPlayer,
-                              rightBottomPlayer,
-                            )
-                        : null,
-                    child: const Icon(
-                      Icons.compare_arrows,
-                      color: Colors.white,
-                    ),
-                  ),
-                  ElevatedCircleButton(
-                    onPressed: leftTopPlayer.value != null ||
-                            leftBottomPlayer.value != null ||
-                            rightTopPlayer.value != null ||
-                            rightBottomPlayer.value != null
-                        ? () {
-                            leftTopPlayer.value = null;
-                            leftBottomPlayer.value = null;
-                            rightTopPlayer.value = null;
-                            rightBottomPlayer.value = null;
-                          }
-                        : null,
-                    child: const Icon(
-                      Icons.clear,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            )
-          ],
+            rightTeam: Team(
+              topPlayer: rightTopPlayer.value!,
+              bottomPlayer: rightBottomPlayer.value!,
+            ),
+            playerServingSet: playerServing,
+            playerServingMatch: playerServing,
+            currentPlayerServing: playerServing,
+          ),
+          getIt.get<MatchHistoryCubit>(),
         ),
+        child: const DoubleMatchScreen(),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: canProceed(
-          leftTopPlayer.value,
-          leftBottomPlayer.value,
-          rightTopPlayer.value,
-          rightBottomPlayer.value,
-        )
-            ? () async {
-                final navigator = Navigator.of(context);
-                final playerServing = await showDialog<String>(
-                  barrierDismissible: false,
-                  context: context,
-                  builder: (context) => DoubleServeDialog(
-                    leftTopPlayer: leftTopPlayer.value!,
-                    leftBottomPlayer: leftBottomPlayer.value!,
-                    rightTopPlayer: rightTopPlayer.value!,
-                    rightBottomPlayer: rightBottomPlayer.value!,
-                  ),
-                );
-
-                if (playerServing != null) {
-                  navigator.pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => BlocProvider(
-                        create: (context) => DoubleMatchCubit(
-                          DoubleMatchState(
-                            leftTeam: Team(
-                              topPlayer: leftTopPlayer.value!,
-                              bottomPlayer: leftBottomPlayer.value!,
-                            ),
-                            rightTeam: Team(
-                              topPlayer: rightTopPlayer.value!,
-                              bottomPlayer: rightBottomPlayer.value!,
-                            ),
-                            playerServingSet: playerServing,
-                            playerServingMatch: playerServing,
-                            currentPlayerServing: playerServing,
-                          ),
-                          getIt.get<MatchHistoryCubit>(),
-                        ),
-                        child: const DoubleMatchScreen(),
-                      ),
-                    ),
-                  );
-                }
-              }
-            : null,
-        backgroundColor: canProceed(
-          leftTopPlayer.value,
-          leftBottomPlayer.value,
-          rightTopPlayer.value,
-          rightBottomPlayer.value,
-        )
-            ? null
-            : Colors.grey,
-        child: const Icon(Icons.arrow_forward),
+      serveDialogBuilder: (context) => DoubleServeDialog(
+        leftTopPlayer: leftTopPlayer.value!,
+        leftBottomPlayer: leftBottomPlayer.value!,
+        rightTopPlayer: rightTopPlayer.value!,
+        rightBottomPlayer: rightBottomPlayer.value!,
       ),
+      leftChild: _SidePanel(
+        players: players,
+        topTitle: 'Zawodnik w lewym górnym rogu:',
+        bottomTitle: 'Zawodnik w lewym dolnym rogu:',
+        topPlayer: leftTopPlayer,
+        topOtherPlayers: [
+          leftBottomPlayer,
+          rightTopPlayer,
+          rightBottomPlayer,
+        ],
+        bottomPlayer: leftBottomPlayer,
+        bottomOtherPlayers: [
+          leftTopPlayer,
+          rightTopPlayer,
+          rightBottomPlayer,
+        ],
+      ),
+      rightChild: _SidePanel(
+        players: players,
+        topTitle: 'Zawodnik w prawym górnym rogu:',
+        bottomTitle: 'Zawodnik w prawym dolnym rogu:',
+        topPlayer: rightTopPlayer,
+        topOtherPlayers: [
+          leftTopPlayer,
+          leftBottomPlayer,
+          rightBottomPlayer,
+        ],
+        bottomPlayer: rightBottomPlayer,
+        bottomOtherPlayers: [
+          leftTopPlayer,
+          leftBottomPlayer,
+          rightTopPlayer,
+        ],
+      ),
+      selectRandomPlayers: () => _selectRandomPlayers(
+        players: players,
+        leftTopPlayer: leftTopPlayer,
+        leftBottomPlayer: leftBottomPlayer,
+        rightTopPlayer: rightTopPlayer,
+        rightBottomPlayer: rightBottomPlayer,
+      ),
+      swapTeams: leftTopPlayer.value != null ||
+              leftBottomPlayer.value != null ||
+              rightTopPlayer.value != null ||
+              rightBottomPlayer.value != null
+          ? () => _swapPlayers(
+                leftTopPlayer,
+                leftBottomPlayer,
+                rightTopPlayer,
+                rightBottomPlayer,
+              )
+          : null,
+      clearSelectedPlayers: leftTopPlayer.value != null ||
+              leftBottomPlayer.value != null ||
+              rightTopPlayer.value != null ||
+              rightBottomPlayer.value != null
+          ? () {
+              leftTopPlayer.value = null;
+              leftBottomPlayer.value = null;
+              rightTopPlayer.value = null;
+              rightBottomPlayer.value = null;
+            }
+          : null,
+      arePlayersSelected: leftTopPlayer.value != null &&
+          leftBottomPlayer.value != null &&
+          rightTopPlayer.value != null &&
+          rightBottomPlayer.value != null,
     );
   }
 
@@ -323,11 +174,89 @@ class DoubleMatchConfigScreen extends HookWidget {
     leftBottomPlayer.value = rightBottomPlayer.value;
     rightBottomPlayer.value = tempLeftBottom;
   }
+}
 
-  bool canProceed(String? leftTop, String? leftBottom, String? rightTop,
-          String? rightBottom) =>
-      leftTop != null &&
-      leftBottom != null &&
-      rightTop != null &&
-      rightBottom != null;
+class _SidePanel extends StatelessWidget {
+  const _SidePanel({
+    required this.players,
+    required this.topTitle,
+    required this.bottomTitle,
+    required this.topPlayer,
+    required this.topOtherPlayers,
+    required this.bottomPlayer,
+    required this.bottomOtherPlayers,
+  });
+
+  final List<String> players;
+  final String topTitle;
+  final String bottomTitle;
+  final ValueNotifier<String?> topPlayer;
+  final List<ValueNotifier<String?>> topOtherPlayers;
+  final ValueNotifier<String?> bottomPlayer;
+  final List<ValueNotifier<String?>> bottomOtherPlayers;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        _PlayerChoice(
+          title: topTitle,
+          players: players,
+          playerNotifier: topPlayer,
+          otherPlayerNotifiers: topOtherPlayers,
+        ),
+        ElevatedCircleButton(
+          onPressed: topPlayer.value != null || bottomPlayer.value != null
+              ? () {
+                  final temp = topPlayer.value;
+                  topPlayer.value = bottomPlayer.value;
+                  bottomPlayer.value = temp;
+                }
+              : null,
+          icon: const RotatedBox(
+            quarterTurns: 1,
+            child: Icon(Icons.compare_arrows),
+          ),
+          label: 'Zamień',
+        ),
+        _PlayerChoice(
+          title: bottomTitle,
+          players: players,
+          playerNotifier: bottomPlayer,
+          otherPlayerNotifiers: bottomOtherPlayers,
+        ),
+      ],
+    );
+  }
+}
+
+class _PlayerChoice extends StatelessWidget {
+  const _PlayerChoice({
+    required this.title,
+    required this.players,
+    required this.playerNotifier,
+    required this.otherPlayerNotifiers,
+  });
+
+  final String title;
+  final List<String> players;
+  final ValueNotifier<String?> playerNotifier;
+  final List<ValueNotifier<String?>> otherPlayerNotifiers;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(title),
+        const SizedBox(height: 10.0),
+        DoublePlayerDropdownButton(
+          players: players,
+          playerNotifier: playerNotifier,
+          otherPlayerNotifiers: otherPlayerNotifiers,
+        ),
+      ],
+    );
+  }
 }
