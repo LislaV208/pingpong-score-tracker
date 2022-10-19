@@ -32,8 +32,8 @@ class MatchConfigScreen extends StatelessWidget {
       offset: arePlayersSelected
           ? Offset.zero
           : centerFab
-              ? const Offset(2, 0)
-              : const Offset(0, 2),
+              ? const Offset(3, 0)
+              : const Offset(0, 3),
       child: FloatingActionButton(
         onPressed: arePlayersSelected
             ? () async {
