@@ -9,7 +9,7 @@ class AddEditPlayerScreen extends HookWidget {
 
   final String? player;
 
-  static const maxNameLength = 20;
+  static const maxNameLength = 12;
 
   bool get isAddingMode => player == null;
 
