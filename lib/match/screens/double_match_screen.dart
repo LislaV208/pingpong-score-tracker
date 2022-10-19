@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pingpong_score_tracker/match/bloc/double_match_cubit.dart';
 import 'package:pingpong_score_tracker/match/bloc/double_match_state.dart';
-import 'package:pingpong_score_tracker/match/widgets/end_match_dialog.dart';
+import 'package:pingpong_score_tracker/match/screens/match_screen.dart';
 import 'package:pingpong_score_tracker/match/widgets/match_finished_dialog.dart';
 import 'package:pingpong_score_tracker/match/widgets/match_score.dart';
-import 'package:pingpong_score_tracker/match/widgets/team_point_button.dart';
-import 'package:pingpong_score_tracker/match/widgets/undo_button.dart';
+import 'package:pingpong_score_tracker/match/widgets/player_name.dart';
 
 class DoubleMatchScreen extends StatelessWidget {
   const DoubleMatchScreen({super.key});
@@ -41,77 +40,45 @@ class DoubleMatchScreen extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return WillPopScope(
-          onWillPop: () async {
-            return await showDialog(
-              context: context,
-              builder: (context) => const EndMatchDialog(),
-            );
-          },
-          child: Scaffold(
-            appBar: AppBar(
-              title: MatchScore(
-                teamLeft: state.leftTeam.name,
-                teamRight: state.rightTeam.name,
-                scoreLeft: state.leftTeamMatchScore,
-                scoreRight: state.rightTeamMatchScore,
-              ),
-            ),
-            body: SafeArea(
-              child: Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 14),
-                    child: Stack(
-                      alignment: Alignment.bottomCenter,
-                      children: [
-                        Column(
-                          children: [
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: TeamPointButton(
-                                      team: state.leftTeam,
-                                      currentPlayerServing:
-                                          state.currentPlayerServing,
-                                      setScore: state.leftTeamSetScore,
-                                    ),
-                                  ),
-                                  const VerticalDivider(
-                                    thickness: 4.0,
-                                    color: Colors.white,
-                                  ),
-                                  Expanded(
-                                    child: TeamPointButton(
-                                      team: state.rightTeam,
-                                      currentPlayerServing:
-                                          state.currentPlayerServing,
-                                      setScore: state.rightTeamSetScore,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: UndoButton(
-                            onPressed: state.canUndo
-                                ? () {
-                                    context.read<DoubleMatchCubit>().undo();
-                                  }
-                                : null,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+        return MatchScreen(
+          matchScore: MatchScore(
+            teamLeft: state.leftTeam.name,
+            teamRight: state.rightTeam.name,
+            scoreLeft: state.leftTeamMatchScore,
+            scoreRight: state.rightTeamMatchScore,
           ),
+          leftTeamSetScore: state.leftTeamSetScore,
+          rightTeamSetScore: state.rightTeamSetScore,
+          leftTeamLabels: [
+            PlayerName(
+              name: state.leftTeam.topPlayer,
+              isServing: state.currentPlayerServing == state.leftTeam.topPlayer,
+            ),
+            PlayerName(
+              name: state.leftTeam.bottomPlayer,
+              isServing:
+                  state.currentPlayerServing == state.leftTeam.bottomPlayer,
+            ),
+          ],
+          rightTeamLabels: [
+            PlayerName(
+              name: state.rightTeam.topPlayer,
+              isServing:
+                  state.currentPlayerServing == state.rightTeam.topPlayer,
+            ),
+            PlayerName(
+              name: state.rightTeam.bottomPlayer,
+              isServing:
+                  state.currentPlayerServing == state.rightTeam.bottomPlayer,
+            ),
+          ],
+          onGivePointToLeftTeam: () =>
+              context.read<DoubleMatchCubit>().givePointToTeam(state.leftTeam),
+          onGivePointToRightTeam: () =>
+              context.read<DoubleMatchCubit>().givePointToTeam(state.rightTeam),
+          onUndoPressed: state.canUndo
+              ? () => context.read<DoubleMatchCubit>().undo()
+              : null,
         );
       },
     );
