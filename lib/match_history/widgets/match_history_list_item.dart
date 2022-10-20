@@ -56,18 +56,20 @@ class MatchHistoryListItem extends StatelessWidget {
         ),
         Positioned(
           left: 5,
-          top: -5,
+          top: -8,
           child: entry.matchType != MatchType.tournament
               ? Chip(
                   label: Text(entry.matchType == MatchType.single
                       ? 'Singiel'
                       : 'Debel'),
                   backgroundColor: Colors.blueGrey,
+                  visualDensity: VisualDensity.compact,
                 )
               : const Chip(
                   avatar: Icon(Icons.emoji_events),
                   label: Text('Turniej'),
                   backgroundColor: Colors.orange,
+                  visualDensity: VisualDensity.compact,
                 ),
         ),
       ],

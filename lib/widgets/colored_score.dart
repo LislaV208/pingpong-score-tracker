@@ -16,30 +16,75 @@ class ColoredScore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        style: Theme.of(context)
-            .textTheme
-            .headline5
-            ?.copyWith(fontWeight: FontWeight.bold),
-        children: <TextSpan>[
-          TextSpan(
-            text: '$leftPlayer $leftScore',
-            style: TextStyle(
-              color: _isWinner(
-                leftScore,
-                rightScore,
-              )
-                  ? Colors.green
-                  : Colors.red,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerRight,
+              child: Text(
+                leftPlayer,
+                style: Theme.of(context).textTheme.headline5?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: _isWinner(
+                        leftScore,
+                        rightScore,
+                      )
+                          ? Colors.green
+                          : Colors.red,
+                    ),
+              ),
             ),
           ),
-          const TextSpan(text: ' : '),
-          TextSpan(
-            text: '$rightScore $rightPlayer',
-            style: TextStyle(
-              color:
-                  _isWinner(rightScore, leftScore) ? Colors.green : Colors.red,
+          RichText(
+            text: TextSpan(
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5
+                  ?.copyWith(fontWeight: FontWeight.bold),
+              children: <TextSpan>[
+                TextSpan(
+                  text: ' $leftScore',
+                  style: TextStyle(
+                    color: _isWinner(
+                      leftScore,
+                      rightScore,
+                    )
+                        ? Colors.green
+                        : Colors.red,
+                  ),
+                ),
+                const TextSpan(text: ' : '),
+                TextSpan(
+                  text: '$rightScore ',
+                  style: TextStyle(
+                    color: _isWinner(rightScore, leftScore)
+                        ? Colors.green
+                        : Colors.red,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerLeft,
+              child: Text(
+                rightPlayer,
+                style: Theme.of(context).textTheme.headline5?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: _isWinner(
+                        rightScore,
+                        leftScore,
+                      )
+                          ? Colors.green
+                          : Colors.red,
+                    ),
+                textAlign: TextAlign.start,
+              ),
             ),
           ),
         ],

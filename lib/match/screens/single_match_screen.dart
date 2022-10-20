@@ -54,8 +54,6 @@ class SingleMatchScreen extends StatelessWidget {
       builder: (context, state) {
         return MatchScreen(
           matchScore: MatchScore(
-            teamLeft: state.leftPlayer,
-            teamRight: state.rightPlayer,
             scoreLeft: state.leftPlayerMatchScore,
             scoreRight: state.rightPlayerMatchScore,
           ),

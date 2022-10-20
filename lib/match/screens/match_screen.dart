@@ -38,6 +38,7 @@ class MatchScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: matchScore,
+          centerTitle: true,
         ),
         body: SafeArea(
           child: Stack(

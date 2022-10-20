@@ -45,6 +45,7 @@ class MatchHistoryScreen extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(16.0),
               child: ListView.builder(
+                clipBehavior: Clip.none,
                 itemCount: historyEntries.length,
                 itemBuilder: (context, index) {
                   return MatchHistoryListItem(
