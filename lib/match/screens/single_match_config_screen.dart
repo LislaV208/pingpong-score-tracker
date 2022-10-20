@@ -10,7 +10,7 @@ import 'package:pingpong_score_tracker/match/match_type.dart';
 import 'package:pingpong_score_tracker/match/screens/match_config_screen.dart';
 import 'package:pingpong_score_tracker/match/screens/single_match_screen.dart';
 import 'package:pingpong_score_tracker/match/widgets/player_dropdown_button/single_player_dropdown_button.dart';
-import 'package:pingpong_score_tracker/match/widgets/single_serve_dialog.dart';
+import 'package:pingpong_score_tracker/match/widgets/serve_dialog.dart';
 import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 
@@ -45,7 +45,7 @@ class SingledMatchConfigScreen extends HookWidget {
           },
         ),
       ),
-      serveDialogBuilder: (context) => SingleServeDialog(
+      serveDialogBuilder: (context) => ServeDialog.single(
         leftPlayer: leftPlayer.value!,
         rightPlayer: rightPlayer.value!,
       ),

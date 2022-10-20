@@ -9,8 +9,8 @@ import 'package:pingpong_score_tracker/match/bloc/double_match_state.dart';
 import 'package:pingpong_score_tracker/match/models/team.dart';
 import 'package:pingpong_score_tracker/match/screens/double_match_screen.dart';
 import 'package:pingpong_score_tracker/match/screens/match_config_screen.dart';
-import 'package:pingpong_score_tracker/match/widgets/double_serve_dialog.dart';
 import 'package:pingpong_score_tracker/match/widgets/player_dropdown_button/double_player_dropdown_button.dart';
+import 'package:pingpong_score_tracker/match/widgets/serve_dialog.dart';
 import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/widgets/elevated_circle_button.dart';
@@ -49,7 +49,7 @@ class DoubleMatchConfigScreen extends HookWidget {
         ),
         child: const DoubleMatchScreen(),
       ),
-      serveDialogBuilder: (context) => DoubleServeDialog(
+      serveDialogBuilder: (context) => ServeDialog.double(
         leftTopPlayer: leftTopPlayer.value!,
         leftBottomPlayer: leftBottomPlayer.value!,
         rightTopPlayer: rightTopPlayer.value!,

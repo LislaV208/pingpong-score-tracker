@@ -39,7 +39,6 @@ class MatchConfigScreen extends StatelessWidget {
             ? () async {
                 final navigator = Navigator.of(context);
                 final playerServing = await showDialog<String>(
-                  barrierDismissible: false,
                   context: context,
                   builder: serveDialogBuilder,
                 );

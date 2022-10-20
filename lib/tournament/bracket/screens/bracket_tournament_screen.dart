@@ -5,7 +5,7 @@ import 'package:pingpong_score_tracker/match/bloc/single_match_cubit.dart';
 import 'package:pingpong_score_tracker/match/bloc/single_match_state.dart';
 import 'package:pingpong_score_tracker/match/match_type.dart';
 import 'package:pingpong_score_tracker/match/screens/single_match_screen.dart';
-import 'package:pingpong_score_tracker/match/widgets/single_serve_dialog.dart';
+import 'package:pingpong_score_tracker/match/widgets/serve_dialog.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/screens/players_screen.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_cubit.dart';
@@ -81,7 +81,7 @@ class BracketTournamentScreen extends StatelessWidget {
             final playerServing = await showDialog<String>(
               barrierDismissible: false,
               context: context,
-              builder: (context) => SingleServeDialog(
+              builder: (context) => ServeDialog.single(
                 leftPlayer: state.upcomingMatch!.player1,
                 rightPlayer: state.upcomingMatch!.player2,
               ),

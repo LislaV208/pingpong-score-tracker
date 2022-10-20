@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pingpong_score_tracker/match/match_type.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
+import 'package:pingpong_score_tracker/widgets/app_button.dart';
 
 class MatchTypeDialog extends StatelessWidget {
   const MatchTypeDialog({super.key});
@@ -21,14 +22,16 @@ class MatchTypeDialog extends StatelessWidget {
           ),
           ButtonBar(
             alignment: MainAxisAlignment.center,
+            buttonPadding: const EdgeInsets.all(12.0),
             children: [
-              ElevatedButton(
+              AppButton(
                 onPressed: () {
                   Navigator.of(context).pop(MatchType.single);
                 },
                 child: const Text('Singiel'),
               ),
-              ElevatedButton(
+              const SizedBox(width: 6.0),
+              AppButton(
                 onPressed: canPlayDouble
                     ? () {
                         Navigator.of(context).pop(MatchType.double);
