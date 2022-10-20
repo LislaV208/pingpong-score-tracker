@@ -97,6 +97,7 @@ class _PointButton extends StatelessWidget {
 
     return Container(
       color: Colors.green.withOpacity(0.4),
+      alignment: Alignment.center,
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ClipOval(
@@ -104,25 +105,28 @@ class _PointButton extends StatelessWidget {
             color: Colors.white.withOpacity(0.05),
             child: InkWell(
               onTap: onPressed,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: children.length == 1
-                    ? [
-                        children.first,
-                        scoreWidget,
-                      ]
-                    : children.length == 2
-                        ? [
-                            children.first,
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 40.0,
+              child: AspectRatio(
+                aspectRatio: 1 / 1,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: children.length == 1
+                      ? [
+                          children.first,
+                          scoreWidget,
+                        ]
+                      : children.length == 2
+                          ? [
+                              children.first,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 40.0,
+                                ),
+                                child: scoreWidget,
                               ),
-                              child: scoreWidget,
-                            ),
-                            children.last,
-                          ]
-                        : [],
+                              children.last,
+                            ]
+                          : [],
+                ),
               ),
             ),
           ),
