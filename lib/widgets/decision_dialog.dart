@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pingpong_score_tracker/widgets/app_button.dart';
+import 'package:pingpong_score_tracker/widgets/app_dialog.dart';
+import 'package:pingpong_score_tracker/widgets/row_button_panel.dart';
 
 Future<T?> showDecisionDialog<T>(
   BuildContext context, {
@@ -19,28 +22,21 @@ class DecisionDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            title: Text(title),
+    return AppDialog(
+      title: title,
+      child: RowButtonPanel(
+        buttons: [
+          AppButton(
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            },
+            child: const Text('Tak'),
           ),
-          ButtonBar(
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                },
-                child: const Text('Tak'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(false);
-                },
-                child: const Text('Nie'),
-              )
-            ],
+          AppButton(
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+            child: const Text('Nie'),
           )
         ],
       ),

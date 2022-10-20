@@ -28,24 +28,16 @@ class BracketTournamentScreen extends StatelessWidget {
 
         if (cubit.state.isFinished == true) {
           cubit.setToNotStarted();
-          navigator.popUntil(
-            ModalRoute.withName('/'),
+          navigator.pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (context) => BlocProvider.value(
+                value: getIt.get<PlayersCubit>(),
+                child: const PlayersScreen(),
+              ),
+            ),
+            (route) => false,
           );
-
-          return false;
-        }
-
-        final result = await showDialog<ExitTournamentDialogResult>(
-              context: context,
-              builder: (context) => const ExitTournamentDialog(),
-            ) ??
-            ExitTournamentDialogResult.continueTournament;
-
-        if (result != ExitTournamentDialogResult.continueTournament) {
-          if (result == ExitTournamentDialogResult.cancel) {
-            cubit.setToNotStarted();
-          }
-
+        } else {
           navigator.popUntil(
             ModalRoute.withName('/'),
           );
@@ -54,7 +46,32 @@ class BracketTournamentScreen extends StatelessWidget {
         return false;
       },
       child: Scaffold(
-        appBar: AppBar(title: const Text('Turniej')),
+        appBar: AppBar(
+          title: const Text('Turniej'),
+          actions: [
+            if (!state.isFinished)
+              IconButton(
+                onPressed: () async {
+                  final cubit = context.read<BracketTournamentCubit>();
+                  final navigator = Navigator.of(context);
+
+                  final doAbortTournament = await showDialog<bool>(
+                        context: context,
+                        builder: (context) => const ExitTournamentDialog(),
+                      ) ??
+                      false;
+
+                  if (doAbortTournament) {
+                    cubit.setToNotStarted();
+                    navigator.popUntil(
+                      ModalRoute.withName('/'),
+                    );
+                  }
+                },
+                icon: const Icon(Icons.close),
+              ),
+          ],
+        ),
         body: const SafeArea(
           child: BracketGraph(),
         ),

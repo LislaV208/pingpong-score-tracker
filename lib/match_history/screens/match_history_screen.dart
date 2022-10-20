@@ -19,10 +19,11 @@ class MatchHistoryScreen extends StatelessWidget {
               final cubit = context.read<MatchHistoryCubit>();
               if (cubit.state.history.isEmpty) return;
 
-              final clearHistoryConfirmed = await showDialog(
-                context: context,
-                builder: (context) => const ClearHistoryDialog(),
-              );
+              final clearHistoryConfirmed = await showDialog<bool>(
+                    context: context,
+                    builder: (context) => const ClearHistoryDialog(),
+                  ) ??
+                  false;
 
               if (clearHistoryConfirmed) {
                 cubit.clearHistory();

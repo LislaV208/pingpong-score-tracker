@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pingpong_score_tracker/widgets/app_button.dart';
+import 'package:pingpong_score_tracker/widgets/app_dialog.dart';
 
 class ServeDialog extends StatelessWidget {
   ServeDialog.single({
@@ -33,29 +34,13 @@ class ServeDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            ListTile(
-              title: const Center(child: Text('Kto serwuje?')),
-              tileColor: Colors.black.withOpacity(0.2),
-            ),
-            const SizedBox(height: 8.0),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: players.length == 2
-                  ? _buildSingleButtons(context)
-                  : players.length == 4
-                      ? _buildDoubleButtons(context)
-                      : const SizedBox(),
-            ),
-          ],
-        ),
-      ),
+    return AppDialog(
+      title: 'Kto serwuje?',
+      child: players.length == 2
+          ? _buildSingleButtons(context)
+          : players.length == 4
+              ? _buildDoubleButtons(context)
+              : const SizedBox(),
     );
   }
 

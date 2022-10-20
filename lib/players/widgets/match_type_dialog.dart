@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pingpong_score_tracker/match/match_type.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/widgets/app_button.dart';
+import 'package:pingpong_score_tracker/widgets/app_dialog.dart';
+import 'package:pingpong_score_tracker/widgets/row_button_panel.dart';
 
 class MatchTypeDialog extends StatelessWidget {
   const MatchTypeDialog({super.key});
@@ -12,35 +14,24 @@ class MatchTypeDialog extends StatelessWidget {
     final canPlayDouble = context
         .select<PlayersCubit, bool>((cubit) => cubit.state.players.length >= 4);
 
-    return Dialog(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          const ListTile(
-            title: Text('Wybierz tryb gry'),
+    return AppDialog(
+      title: 'Wybierz rodzaj rozgrywki',
+      child: RowButtonPanel(
+        buttons: [
+          AppButton(
+            onPressed: () {
+              Navigator.of(context).pop(MatchType.single);
+            },
+            child: const Text('Singiel'),
           ),
-          ButtonBar(
-            alignment: MainAxisAlignment.center,
-            buttonPadding: const EdgeInsets.all(12.0),
-            children: [
-              AppButton(
-                onPressed: () {
-                  Navigator.of(context).pop(MatchType.single);
-                },
-                child: const Text('Singiel'),
-              ),
-              const SizedBox(width: 6.0),
-              AppButton(
-                onPressed: canPlayDouble
-                    ? () {
-                        Navigator.of(context).pop(MatchType.double);
-                      }
-                    : null,
-                child: const Text('Debel'),
-              ),
-            ],
-          )
+          AppButton(
+            onPressed: canPlayDouble
+                ? () {
+                    Navigator.of(context).pop(MatchType.double);
+                  }
+                : null,
+            child: const Text('Debel'),
+          ),
         ],
       ),
     );
