@@ -34,12 +34,12 @@ class BracketPlayersScreen extends HookWidget {
           ),
         ],
       ),
-      body: SafeArea(
-        child: Stack(
-          clipBehavior: Clip.none,
-          alignment: Alignment.bottomCenter,
-          children: [
-            Padding(
+      body: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.bottomCenter,
+        children: [
+          SafeArea(
+            child: Padding(
               padding: const EdgeInsets.only(bottom: 80.0),
               child: BlocBuilder<PlayersCubit, PlayersState>(
                 builder: (context, state) {
@@ -76,75 +76,96 @@ class BracketPlayersScreen extends HookWidget {
                 },
               ),
             ),
-            Positioned(
-              bottom: -20,
-              child: Container(
-                height: 96,
-                color: const Color.fromARGB(255, 54, 54, 54),
-                width: MediaQuery.of(context).size.width,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 30.0, bottom: 12.0),
-                  child: Column(
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          text: 'Liczba wybranych graczy: ',
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: '${selectedPlayers.value.length}',
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          Positioned(
+            bottom: 0,
+            child: Container(
+              color: const Color.fromARGB(255, 54, 54, 54),
+              width: MediaQuery.of(context).size.width,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 14.0,
+                  horizontal: 16.0,
+                ),
+                child: Row(
+                  children: [
+                    const Spacer(),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              text: 'Liczba wybranych graczy: ',
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: '${selectedPlayers.value.length}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
-                      if (missingPlayersCount > 0)
-                        RichText(
-                          text: TextSpan(
-                            text: 'Brakuje ',
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: _calculateMissingPlayers(
-                                        selectedPlayers.value.length)
-                                    .toString(),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.red),
+                          ),
+                          if (missingPlayersCount > 0)
+                            RichText(
+                              text: TextSpan(
+                                text: 'Brakuje ',
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: _calculateMissingPlayers(
+                                            selectedPlayers.value.length)
+                                        .toString(),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.red),
+                                  ),
+                                  TextSpan(
+                                    text: missingPlayersCount == 1
+                                        ? ' gracza'
+                                        : ' graczy',
+                                  )
+                                ],
                               ),
-                              TextSpan(
-                                text: missingPlayersCount == 1
-                                    ? ' gracza'
-                                    : ' graczy',
-                              )
-                            ],
+                            ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: AnimatedSlide(
+                          duration: const Duration(milliseconds: 250),
+                          offset: missingPlayersCount <= 0
+                              ? Offset.zero
+                              : const Offset(0, 2),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                right:
+                                    MediaQuery.of(context).viewPadding.right),
+                            child: FloatingActionButton.small(
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => BlocProvider.value(
+                                      value: getIt.get<BracketTournamentCubit>()
+                                        ..start(selectedPlayers.value),
+                                      child: const BracketTournamentScreen(),
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: const Icon(Icons.arrow_forward),
+                            ),
                           ),
                         ),
-                    ],
-                  ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: AnimatedSlide(
-        duration: const Duration(milliseconds: 300),
-        offset: missingPlayersCount <= 0 ? Offset.zero : const Offset(0, 2),
-        child: FloatingActionButton(
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => BlocProvider.value(
-                  value: getIt.get<BracketTournamentCubit>()
-                    ..start(selectedPlayers.value),
-                  child: const BracketTournamentScreen(),
-                ),
-              ),
-            );
-          },
-          child: const Icon(Icons.arrow_forward),
-        ),
+          ),
+        ],
       ),
     );
   }
