@@ -1,5 +1,7 @@
 // ignore_for_file: unused_import
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,7 +21,9 @@ import 'package:wakelock/wakelock.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
-    DeviceOrientation.landscapeRight,
+    Platform.isAndroid
+        ? DeviceOrientation.landscapeLeft
+        : DeviceOrientation.landscapeRight
   ]);
 
   final storage = await HydratedStorage.build(
