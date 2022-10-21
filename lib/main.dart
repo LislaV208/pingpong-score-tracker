@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pingpong_score_tracker/home_screen.dart';
 import 'package:pingpong_score_tracker/injectable/injectable.dart';
 import 'package:pingpong_score_tracker/match/bloc/single_match_cubit.dart';
 import 'package:pingpong_score_tracker/match/bloc/single_match_state.dart';
@@ -50,8 +51,12 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.dark,
       home: BlocProvider.value(
         value: getIt.get<PlayersCubit>(),
-        child: const PlayersScreen(),
+        child: const HomeScreen(),
       ),
+      // home: BlocProvider.value(
+      //   value: getIt.get<PlayersCubit>(),
+      //   child: const PlayersScreen(),
+      // ),
       // home: BlocProvider(
       //   create: (context) => SingleMatchCubit(
       //     SingleMatchState(

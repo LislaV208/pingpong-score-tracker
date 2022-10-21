@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pingpong_score_tracker/home_screen.dart';
 import 'package:pingpong_score_tracker/injectable/injectable.dart';
 import 'package:pingpong_score_tracker/match/bloc/single_match_cubit.dart';
 import 'package:pingpong_score_tracker/match/bloc/single_match_state.dart';
@@ -7,7 +8,6 @@ import 'package:pingpong_score_tracker/match/match_type.dart';
 import 'package:pingpong_score_tracker/match/screens/single_match_screen.dart';
 import 'package:pingpong_score_tracker/match/widgets/serve_dialog.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
-import 'package:pingpong_score_tracker/players/screens/players_screen.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_cubit.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/widgets/bracket_graph.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/widgets/exit_tournament_dialog.dart';
@@ -32,7 +32,7 @@ class BracketTournamentScreen extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => BlocProvider.value(
                 value: getIt.get<PlayersCubit>(),
-                child: const PlayersScreen(),
+                child: const HomeScreen(),
               ),
             ),
             (route) => false,
@@ -86,7 +86,7 @@ class BracketTournamentScreen extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => BlocProvider.value(
                     value: getIt.get<PlayersCubit>(),
-                    child: const PlayersScreen(),
+                    child: const HomeScreen(),
                   ),
                 ),
                 (route) => false,

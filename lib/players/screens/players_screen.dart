@@ -1,19 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pingpong_score_tracker/injectable/injectable.dart';
-import 'package:pingpong_score_tracker/match/match_type.dart';
-import 'package:pingpong_score_tracker/match/screens/double_match_config_screen.dart';
-import 'package:pingpong_score_tracker/match/screens/single_match_config_screen.dart';
-import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.dart';
-import 'package:pingpong_score_tracker/match_history/screens/match_history_screen.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
 import 'package:pingpong_score_tracker/players/screens/add_edit_player_screen.dart';
-import 'package:pingpong_score_tracker/players/widgets/match_type_dialog.dart';
-import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_cubit.dart';
-import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_state.dart';
-import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_players_screen.dart';
-import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_tournament_screen.dart';
 import 'package:pingpong_score_tracker/widgets/decision_dialog.dart';
 
 class PlayersScreen extends StatelessWidget {
@@ -93,35 +83,6 @@ class PlayersScreen extends StatelessWidget {
               alignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: context.select<PlayersCubit, int>(
-                              (value) => value.state.players.length) <
-                          2
-                      ? null
-                      : () async {
-                          final navigator = Navigator.of(context);
-                          final matchType = await showDialog<MatchType?>(
-                            context: context,
-                            builder: (context) => BlocProvider.value(
-                              value: getIt.get<PlayersCubit>(),
-                              child: const MatchTypeDialog(),
-                            ),
-                          );
-                          if (matchType != null) {
-                            navigator.push(
-                              MaterialPageRoute(
-                                builder: (context) => BlocProvider.value(
-                                  value: getIt.get<PlayersCubit>(),
-                                  child: matchType == MatchType.single
-                                      ? const SingledMatchConfigScreen()
-                                      : const DoubleMatchConfigScreen(),
-                                ),
-                              ),
-                            );
-                          }
-                        },
-                  child: const Text('Rozpocznij mecz'),
-                ),
-                ElevatedButton(
                   onPressed: () async {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => BlocProvider.value(
@@ -131,43 +92,6 @@ class PlayersScreen extends StatelessWidget {
                     ));
                   },
                   child: const Text('Dodaj gracza'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => BlocProvider.value(
-                        value: getIt.get<MatchHistoryCubit>(),
-                        child: const MatchHistoryScreen(),
-                      ),
-                    ));
-                  },
-                  child: const Text('Historia meczy'),
-                ),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) {
-                        final tournamentState =
-                            getIt.get<BracketTournamentCubit>().state;
-                        if (tournamentState ==
-                            BracketTournamentState.notStarted()) {
-                          return BlocProvider.value(
-                            value: getIt.get<PlayersCubit>(),
-                            child: const BracketPlayersScreen(),
-                          );
-                        }
-                        return BlocProvider.value(
-                          value: getIt.get<BracketTournamentCubit>(),
-                          child: const BracketTournamentScreen(),
-                        );
-                      },
-                    ));
-                  },
-                  icon: const Icon(Icons.emoji_events),
-                  label: const Text('Turniej'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                  ),
                 ),
               ],
             ),
