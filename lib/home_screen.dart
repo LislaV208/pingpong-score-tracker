@@ -13,6 +13,7 @@ import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournamen
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_state.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_players_screen.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_tournament_screen.dart';
+import 'package:pingpong_score_tracker/widgets/badge_icon.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -53,7 +54,11 @@ class HomeScreen extends StatelessWidget {
                         children: [
                           _HomeScreenButton(
                             onPressed: () => _onManagePlayersPressed(context),
-                            icon: Icons.people,
+                            leading: BadgeIcon(
+                              Icons.people,
+                              badgeText:
+                                  '${context.select<PlayersCubit, int>((cubit) => cubit.state.players.length)}',
+                            ),
                             label: 'Zarządzaj graczami',
                             backgroundColor: Colors.blue[700],
                           ),
@@ -164,14 +169,18 @@ class HomeScreen extends StatelessWidget {
 class _HomeScreenButton extends StatelessWidget {
   const _HomeScreenButton({
     required this.onPressed,
-    required this.icon,
     required this.label,
+    this.icon,
+    this.leading,
     this.backgroundColor,
-  });
+  }) : assert(icon == null && leading == null ||
+            icon != null && leading == null ||
+            icon == null && leading != null);
 
   final VoidCallback? onPressed;
-  final IconData icon;
   final String label;
+  final IconData? icon;
+  final Widget? leading;
   final Color? backgroundColor;
 
   @override
@@ -198,7 +207,7 @@ class _HomeScreenButton extends StatelessWidget {
                   Expanded(
                     flex: 1,
                     child: FittedBox(
-                      child: Icon(icon),
+                      child: leading ?? Icon(icon),
                     ),
                   ),
                   const Spacer(),
