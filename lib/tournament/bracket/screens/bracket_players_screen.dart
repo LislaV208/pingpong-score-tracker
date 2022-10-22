@@ -8,6 +8,7 @@ import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_cubit.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_tournament_screen.dart';
+import 'package:pingpong_score_tracker/widgets/players_list.dart';
 
 class BracketPlayersScreen extends HookWidget {
   const BracketPlayersScreen({super.key});
@@ -15,152 +16,186 @@ class BracketPlayersScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final selectedPlayers = useState<List<String>>([]);
-    final missingPlayersCount =
-        _calculateMissingPlayers(selectedPlayers.value.length);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Wybierz graczy do turnieju'),
         actions: [
           IconButton(
-            onPressed: () {
-              final players = context.read<PlayersCubit>().state.players;
-
-              selectedPlayers.value =
-                  selectedPlayers.value.length == players.length
-                      ? []
-                      : [...players];
-            },
+            onPressed: () => _onSelectedAll(context, selectedPlayers),
             icon: const Icon(Icons.select_all),
           ),
         ],
       ),
       body: Stack(
-        clipBehavior: Clip.none,
-        alignment: Alignment.bottomCenter,
         children: [
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 80.0),
-              child: BlocBuilder<PlayersCubit, PlayersState>(
-                builder: (context, state) {
-                  final players = state.players;
-                  if (players.isEmpty) {
-                    return const Center(
-                      child: Text('Brak graczy'),
-                    );
-                  }
+          Column(
+            children: [
+              Expanded(
+                child: SafeArea(
+                  bottom: false,
+                  child: BlocBuilder<PlayersCubit, PlayersState>(
+                    builder: (context, state) {
+                      final players = state.players;
+                      if (players.isEmpty) {
+                        return const Center(
+                          child: Text('Brak graczy'),
+                        );
+                      }
 
-                  return ListView(
-                    children: players
-                        .map(
-                          (item) => CheckboxListTile(
-                            title: Text(item),
+                      return PlayersList(
+                        players: players,
+                        itemBuilder: (index, player) {
+                          return CheckboxListTile(
+                            title: Text(player),
                             activeColor: Colors.blueGrey,
                             selectedTileColor: Colors.black.withOpacity(0.1),
-                            selected: selectedPlayers.value.contains(item),
-                            onChanged: (bool? isSelected) {
-                              final players = [...selectedPlayers.value];
-                              if (isSelected ?? false) {
-                                players.add(item);
-                              } else {
-                                players.remove(item);
-                              }
-
-                              selectedPlayers.value = players;
-                            },
-                            value: selectedPlayers.value.contains(item),
-                          ),
-                        )
-                        .toList(),
-                  );
-                },
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: Container(
-              color: const Color.fromARGB(255, 54, 54, 54),
-              width: MediaQuery.of(context).size.width,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 14.0,
-                  horizontal: 16.0,
+                            selected: selectedPlayers.value.contains(player),
+                            onChanged: (bool? isSelected) => _onPlayerSelected(
+                                selectedPlayers, isSelected, player),
+                            value: selectedPlayers.value.contains(player),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
-                child: Row(
-                  children: [
-                    const Spacer(),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          RichText(
-                            text: TextSpan(
-                              text: 'Liczba wybranych graczy: ',
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: '${selectedPlayers.value.length}',
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
+              ),
+              const SizedBox(height: 20.0),
+              _BottomPanel(
+                selectedPlayersCount: selectedPlayers.value.length,
+                onFabPressed: () =>
+                    _goToTournamentScreen(context, selectedPlayers.value),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _onSelectedAll(
+      BuildContext context, ValueNotifier<List<String>> selectedPlayers) {
+    final players = context.read<PlayersCubit>().state.players;
+
+    selectedPlayers.value =
+        selectedPlayers.value.length == players.length ? [] : [...players];
+  }
+
+  void _onPlayerSelected(ValueNotifier<List<String>> selectedPlayers,
+      bool? isSelected, String player) {
+    final players = [...selectedPlayers.value];
+    if (isSelected ?? false) {
+      players.add(player);
+    } else {
+      players.remove(player);
+    }
+
+    selectedPlayers.value = players;
+  }
+
+  void _goToTournamentScreen(
+    BuildContext context,
+    List<String> selectedPlayers,
+  ) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => BlocProvider.value(
+          value: getIt.get<BracketTournamentCubit>()..start(selectedPlayers),
+          child: const BracketTournamentScreen(),
+        ),
+      ),
+    );
+  }
+}
+
+class _BottomPanel extends StatelessWidget {
+  const _BottomPanel({
+    required this.selectedPlayersCount,
+    required this.onFabPressed,
+  });
+
+  final int selectedPlayersCount;
+  final VoidCallback onFabPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final missingPlayersCount = _calculateMissingPlayers(selectedPlayersCount);
+
+    return Container(
+      color: const Color.fromARGB(255, 54, 54, 54),
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.symmetric(
+        vertical: MediaQuery.of(context).padding.bottom / 4,
+      ),
+      child: Row(
+        children: [
+          const Spacer(),
+          Expanded(
+            flex: 3,
+            child: Column(
+              children: [
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    text: 'Liczba wybranych graczy: ',
+                    style: const TextStyle(fontSize: 16.0),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: '$selectedPlayersCount',
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+                if (missingPlayersCount > 0)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4.0),
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        text: 'Brakuje ',
+                        style: const TextStyle(fontSize: 14.0),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: _calculateMissingPlayers(selectedPlayersCount)
+                                .toString(),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, color: Colors.red),
                           ),
-                          if (missingPlayersCount > 0)
-                            RichText(
-                              text: TextSpan(
-                                text: 'Brakuje ',
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: _calculateMissingPlayers(
-                                            selectedPlayers.value.length)
-                                        .toString(),
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.red),
-                                  ),
-                                  TextSpan(
-                                    text: missingPlayersCount == 1
-                                        ? ' gracza'
-                                        : ' graczy',
-                                  )
-                                ],
-                              ),
-                            ),
+                          TextSpan(
+                            text: missingPlayersCount == 1
+                                ? ' gracza'
+                                : ' graczy',
+                          )
                         ],
                       ),
                     ),
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: AnimatedSlide(
-                          duration: const Duration(milliseconds: 250),
-                          offset: missingPlayersCount <= 0
-                              ? Offset.zero
-                              : const Offset(0, 2),
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                                right:
-                                    MediaQuery.of(context).viewPadding.right),
-                            child: FloatingActionButton.small(
-                              onPressed: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => BlocProvider.value(
-                                      value: getIt.get<BracketTournamentCubit>()
-                                        ..start(selectedPlayers.value),
-                                      child: const BracketTournamentScreen(),
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: const Icon(Icons.arrow_forward),
-                            ),
-                          ),
-                        ),
-                      ),
+                  ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24.0,
+                  vertical: 14.0,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      right: MediaQuery.of(context).padding.right),
+                  child: AnimatedSlide(
+                    duration: const Duration(milliseconds: 250),
+                    offset: missingPlayersCount <= 0
+                        ? Offset.zero
+                        : const Offset(0, 2),
+                    child: FloatingActionButton.small(
+                      onPressed: onFabPressed,
+                      child: const Icon(Icons.arrow_forward),
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
