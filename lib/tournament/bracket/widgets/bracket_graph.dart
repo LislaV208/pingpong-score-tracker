@@ -5,41 +5,55 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_cubit.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_state.dart';
 import 'package:pingpong_score_tracker/tournament/models/tournament_match.dart';
+import 'package:pingpong_score_tracker/widgets/scaling_box.dart';
 
 class BracketGraph extends StatelessWidget {
   const BracketGraph({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return InteractiveViewer(
-      child: Center(
-        child: BlocBuilder<BracketTournamentCubit, BracketTournamentState>(
-          builder: (context, state) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ..._generateColumns(state),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.emoji_events,
-                        size: 100,
-                        color: state.isFinished ? Colors.amber : null,
-                      ),
-                      if (state.isFinished) Text(state.matches.last.winner!),
-                    ],
+    final size = _calculateSize(context);
+    print(size);
+
+    final content = BlocBuilder<BracketTournamentCubit, BracketTournamentState>(
+      builder: (context, state) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ..._generateColumns(state),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.emoji_events,
+                    size: 100,
+                    color: state.isFinished ? Colors.amber : null,
                   ),
-                ),
-              ],
-            );
-          },
-        ),
-      ),
+                  if (state.isFinished) Text(state.matches.last.winner!),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
     );
+
+    final playersCount =
+        context.read<BracketTournamentCubit>().state.playersCount;
+    final useScalingBox = playersCount > 4;
+    final useInteractiveViewer = playersCount > 8;
+
+    return useScalingBox
+        ? ScalingBox(
+            size: _calculateSize(context),
+            child: useInteractiveViewer
+                ? InteractiveViewer(child: content)
+                : content,
+          )
+        : Center(child: content);
   }
 
   List<Widget> _generateColumns(BracketTournamentState state) {
@@ -76,6 +90,20 @@ class BracketGraph extends StatelessWidget {
     );
 
     return columns;
+  }
+
+  Size _calculateSize(BuildContext context) {
+    final playersCount =
+        context.read<BracketTournamentCubit>().state.playersCount;
+
+    // probably it can be calculated dynamically
+    if (playersCount == 4) {
+      return const Size(600, 300);
+    } else if (playersCount == 8) {
+      return const Size(800, 300);
+    }
+
+    return const Size(600, 1600);
   }
 }
 
@@ -117,23 +145,30 @@ class MatchContainer extends StatelessWidget {
         alignment: Alignment.center,
         height: 50,
         width: 150,
-        child: RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(
-            children: <TextSpan>[
-              TextSpan(
-                text: '$player1 $score1',
-                style: getScoreStyle(match.player1Score, match.player2Score),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: FittedBox(
+            child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                children: <TextSpan>[
+                  TextSpan(
+                    text: '$player1 $score1',
+                    style:
+                        getScoreStyle(match.player1Score, match.player2Score),
+                  ),
+                  const TextSpan(
+                    text: ' : ',
+                    style: TextStyle(),
+                  ),
+                  TextSpan(
+                    text: '$score2 $player2',
+                    style:
+                        getScoreStyle(match.player2Score, match.player1Score),
+                  ),
+                ],
               ),
-              const TextSpan(
-                text: ' : ',
-                style: TextStyle(),
-              ),
-              TextSpan(
-                text: '$score2 $player2',
-                style: getScoreStyle(match.player2Score, match.player1Score),
-              ),
-            ],
+            ),
           ),
         ),
       ),
