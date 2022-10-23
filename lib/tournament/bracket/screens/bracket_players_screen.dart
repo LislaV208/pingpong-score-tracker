@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:pingpong_score_tracker/config.dart';
 import 'package:pingpong_score_tracker/injectable/injectable.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
@@ -170,6 +171,13 @@ class _BottomPanel extends StatelessWidget {
                           )
                         ],
                       ),
+                    ),
+                  ),
+                if (selectedPlayersCount >= Config.maxPlayersCount)
+                  const Padding(
+                    padding: EdgeInsets.only(top: 4.0),
+                    child: Text(
+                      'Wybrano maksymalną ilość graczy',
                     ),
                   ),
               ],

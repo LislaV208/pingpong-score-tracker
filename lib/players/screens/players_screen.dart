@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pingpong_score_tracker/config.dart';
 import 'package:pingpong_score_tracker/injectable/injectable.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
 import 'package:pingpong_score_tracker/players/screens/add_edit_player_screen.dart';
 import 'package:pingpong_score_tracker/utils/media_query_utils.dart';
+import 'package:pingpong_score_tracker/widgets/app_snack_bar.dart';
 import 'package:pingpong_score_tracker/widgets/decision_dialog.dart';
 import 'package:pingpong_score_tracker/widgets/players_list.dart';
 
@@ -73,14 +75,20 @@ class PlayersScreen extends StatelessWidget {
   }
 
   void _onAddEditPlayer(BuildContext context, {String? player}) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => BlocProvider.value(
-          value: getIt.get<PlayersCubit>(),
-          child: AddEditPlayerScreen(player: player),
+    final playersCount = context.read<PlayersCubit>().state.players.length;
+
+    if (playersCount >= Config.maxPlayersCount) {
+      AppSnackBar.show(context, 'Utworzono maksymalną liczbę graczy');
+    } else {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => BlocProvider.value(
+            value: getIt.get<PlayersCubit>(),
+            child: AddEditPlayerScreen(player: player),
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   void _onPlayerDelete(BuildContext context, String player) async {

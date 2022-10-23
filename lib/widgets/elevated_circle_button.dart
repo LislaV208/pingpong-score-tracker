@@ -6,11 +6,13 @@ class ElevatedCircleButton extends StatelessWidget {
     required this.onPressed,
     required this.icon,
     this.label,
+    this.color = Colors.blue,
   });
 
   final VoidCallback? onPressed;
   final Widget icon;
   final String? label;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class ElevatedCircleButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         shape: const CircleBorder(),
         padding: const EdgeInsets.all(10),
-        backgroundColor: Colors.blue, // <-- Button color
+        backgroundColor: color,
         disabledBackgroundColor: Colors.grey,
       ),
       child: label == null
