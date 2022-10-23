@@ -14,6 +14,7 @@ import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournamen
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_state.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_players_screen.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_tournament_screen.dart';
+import 'package:pingpong_score_tracker/widgets/badge_icon.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -42,11 +43,8 @@ class HomeScreen extends StatelessWidget {
                             label: 'Rozpocznij mecz',
                             backgroundColor: Colors.green[700],
                           ),
-                          _HomeScreenButton(
+                          _HomeTournamentButton(
                             onPressed: () => _onTournamentPressed(context),
-                            icon: Icons.emoji_events,
-                            label: 'Turniej',
-                            backgroundColor: Colors.amber[700],
                           ),
                         ],
                       ),
@@ -233,6 +231,55 @@ class _HomeScreenButton extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _HomeTournamentButton extends StatelessWidget {
+  const _HomeTournamentButton({
+    required this.onPressed,
+  });
+
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<BracketTournamentCubit, BracketTournamentState>(
+      bloc: getIt.get<BracketTournamentCubit>(),
+      builder: (context, state) {
+        final isTournamentStarted =
+            state != BracketTournamentState.notStarted();
+
+        final gamesPlayedCount = state.matchesPlayedCount;
+        final totalMatchesCount = state.playersCount - 1;
+
+        return _HomeScreenButton(
+          onPressed: onPressed,
+          icon: isTournamentStarted ? null : Icons.emoji_events,
+          leading: isTournamentStarted
+              ? Stack(
+                  clipBehavior: Clip.none,
+                  alignment: Alignment.center,
+                  children: [
+                    const Positioned(
+                        top: 2.0,
+                        child: BadgeIcon(
+                          Icons.emoji_events,
+                        )),
+                    Positioned(
+                      bottom: 2,
+                      child: Text(
+                        '$gamesPlayedCount/$totalMatchesCount',
+                        style: const TextStyle(fontSize: 14.0),
+                      ),
+                    ),
+                  ],
+                )
+              : null,
+          label: 'Turniej',
+          backgroundColor: Colors.amber[700],
+        );
+      },
     );
   }
 }
