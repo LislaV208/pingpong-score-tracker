@@ -14,6 +14,7 @@ import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournamen
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_state.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_players_screen.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_tournament_screen.dart';
+import 'package:pingpong_score_tracker/widgets/app_dialog.dart';
 import 'package:pingpong_score_tracker/widgets/badge_icon.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -73,7 +74,20 @@ class HomeScreen extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      // TODO: implement
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return const AppDialog(
+                            title: 'O autorze',
+                            child: Center(
+                              child: Text(
+                                'Tu będą jakieś informacje, moze jakis odnosnik do jakiejs strony.\nW sumie to jeszcze nie wiem, to sie zrobi później XD',
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          );
+                        },
+                      );
                     },
                     child: const Text(
                       'O autorze',
