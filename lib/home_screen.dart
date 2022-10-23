@@ -7,13 +7,13 @@ import 'package:pingpong_score_tracker/match/screens/single_match_config_screen.
 import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.dart';
 import 'package:pingpong_score_tracker/match_history/screens/match_history_screen.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
+import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
 import 'package:pingpong_score_tracker/players/screens/players_screen.dart';
 import 'package:pingpong_score_tracker/players/widgets/match_type_dialog.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_cubit.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_state.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_players_screen.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_tournament_screen.dart';
-import 'package:pingpong_score_tracker/widgets/badge_icon.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -54,10 +54,11 @@ class HomeScreen extends StatelessWidget {
                         children: [
                           _HomeScreenButton(
                             onPressed: () => _onManagePlayersPressed(context),
-                            leading: BadgeIcon(
-                              Icons.people,
-                              badgeText:
-                                  '${context.select<PlayersCubit, int>((cubit) => cubit.state.players.length)}',
+                            leading:
+                                BlocSelector<PlayersCubit, PlayersState, int>(
+                              selector: (state) => state.players.length,
+                              builder: (context, playersCount) =>
+                                  _PlayersIcon(playersCount: playersCount),
                             ),
                             label: 'Zarządzaj graczami',
                             backgroundColor: Colors.blue[700],
@@ -206,9 +207,10 @@ class _HomeScreenButton extends StatelessWidget {
                 children: [
                   Expanded(
                     flex: 1,
-                    child: FittedBox(
-                      child: leading ?? Icon(icon),
-                    ),
+                    child: leading ??
+                        FittedBox(
+                          child: Icon(icon),
+                        ),
                   ),
                   const Spacer(),
                   Expanded(
@@ -232,5 +234,42 @@ class _HomeScreenButton extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class _PlayersIcon extends StatelessWidget {
+  const _PlayersIcon({
+    required this.playersCount,
+  });
+
+  final int playersCount;
+
+  @override
+  Widget build(BuildContext context) {
+    return playersCount <= 0
+        ? const Icon(
+            Icons.people,
+            size: 50,
+          )
+        : Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.center,
+            children: [
+              const Positioned(
+                top: 2.0,
+                child: Icon(
+                  Icons.people,
+                  size: 50,
+                ),
+              ),
+              Positioned(
+                bottom: 2,
+                child: Text(
+                  '$playersCount',
+                  style: const TextStyle(fontSize: 18.0),
+                ),
+              ),
+            ],
+          );
   }
 }
