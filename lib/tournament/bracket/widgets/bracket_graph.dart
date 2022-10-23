@@ -50,7 +50,10 @@ class BracketGraph extends StatelessWidget {
         ? ScalingBox(
             size: _calculateSize(context),
             child: useInteractiveViewer
-                ? InteractiveViewer(child: content)
+                ? InteractiveViewer(
+                    maxScale: playersCount > 16 ? 5.0 : 2.5,
+                    child: content,
+                  )
                 : content,
           )
         : Center(child: content);
@@ -101,9 +104,11 @@ class BracketGraph extends StatelessWidget {
       return const Size(600, 300);
     } else if (playersCount == 8) {
       return const Size(800, 300);
+    } else if (playersCount == 16) {
+      return const Size(1600, 600);
     }
 
-    return const Size(600, 1600);
+    return const Size(3000, 1100);
   }
 }
 
