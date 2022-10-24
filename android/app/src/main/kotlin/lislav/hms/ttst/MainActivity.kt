@@ -1,4 +1,4 @@
-package com.example.pingpong_score_tracker
+package lislav.hms.ttst
 
 import io.flutter.embedding.android.FlutterActivity
 
