@@ -12,9 +12,6 @@ class BracketGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = _calculateSize(context);
-    print(size);
-
     final content = BlocBuilder<BracketTournamentCubit, BracketTournamentState>(
       builder: (context, state) {
         return Row(
