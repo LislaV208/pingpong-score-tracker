@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pingpong_score_tracker/config.dart';
+import 'package:pingpong_score_tracker/default_values.dart';
 import 'package:pingpong_score_tracker/injectable/injectable.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
@@ -77,7 +77,7 @@ class PlayersScreen extends StatelessWidget {
   void _onAddEditPlayer(BuildContext context, {String? player}) {
     final playersCount = context.read<PlayersCubit>().state.players.length;
 
-    if (playersCount >= Config.maxPlayersCount) {
+    if (playersCount >= DefaultValues.maxPlayersCount) {
       AppSnackBar.show(context, 'Utworzono maksymalną liczbę graczy');
     } else {
       Navigator.of(context).push(

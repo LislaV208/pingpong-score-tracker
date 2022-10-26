@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:injectable/injectable.dart';
-import 'package:pingpong_score_tracker/config.dart';
+
+import 'package:pingpong_score_tracker/configuration/bloc/configuration_cubit.dart';
+import 'package:pingpong_score_tracker/default_values.dart';
 import 'package:pingpong_score_tracker/match/bloc/double_match_state.dart';
 import 'package:pingpong_score_tracker/match/match_type.dart';
 import 'package:pingpong_score_tracker/match/models/team.dart';
@@ -8,13 +9,17 @@ import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.d
 import 'package:pingpong_score_tracker/match_history/models/match_history_entry.dart';
 import 'package:stack/stack.dart';
 
-@injectable
 class DoubleMatchCubit extends Cubit<DoubleMatchState> {
-  DoubleMatchCubit(super.initialState, this.historyCubit) {
+  DoubleMatchCubit(
+    super.initialState, {
+    required this.historyCubit,
+    required this.configurationCubit,
+  }) {
     _startedAt = DateTime.now();
   }
 
   final MatchHistoryCubit historyCubit;
+  final ConfigurationCubit configurationCubit;
 
   final _stateStack = Stack<DoubleMatchState>();
   late final DateTime _startedAt;
@@ -120,7 +125,7 @@ class DoubleMatchCubit extends Cubit<DoubleMatchState> {
     setScore += 1;
     currentServesCount += 1;
 
-    if (currentServesCount >= Config.servesPerPlayer) {
+    if (currentServesCount >= DefaultValues.servesPerPlayer) {
       currentPlayerServing = _computePlayerServing();
 
       currentServesCount = 0;
@@ -129,8 +134,11 @@ class DoubleMatchCubit extends Cubit<DoubleMatchState> {
     leftTeamSetScore = team == state.leftTeam ? setScore : leftTeamSetScore;
     rightTeamSetScore = team == state.rightTeam ? setScore : rightTeamSetScore;
 
-    if (setScore >= Config.setWinningPoints) {
-      if ((leftTeamSetScore - rightTeamSetScore).abs() >= 2) {
+    if (setScore >= configurationCubit.state.pointsInSet) {
+      // setScore >= configurationCubit.state.pointsInSet extra check is for special case
+      // when configurationCubit.state.pointsInSet == 1
+      if ((leftTeamSetScore - rightTeamSetScore).abs() >= 2 ||
+          setScore >= configurationCubit.state.pointsInSet) {
         matchScore += 1;
 
         leftTeamMatchScore =
@@ -171,7 +179,7 @@ class DoubleMatchCubit extends Cubit<DoubleMatchState> {
 
         // ----------
 
-        if (matchScore >= Config.matchWinningPoints) {
+        if (matchScore >= configurationCubit.state.setsInMatch) {
           isFinished = true;
         }
       }

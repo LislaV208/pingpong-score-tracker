@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pingpong_score_tracker/configuration/bloc/configuration_cubit.dart';
+import 'package:pingpong_score_tracker/configuration/screens/configuration_screen.dart';
 import 'package:pingpong_score_tracker/injectable/injectable.dart';
 import 'package:pingpong_score_tracker/match/match_type.dart';
 import 'package:pingpong_score_tracker/match/screens/double_match_config_screen.dart';
@@ -23,7 +25,15 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Ekran główny')),
+      appBar: AppBar(
+        title: const Text('Ekran główny'),
+        actions: [
+          IconButton(
+            onPressed: () => _onConfigurationPressed(context),
+            icon: const Icon(Icons.settings),
+          ),
+        ],
+      ),
       body: Center(
         child: SafeArea(
           child: ConstrainedBox(
@@ -173,6 +183,17 @@ class HomeScreen extends StatelessWidget {
         builder: (context) => BlocProvider.value(
           value: getIt.get<MatchHistoryCubit>(),
           child: const MatchHistoryScreen(),
+        ),
+      ),
+    );
+  }
+
+  void _onConfigurationPressed(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => BlocProvider.value(
+          value: getIt.get<ConfigurationCubit>(),
+          child: const ConfigurationScreen(),
         ),
       ),
     );
