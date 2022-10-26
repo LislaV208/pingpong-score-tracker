@@ -202,6 +202,31 @@ class DoubleMatchCubit extends Cubit<DoubleMatchState> {
     ));
   }
 
+  void flipTeams() {
+    final tempTeam = state.leftTeam;
+    final leftTeam = state.rightTeam;
+    final rightTeam = tempTeam;
+
+    final tempSetScore = state.leftTeamSetScore;
+    final leftSetScore = state.rightTeamSetScore;
+    final rightSetScore = tempSetScore;
+
+    final tempMatchScore = state.leftTeamMatchScore;
+    final leftTeamMatchScore = state.rightTeamMatchScore;
+    final rightTeamMatchScore = tempMatchScore;
+
+    _flipStateStack();
+
+    emit(state.copyWith(
+      leftTeam: leftTeam,
+      rightTeam: rightTeam,
+      leftTeamSetScore: leftSetScore,
+      rightTeamSetScore: rightSetScore,
+      leftTeamMatchScore: leftTeamMatchScore,
+      rightTeamMatchScore: rightTeamMatchScore,
+    ));
+  }
+
   void undo() {
     if (_stateStack.isNotEmpty) {
       final previousState = _stateStack.pop();
@@ -221,5 +246,37 @@ class DoubleMatchCubit extends Cubit<DoubleMatchState> {
         matchType: MatchType.double,
       ),
     );
+  }
+
+  void _flipStateStack() {
+    final oldStates = <DoubleMatchState>[];
+    while (_stateStack.isNotEmpty) {
+      oldStates.add(_stateStack.pop());
+    }
+
+    for (final oldState in oldStates.reversed) {
+      final tempTeam = oldState.leftTeam;
+      final leftTeam = oldState.rightTeam;
+      final rightTeam = tempTeam;
+
+      final tempSetScore = oldState.leftTeamSetScore;
+      final leftSetScore = oldState.rightTeamSetScore;
+      final rightSetScore = tempSetScore;
+
+      final tempMatchScore = oldState.leftTeamMatchScore;
+      final leftTeamMatchScore = oldState.rightTeamMatchScore;
+      final rightTeamMatchScore = tempMatchScore;
+
+      _stateStack.push(
+        oldState.copyWith(
+          leftTeam: leftTeam,
+          rightTeam: rightTeam,
+          leftTeamSetScore: leftSetScore,
+          rightTeamSetScore: rightSetScore,
+          leftTeamMatchScore: leftTeamMatchScore,
+          rightTeamMatchScore: rightTeamMatchScore,
+        ),
+      );
+    }
   }
 }

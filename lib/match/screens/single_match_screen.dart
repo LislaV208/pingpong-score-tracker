@@ -80,6 +80,8 @@ class SingleMatchScreen extends StatelessWidget {
           onUndoPressed: state.canUndo
               ? () => context.read<SingleMatchCubit>().undo()
               : null,
+          onFlipTeamsPressed: () =>
+              context.read<SingleMatchCubit>().flipPlayers(),
         );
       },
     );

@@ -109,6 +109,31 @@ class SingleMatchCubit extends Cubit<SingleMatchState> {
     ));
   }
 
+  void flipPlayers() {
+    final tempPlayer = state.leftPlayer;
+    final leftPlayer = state.rightPlayer;
+    final rightPlayer = tempPlayer;
+
+    final tempSetScore = state.leftPlayerSetScore;
+    final leftSetScore = state.rightPlayerSetScore;
+    final rightSetScore = tempSetScore;
+
+    final tempMatchScore = state.leftPlayerMatchScore;
+    final leftPlayerMatchScore = state.rightPlayerMatchScore;
+    final rightPlayerMatchScore = tempMatchScore;
+
+    _flipStateStack();
+
+    emit(state.copyWith(
+      leftPlayer: leftPlayer,
+      rightPlayer: rightPlayer,
+      leftPlayerSetScore: leftSetScore,
+      rightPlayerSetScore: rightSetScore,
+      leftPlayerMatchScore: leftPlayerMatchScore,
+      rightPlayerMatchScore: rightPlayerMatchScore,
+    ));
+  }
+
   void undo() {
     if (_stateStack.isNotEmpty) {
       final previousState = _stateStack.pop();
@@ -130,5 +155,37 @@ class SingleMatchCubit extends Cubit<SingleMatchState> {
         matchType: matchType,
       ),
     );
+  }
+
+  void _flipStateStack() {
+    final oldStates = <SingleMatchState>[];
+    while (_stateStack.isNotEmpty) {
+      oldStates.add(_stateStack.pop());
+    }
+
+    for (final oldState in oldStates.reversed) {
+      final tempPlayer = oldState.leftPlayer;
+      final leftPlayer = oldState.rightPlayer;
+      final rightPlayer = tempPlayer;
+
+      final tempSetScore = oldState.leftPlayerSetScore;
+      final leftSetScore = oldState.rightPlayerSetScore;
+      final rightSetScore = tempSetScore;
+
+      final tempMatchScore = oldState.leftPlayerMatchScore;
+      final leftPlayerMatchScore = oldState.rightPlayerMatchScore;
+      final rightPlayerMatchScore = tempMatchScore;
+
+      _stateStack.push(
+        oldState.copyWith(
+          leftPlayer: leftPlayer,
+          rightPlayer: rightPlayer,
+          leftPlayerSetScore: leftSetScore,
+          rightPlayerSetScore: rightSetScore,
+          leftPlayerMatchScore: leftPlayerMatchScore,
+          rightPlayerMatchScore: rightPlayerMatchScore,
+        ),
+      );
+    }
   }
 }

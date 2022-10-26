@@ -77,6 +77,8 @@ class DoubleMatchScreen extends StatelessWidget {
           onUndoPressed: state.canUndo
               ? () => context.read<DoubleMatchCubit>().undo()
               : null,
+          onFlipTeamsPressed: () =>
+              context.read<DoubleMatchCubit>().flipTeams(),
         );
       },
     );

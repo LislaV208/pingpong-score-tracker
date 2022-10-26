@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pingpong_score_tracker/match/widgets/end_match_dialog.dart';
 import 'package:pingpong_score_tracker/match/widgets/player_score.dart';
 import 'package:pingpong_score_tracker/match/widgets/undo_button.dart';
+import 'package:pingpong_score_tracker/widgets/elevated_circle_button.dart';
 
 class MatchScreen extends StatelessWidget {
   const MatchScreen({
@@ -11,6 +12,7 @@ class MatchScreen extends StatelessWidget {
     required this.rightTeamLabels,
     required this.onGivePointToLeftTeam,
     required this.onGivePointToRightTeam,
+    required this.onFlipTeamsPressed,
     required this.onUndoPressed,
     required this.leftTeamSetScore,
     required this.rightTeamSetScore,
@@ -23,6 +25,7 @@ class MatchScreen extends StatelessWidget {
   final List<Widget> rightTeamLabels;
   final VoidCallback onGivePointToLeftTeam;
   final VoidCallback onGivePointToRightTeam;
+  final VoidCallback onFlipTeamsPressed;
   final VoidCallback? onUndoPressed;
 
   @override
@@ -42,7 +45,7 @@ class MatchScreen extends StatelessWidget {
         ),
         body: SafeArea(
           child: Stack(
-            alignment: Alignment.bottomCenter,
+            alignment: Alignment.center,
             children: [
               Row(
                 children: [
@@ -66,9 +69,23 @@ class MatchScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: UndoButton(onPressed: onUndoPressed),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: ElevatedCircleButton(
+                      onPressed: onFlipTeamsPressed,
+                      icon: const Icon(
+                        Icons.compare_arrows,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: UndoButton(onPressed: onUndoPressed),
+                  ),
+                ],
               ),
             ],
           ),
