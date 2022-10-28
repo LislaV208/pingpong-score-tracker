@@ -20,6 +20,8 @@ class SingleMatchScreen extends StatelessWidget {
     required this.matchType,
   });
 
+  static const route = 'single-match';
+
   final MatchType matchType;
   final OnFinishedCallback onFinished;
 

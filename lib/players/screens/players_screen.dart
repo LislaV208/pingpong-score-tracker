@@ -14,6 +14,8 @@ import 'package:pingpong_score_tracker/widgets/players_list.dart';
 class PlayersScreen extends StatelessWidget {
   const PlayersScreen({super.key});
 
+  static const route = 'players';
+
   @override
   Widget build(BuildContext context) {
     final listBottomPadding =
@@ -95,11 +97,7 @@ class PlayersScreen extends StatelessWidget {
     if (playersCount >= DefaultValues.maxPlayersCount) {
       AppSnackBar.show(context, 'Utworzono maksymalną liczbę graczy');
     } else {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => AddEditPlayerScreen(player: player),
-        ),
-      );
+      Navigator.of(context).pushNamed(AddEditPlayerScreen.route);
     }
   }
 

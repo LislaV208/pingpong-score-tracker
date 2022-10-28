@@ -19,6 +19,8 @@ import 'package:pingpong_score_tracker/widgets/elevated_circle_button.dart';
 class DoubleMatchConfigScreen extends HookWidget {
   const DoubleMatchConfigScreen({super.key});
 
+  static const route = 'double-match-config';
+
   @override
   Widget build(BuildContext context) {
     final leftTopPlayer = useState<String?>(null);

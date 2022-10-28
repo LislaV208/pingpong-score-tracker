@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:pingpong_score_tracker/configuration/bloc/configuration_cubit.dart';
+import 'package:pingpong_score_tracker/home/screens/home_screen.dart';
 import 'package:pingpong_score_tracker/match/bloc/single_match_cubit.dart';
 import 'package:pingpong_score_tracker/match/bloc/single_match_state.dart';
 import 'package:pingpong_score_tracker/match/match_type.dart';
@@ -14,8 +15,10 @@ import 'package:pingpong_score_tracker/match/widgets/serve_dialog.dart';
 import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 
-class SingledMatchConfigScreen extends HookWidget {
-  const SingledMatchConfigScreen({super.key});
+class SingleMatchConfigScreen extends HookWidget {
+  const SingleMatchConfigScreen({super.key});
+
+  static const route = 'single-match-config';
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,7 @@ class SingledMatchConfigScreen extends HookWidget {
           matchType: MatchType.single,
           onFinished: (navigator, _) {
             navigator.popUntil(
-              ModalRoute.withName('/'),
+              ModalRoute.withName(HomeScreen.route),
             );
           },
         ),

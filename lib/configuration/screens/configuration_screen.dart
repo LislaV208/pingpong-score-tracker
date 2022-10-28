@@ -7,6 +7,8 @@ import 'package:pingpong_score_tracker/widgets/increment_decrement_value.dart';
 class ConfigurationScreen extends StatelessWidget {
   const ConfigurationScreen({super.key});
 
+  static const route = 'configuration';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

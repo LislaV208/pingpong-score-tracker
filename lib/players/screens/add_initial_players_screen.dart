@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pingpong_score_tracker/home_screen.dart';
+import 'package:pingpong_score_tracker/home/screens/home_screen.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
 import 'package:pingpong_score_tracker/players/widgets/add_player_field.dart';
@@ -12,6 +12,8 @@ import 'package:pingpong_score_tracker/widgets/players_list.dart';
 
 class AddInitialPlayersScreen extends StatefulWidget {
   const AddInitialPlayersScreen({super.key});
+
+  static const route = 'add-initial-players';
 
   @override
   State<AddInitialPlayersScreen> createState() =>
@@ -123,10 +125,6 @@ class _AddInitialPlayersScreenState extends State<AddInitialPlayersScreen> {
   }
 
   void _navigateToNextScreen() {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => const HomeScreen(),
-      ),
-    );
+    Navigator.of(context).pushReplacementNamed(HomeScreen.route);
   }
 }

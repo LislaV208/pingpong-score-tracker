@@ -8,6 +8,8 @@ import 'package:pingpong_score_tracker/match_history/widgets/match_history_list_
 class MatchHistoryScreen extends StatelessWidget {
   const MatchHistoryScreen({super.key});
 
+  static const route = 'match-history';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

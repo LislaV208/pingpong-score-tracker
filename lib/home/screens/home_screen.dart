@@ -19,6 +19,8 @@ import 'package:pingpong_score_tracker/widgets/badge_icon.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+  static const route = 'home';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,53 +128,34 @@ class HomeScreen extends StatelessWidget {
               builder: (context) => const MatchTypeDialog(),
             );
             if (matchType != null) {
-              navigator.push(
-                MaterialPageRoute(
-                  builder: (context) => matchType == MatchType.single
-                      ? const SingledMatchConfigScreen()
-                      : const DoubleMatchConfigScreen(),
-                ),
+              navigator.pushNamed(
+                matchType == MatchType.single
+                    ? SingleMatchConfigScreen.route
+                    : DoubleMatchConfigScreen.route,
               );
             }
           };
   }
 
   void _onTournamentPressed(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) {
-          final tournamentState = context.read<BracketTournamentCubit>().state;
+    final tournamentState = context.read<BracketTournamentCubit>().state;
+    final routeName = tournamentState == BracketTournamentState.notStarted()
+        ? BracketPlayersScreen.route
+        : BracketTournamentScreen.route;
 
-          return tournamentState == BracketTournamentState.notStarted()
-              ? const BracketPlayersScreen()
-              : const BracketTournamentScreen();
-        },
-      ),
-    );
+    Navigator.of(context).pushNamed(routeName);
   }
 
   void _onManagePlayersPressed(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const PlayersScreen(),
-      ),
-    );
+    Navigator.of(context).pushNamed(PlayersScreen.route);
   }
 
   void _onMatchHistoryPressed(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const MatchHistoryScreen(),
-      ),
-    );
+    Navigator.of(context).pushNamed(MatchHistoryScreen.route);
   }
 
   void _onConfigurationPressed(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const ConfigurationScreen(),
-      ),
-    );
+    Navigator.of(context).pushNamed(ConfigurationScreen.route);
   }
 }
 

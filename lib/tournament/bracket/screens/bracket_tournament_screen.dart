@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pingpong_score_tracker/configuration/bloc/configuration_cubit.dart';
-import 'package:pingpong_score_tracker/home_screen.dart';
+import 'package:pingpong_score_tracker/home/screens/home_screen.dart';
 import 'package:pingpong_score_tracker/match/bloc/single_match_cubit.dart';
 import 'package:pingpong_score_tracker/match/bloc/single_match_state.dart';
 import 'package:pingpong_score_tracker/match/match_type.dart';
@@ -16,6 +16,8 @@ import '../../../match_history/cubit/match_history_cubit.dart';
 
 class BracketTournamentScreen extends StatelessWidget {
   const BracketTournamentScreen({super.key});
+
+  static const route = 'bracket-tournament';
 
   @override
   Widget build(BuildContext context) {
@@ -51,17 +53,10 @@ class BracketTournamentScreen extends StatelessWidget {
 
     if (cubit.state.isFinished == true) {
       cubit.setToNotStarted();
-      navigator.pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
-        ),
-        (route) => false,
-      );
-    } else {
-      navigator.popUntil(
-        ModalRoute.withName('/'),
-      );
     }
+    navigator.popUntil(
+      ModalRoute.withName(HomeScreen.route),
+    );
 
     return false;
   }
@@ -79,7 +74,7 @@ class BracketTournamentScreen extends StatelessWidget {
     if (doAbortTournament) {
       cubit.setToNotStarted();
       navigator.popUntil(
-        ModalRoute.withName('/'),
+        ModalRoute.withName(HomeScreen.route),
       );
     }
   }
@@ -90,11 +85,8 @@ class BracketTournamentScreen extends StatelessWidget {
 
     if (state.isFinished) {
       cubit.setToNotStarted();
-      navigator.pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
-        ),
-        (route) => false,
+      navigator.popUntil(
+        ModalRoute.withName(HomeScreen.route),
       );
 
       return;

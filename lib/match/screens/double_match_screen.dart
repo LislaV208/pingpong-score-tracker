@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pingpong_score_tracker/home/screens/home_screen.dart';
 import 'package:pingpong_score_tracker/match/bloc/double_match_cubit.dart';
 import 'package:pingpong_score_tracker/match/bloc/double_match_state.dart';
 import 'package:pingpong_score_tracker/match/screens/match_screen.dart';
@@ -9,6 +10,8 @@ import 'package:pingpong_score_tracker/match/widgets/player_name.dart';
 
 class DoubleMatchScreen extends StatelessWidget {
   const DoubleMatchScreen({super.key});
+
+  static const route = 'double-match';
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,7 @@ class DoubleMatchScreen extends StatelessWidget {
           if (isFinished) {
             cubit.addMatchHistoryEntry();
             navigator.popUntil(
-              ModalRoute.withName('/'),
+              ModalRoute.withName(HomeScreen.route),
             );
           }
         }

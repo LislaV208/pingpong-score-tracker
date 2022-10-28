@@ -13,6 +13,8 @@ import 'package:pingpong_score_tracker/widgets/players_list.dart';
 class BracketPlayersScreen extends HookWidget {
   const BracketPlayersScreen({super.key});
 
+  static const route = 'bracket-tournament-players';
+
   @override
   Widget build(BuildContext context) {
     final selectedPlayers = useState<List<String>>([]);
@@ -112,12 +114,7 @@ class BracketPlayersScreen extends HookWidget {
     List<String> selectedPlayers,
   ) {
     context.read<BracketTournamentCubit>().start(selectedPlayers);
-
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const BracketTournamentScreen(),
-      ),
-    );
+    Navigator.of(context).pushNamed(BracketTournamentScreen.route);
   }
 }
 
