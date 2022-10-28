@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pingpong_score_tracker/configuration/screens/configuration_screen.dart';
 import 'package:pingpong_score_tracker/match/match_type.dart';
@@ -16,10 +19,26 @@ import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_tourna
 import 'package:pingpong_score_tracker/widgets/app_dialog.dart';
 import 'package:pingpong_score_tracker/widgets/badge_icon.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   static const route = 'home';
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    SystemChrome.setPreferredOrientations([
+      Platform.isAndroid
+          ? DeviceOrientation.landscapeLeft
+          : DeviceOrientation.landscapeRight
+    ]);
+  }
 
   @override
   Widget build(BuildContext context) {
