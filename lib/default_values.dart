@@ -4,4 +4,5 @@ class DefaultValues {
   static const servesPerPlayer = 2;
   static const setsInMatch = 2;
   static const maxPlayersCount = 32;
+  static const maxPlayerNameLength = 12;
 }

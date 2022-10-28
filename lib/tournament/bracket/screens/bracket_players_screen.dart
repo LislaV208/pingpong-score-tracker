@@ -44,19 +44,32 @@ class BracketPlayersScreen extends HookWidget {
                         );
                       }
 
-                      return PlayersList(
-                        players: players,
-                        itemBuilder: (index, player) {
-                          return CheckboxListTile(
-                            title: Text(player),
-                            activeColor: Colors.blueGrey,
-                            selectedTileColor: Colors.black.withOpacity(0.1),
-                            selected: selectedPlayers.value.contains(player),
-                            onChanged: (bool? isSelected) => _onPlayerSelected(
-                                selectedPlayers, isSelected, player),
-                            value: selectedPlayers.value.contains(player),
-                          );
-                        },
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                          top: 20.0,
+                          left: 20.0,
+                          right: 20.0,
+                        ),
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 700),
+                          child: PlayersList(
+                            players: players,
+                            itemBuilder: (index, player) {
+                              return CheckboxListTile(
+                                title: Text(player),
+                                activeColor: Colors.blueGrey,
+                                selectedTileColor:
+                                    Colors.black.withOpacity(0.1),
+                                selected:
+                                    selectedPlayers.value.contains(player),
+                                onChanged: (bool? isSelected) =>
+                                    _onPlayerSelected(
+                                        selectedPlayers, isSelected, player),
+                                value: selectedPlayers.value.contains(player),
+                              );
+                            },
+                          ),
+                        ),
                       );
                     },
                   ),

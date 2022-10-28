@@ -5,6 +5,8 @@ import 'package:pingpong_score_tracker/injectable/injectable.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
 import 'package:pingpong_score_tracker/players/screens/add_edit_player_screen.dart';
+import 'package:pingpong_score_tracker/players/widgets/add_player_field.dart';
+import 'package:pingpong_score_tracker/players/widgets/player_list_item.dart';
 import 'package:pingpong_score_tracker/utils/media_query_utils.dart';
 import 'package:pingpong_score_tracker/widgets/app_snack_bar.dart';
 import 'package:pingpong_score_tracker/widgets/decision_dialog.dart';
@@ -42,18 +44,27 @@ class PlayersScreen extends StatelessWidget {
                     }
 
                     return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 66.0),
-                      child: PlayersList(
-                        players: players,
-                        itemBuilder: (index, player) {
-                          return _ListItem(
-                            index: index,
-                            player: player,
-                            onEditPlayer: _onAddEditPlayer,
-                            onDeletePlayer: _onPlayerDelete,
-                          );
-                        },
-                        clipBehavior: listClip,
+                      padding: const EdgeInsets.fromLTRB(66.0, 20.0, 66.0, 0.0),
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 700),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: PlayersList(
+                                players: players,
+                                itemBuilder: (index, player) {
+                                  return PlayerListItem(
+                                    index: index,
+                                    player: player,
+                                    onEditPlayer: _onAddEditPlayer,
+                                    onDeletePlayer: _onPlayerDelete,
+                                  );
+                                },
+                                clipBehavior: listClip,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -102,48 +113,5 @@ class PlayersScreen extends StatelessWidget {
     if (doRemove) {
       cubit.removePlayer(player);
     }
-  }
-}
-
-class _ListItem extends StatelessWidget {
-  const _ListItem({
-    required this.index,
-    required this.player,
-    required this.onEditPlayer,
-    required this.onDeletePlayer,
-  });
-
-  final int index;
-  final String player;
-  final void Function(BuildContext context, {String? player}) onEditPlayer;
-  final void Function(BuildContext context, String player) onDeletePlayer;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      minLeadingWidth: 20.0,
-      leading: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [Text('${index + 1}.')],
-      ),
-      title: FittedBox(
-        alignment: Alignment.centerLeft,
-        fit: BoxFit.scaleDown,
-        child: Text(player),
-      ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () => onEditPlayer(context, player: player),
-          ),
-          IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: () => onDeletePlayer(context, player),
-          ),
-        ],
-      ),
-    );
   }
 }
