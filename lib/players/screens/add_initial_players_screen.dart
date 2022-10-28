@@ -113,11 +113,14 @@ class _AddInitialPlayersScreenState extends State<AddInitialPlayersScreen> {
   }
 
   void _animatePlayersListToTop() {
-    controller.animateTo(
-      0.0,
-      duration: const Duration(milliseconds: 250),
-      curve: Curves.easeInOut,
-    );
+    final playersCount = context.read<PlayersCubit>().state.players.length;
+    if (playersCount > 1) {
+      controller.animateTo(
+        0.0,
+        duration: const Duration(milliseconds: 250),
+        curve: Curves.easeInOut,
+      );
+    }
   }
 
   void _onPlayerDelete(BuildContext context, String player) {
