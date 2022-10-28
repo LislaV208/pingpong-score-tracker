@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:pingpong_score_tracker/configuration/bloc/configuration_cubit.dart';
-import 'package:pingpong_score_tracker/injectable/injectable.dart';
+
 import 'package:pingpong_score_tracker/match/bloc/double_match_cubit.dart';
 import 'package:pingpong_score_tracker/match/bloc/double_match_state.dart';
 import 'package:pingpong_score_tracker/match/models/team.dart';
@@ -46,8 +46,8 @@ class DoubleMatchConfigScreen extends HookWidget {
             playerServingMatch: playerServing,
             currentPlayerServing: playerServing,
           ),
-          historyCubit: getIt.get<MatchHistoryCubit>(),
-          configurationCubit: getIt.get<ConfigurationCubit>(),
+          historyCubit: context.read<MatchHistoryCubit>(),
+          configurationCubit: context.read<ConfigurationCubit>(),
         ),
         child: const DoubleMatchScreen(),
       ),

@@ -1,10 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
 
 part 'single_match_state.freezed.dart';
 
 @freezed
-@injectable
 class SingleMatchState with _$SingleMatchState {
   const factory SingleMatchState({
     required String leftPlayer,

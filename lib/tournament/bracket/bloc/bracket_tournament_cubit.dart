@@ -1,9 +1,7 @@
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:injectable/injectable.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_state.dart';
 import 'package:pingpong_score_tracker/tournament/models/tournament_match.dart';
 
-@singleton
 class BracketTournamentCubit extends HydratedCubit<BracketTournamentState> {
   BracketTournamentCubit() : super(BracketTournamentState.notStarted());
 

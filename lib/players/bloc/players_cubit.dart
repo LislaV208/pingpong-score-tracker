@@ -1,5 +1,4 @@
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:injectable/injectable.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
 
 enum ValidationError {
@@ -13,7 +12,6 @@ class ValidationException implements Exception {
   final ValidationError error;
 }
 
-@singleton
 class PlayersCubit extends HydratedCubit<PlayersState> {
   PlayersCubit() : super(const PlayersState());
 

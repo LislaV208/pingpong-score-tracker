@@ -3,9 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pingpong_score_tracker/bloc/app_cubit.dart';
 import 'package:pingpong_score_tracker/home_screen.dart';
-import 'package:pingpong_score_tracker/injectable/injectable.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
 import 'package:pingpong_score_tracker/players/widgets/add_player_field.dart';
@@ -67,7 +65,7 @@ class _AddInitialPlayersScreenState extends State<AddInitialPlayersScreen> {
                         if (players.isEmpty) {
                           return const Center(
                             child: Text(
-                                'Dodaj conajmniej 2 graczy, aby kontynuować.'),
+                                'Dodaj co najmniej 2 graczy, aby kontynuować.'),
                           );
                         }
                         return Padding(
@@ -100,8 +98,7 @@ class _AddInitialPlayersScreenState extends State<AddInitialPlayersScreen> {
         builder: (context, state) {
           final canProceed = state.players.length >= 2;
           return FloatingActionButton(
-            onPressed:
-                canProceed ? () => _initializeAndNavigateToNextScreen() : null,
+            onPressed: canProceed ? () => _navigateToNextScreen() : null,
             backgroundColor: canProceed ? null : Colors.grey,
             child: Icon(
               Icons.arrow_forward,
@@ -125,15 +122,10 @@ class _AddInitialPlayersScreenState extends State<AddInitialPlayersScreen> {
     context.read<PlayersCubit>().removePlayer(player);
   }
 
-  void _initializeAndNavigateToNextScreen() {
-    getIt.get<AppCubit>().initialize();
-
+  void _navigateToNextScreen() {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (context) => BlocProvider.value(
-          value: getIt.get<PlayersCubit>(),
-          child: const HomeScreen(),
-        ),
+        builder: (context) => const HomeScreen(),
       ),
     );
   }

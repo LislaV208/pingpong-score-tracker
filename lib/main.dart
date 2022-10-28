@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pingpong_score_tracker/app.dart';
-import 'package:pingpong_score_tracker/bloc/app_cubit.dart';
-import 'package:pingpong_score_tracker/injectable/injectable.dart';
+import 'package:pingpong_score_tracker/configuration/bloc/configuration_cubit.dart';
+import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.dart';
+import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
+import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_cubit.dart';
 import 'package:wakelock/wakelock.dart';
 
 void main() async {
@@ -15,11 +17,15 @@ void main() async {
   );
   HydratedBlocOverrides.runZoned(
     () {
-      configureDependencies();
       Wakelock.enable();
       runApp(
-        BlocProvider.value(
-          value: getIt.get<AppCubit>(),
+        MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => ConfigurationCubit()),
+            BlocProvider(create: (context) => PlayersCubit()),
+            BlocProvider(create: (context) => BracketTournamentCubit()),
+            BlocProvider(create: (context) => MatchHistoryCubit()),
+          ],
           child: const App(),
         ),
       );

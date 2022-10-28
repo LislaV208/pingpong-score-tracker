@@ -1,9 +1,7 @@
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:injectable/injectable.dart';
 import 'package:pingpong_score_tracker/configuration/bloc/configuration_state.dart';
 import 'package:pingpong_score_tracker/utils/parsing_utils.dart';
 
-@singleton
 class ConfigurationCubit extends HydratedCubit<ConfigurationState> {
   ConfigurationCubit() : super(ConfigurationState.classic());
 

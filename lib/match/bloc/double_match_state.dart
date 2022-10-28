@@ -1,11 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
 import 'package:pingpong_score_tracker/match/models/team.dart';
 
 part 'double_match_state.freezed.dart';
 
 @freezed
-@injectable
 class DoubleMatchState with _$DoubleMatchState {
   const factory DoubleMatchState({
     required Team leftTeam,

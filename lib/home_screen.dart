@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pingpong_score_tracker/configuration/bloc/configuration_cubit.dart';
 import 'package:pingpong_score_tracker/configuration/screens/configuration_screen.dart';
-import 'package:pingpong_score_tracker/injectable/injectable.dart';
 import 'package:pingpong_score_tracker/match/match_type.dart';
 import 'package:pingpong_score_tracker/match/screens/double_match_config_screen.dart';
 import 'package:pingpong_score_tracker/match/screens/single_match_config_screen.dart';
-import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.dart';
 import 'package:pingpong_score_tracker/match_history/screens/match_history_screen.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
@@ -126,20 +123,14 @@ class HomeScreen extends StatelessWidget {
             final navigator = Navigator.of(context);
             final matchType = await showDialog<MatchType?>(
               context: context,
-              builder: (context) => BlocProvider.value(
-                value: getIt.get<PlayersCubit>(),
-                child: const MatchTypeDialog(),
-              ),
+              builder: (context) => const MatchTypeDialog(),
             );
             if (matchType != null) {
               navigator.push(
                 MaterialPageRoute(
-                  builder: (context) => BlocProvider.value(
-                    value: getIt.get<PlayersCubit>(),
-                    child: matchType == MatchType.single
-                        ? const SingledMatchConfigScreen()
-                        : const DoubleMatchConfigScreen(),
-                  ),
+                  builder: (context) => matchType == MatchType.single
+                      ? const SingledMatchConfigScreen()
+                      : const DoubleMatchConfigScreen(),
                 ),
               );
             }
@@ -150,17 +141,11 @@ class HomeScreen extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) {
-          final tournamentState = getIt.get<BracketTournamentCubit>().state;
-          if (tournamentState == BracketTournamentState.notStarted()) {
-            return BlocProvider.value(
-              value: getIt.get<PlayersCubit>(),
-              child: const BracketPlayersScreen(),
-            );
-          }
-          return BlocProvider.value(
-            value: getIt.get<BracketTournamentCubit>(),
-            child: const BracketTournamentScreen(),
-          );
+          final tournamentState = context.read<BracketTournamentCubit>().state;
+
+          return tournamentState == BracketTournamentState.notStarted()
+              ? const BracketPlayersScreen()
+              : const BracketTournamentScreen();
         },
       ),
     );
@@ -169,10 +154,7 @@ class HomeScreen extends StatelessWidget {
   void _onManagePlayersPressed(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => BlocProvider.value(
-          value: getIt.get<PlayersCubit>(),
-          child: const PlayersScreen(),
-        ),
+        builder: (context) => const PlayersScreen(),
       ),
     );
   }
@@ -180,10 +162,7 @@ class HomeScreen extends StatelessWidget {
   void _onMatchHistoryPressed(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => BlocProvider.value(
-          value: getIt.get<MatchHistoryCubit>(),
-          child: const MatchHistoryScreen(),
-        ),
+        builder: (context) => const MatchHistoryScreen(),
       ),
     );
   }
@@ -191,10 +170,7 @@ class HomeScreen extends StatelessWidget {
   void _onConfigurationPressed(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => BlocProvider.value(
-          value: getIt.get<ConfigurationCubit>(),
-          child: const ConfigurationScreen(),
-        ),
+        builder: (context) => const ConfigurationScreen(),
       ),
     );
   }
@@ -280,7 +256,6 @@ class _HomeTournamentButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BracketTournamentCubit, BracketTournamentState>(
-      bloc: getIt.get<BracketTournamentCubit>(),
       builder: (context, state) {
         final isTournamentStarted =
             state != BracketTournamentState.notStarted();
