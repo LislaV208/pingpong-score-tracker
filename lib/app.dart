@@ -8,7 +8,6 @@ import 'package:pingpong_score_tracker/players/screens/add_initial_players_scree
 import 'package:pingpong_score_tracker/match/screens/double_match_config_screen.dart';
 import 'package:pingpong_score_tracker/match/screens/double_match_screen.dart';
 import 'package:pingpong_score_tracker/match/screens/single_match_config_screen.dart';
-import 'package:pingpong_score_tracker/players/screens/add_edit_player_screen.dart';
 import 'package:pingpong_score_tracker/players/screens/players_screen.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_players_screen.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_tournament_screen.dart';

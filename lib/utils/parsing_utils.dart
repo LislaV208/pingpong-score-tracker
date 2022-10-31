@@ -7,7 +7,7 @@ T tryParse<T>({
   try {
     value = parse();
   } on Exception catch (_) {
-    // TODO log error
+    // log error
 
   }
 

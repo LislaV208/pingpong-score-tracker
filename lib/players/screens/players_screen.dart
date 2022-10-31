@@ -61,7 +61,7 @@ class PlayersScreen extends StatelessWidget {
                                     return PlayerListItem(
                                       index: index,
                                       player: player,
-                                      onEditPlayer: _onAddEditPlayer,
+                                      onEditPlayer: _onEditPlayer,
                                       onDeletePlayer: _onPlayerDelete,
                                     );
                                   },
@@ -81,7 +81,7 @@ class PlayersScreen extends StatelessWidget {
               right: MediaQuery.of(context).padding.right / 4 + 20,
               bottom: 20,
               child: FloatingActionButton(
-                onPressed: () => _onAddEditPlayer(context),
+                onPressed: () => _onAddPlayer(context),
                 child: const Icon(Icons.add),
               ),
             ),
@@ -91,14 +91,26 @@ class PlayersScreen extends StatelessWidget {
     );
   }
 
-  void _onAddEditPlayer(BuildContext context, {String? player}) {
+  void _onAddPlayer(BuildContext context) {
     final playersCount = context.read<PlayersCubit>().state.players.length;
 
     if (playersCount >= DefaultValues.maxPlayersCount) {
       AppSnackBar.show(context, 'Utworzono maksymalną liczbę graczy');
     } else {
-      Navigator.of(context).pushNamed(AddEditPlayerScreen.route);
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const AddEditPlayerScreen(),
+        ),
+      );
     }
+  }
+
+  void _onEditPlayer(BuildContext context, {String? player}) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => AddEditPlayerScreen(player: player),
+      ),
+    );
   }
 
   void _onPlayerDelete(BuildContext context, String player) async {
