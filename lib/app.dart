@@ -11,6 +11,7 @@ import 'package:pingpong_score_tracker/match/screens/single_match_config_screen.
 import 'package:pingpong_score_tracker/players/screens/players_screen.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_players_screen.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_tournament_screen.dart';
+import 'package:pingpong_score_tracker/tournament/tournament_type_screen.dart';
 
 part 'app_routes.dart';
 

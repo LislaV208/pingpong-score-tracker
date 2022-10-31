@@ -14,8 +14,8 @@ import 'package:pingpong_score_tracker/players/screens/players_screen.dart';
 import 'package:pingpong_score_tracker/players/widgets/match_type_dialog.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_cubit.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_state.dart';
-import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_players_screen.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_tournament_screen.dart';
+import 'package:pingpong_score_tracker/tournament/tournament_type_screen.dart';
 import 'package:pingpong_score_tracker/widgets/app_dialog.dart';
 import 'package:pingpong_score_tracker/widgets/badge_icon.dart';
 
@@ -163,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onTournamentPressed(BuildContext context) {
     final tournamentState = context.read<BracketTournamentCubit>().state;
     final routeName = tournamentState == BracketTournamentState.notStarted()
-        ? BracketPlayersScreen.route
+        ? TournamentTypeScreen.route
         : BracketTournamentScreen.route;
 
     Navigator.of(context).pushNamed(routeName);

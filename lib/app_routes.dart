@@ -14,4 +14,5 @@ final _appRoutes = {
   BracketPlayersScreen.route: (_) => const BracketPlayersScreen(),
   BracketTournamentScreen.route: (_) => const BracketTournamentScreen(),
   ConfigurationScreen.route: (_) => const ConfigurationScreen(),
+  TournamentTypeScreen.route: (_) => const TournamentTypeScreen(),
 };
