@@ -11,8 +11,11 @@ final _appRoutes = {
   PlayersScreen.route: (_) => const PlayersScreen(),
   // AddEditPlayerScreen needs parameters, so it uses anonymous navigation
   // AddEditPlayerScreen.route: (_) => const AddEditPlayerScreen(),
-  BracketPlayersScreen.route: (_) => const BracketPlayersScreen(),
+  BracketTournamentPlayersScreen.route: (_) =>
+      const BracketTournamentPlayersScreen(),
   BracketTournamentScreen.route: (_) => const BracketTournamentScreen(),
   ConfigurationScreen.route: (_) => const ConfigurationScreen(),
   TournamentTypeScreen.route: (_) => const TournamentTypeScreen(),
+  CircularTournamentPlayersScreen.route: (_) =>
+      const CircularTournamentPlayersScreen(),
 };
