@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pingpong_score_tracker/configuration/screens/configuration_screen.dart';
 import 'package:pingpong_score_tracker/home/screens/home_screen.dart';
+import 'package:pingpong_score_tracker/match_history/screens/match_history_screen.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/screens/add_initial_players_screen.dart';
 
