@@ -174,7 +174,7 @@ class __$$_MatchHistoryEntryCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MatchHistoryEntry implements _MatchHistoryEntry {
+class _$_MatchHistoryEntry extends _MatchHistoryEntry {
   const _$_MatchHistoryEntry(
       {required this.leftPlayer,
       required this.leftPlayerScore,
@@ -182,7 +182,8 @@ class _$_MatchHistoryEntry implements _MatchHistoryEntry {
       required this.rightPlayerScore,
       required this.startedAt,
       required this.finishedAt,
-      required this.matchType});
+      required this.matchType})
+      : super._();
 
   factory _$_MatchHistoryEntry.fromJson(Map<String, dynamic> json) =>
       _$$_MatchHistoryEntryFromJson(json);
@@ -252,7 +253,7 @@ class _$_MatchHistoryEntry implements _MatchHistoryEntry {
   }
 }
 
-abstract class _MatchHistoryEntry implements MatchHistoryEntry {
+abstract class _MatchHistoryEntry extends MatchHistoryEntry {
   const factory _MatchHistoryEntry(
       {required final String leftPlayer,
       required final int leftPlayerScore,
@@ -261,6 +262,7 @@ abstract class _MatchHistoryEntry implements MatchHistoryEntry {
       required final DateTime startedAt,
       required final DateTime finishedAt,
       required final MatchType matchType}) = _$_MatchHistoryEntry;
+  const _MatchHistoryEntry._() : super._();
 
   factory _MatchHistoryEntry.fromJson(Map<String, dynamic> json) =
       _$_MatchHistoryEntry.fromJson;
