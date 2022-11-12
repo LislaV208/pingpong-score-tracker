@@ -6,6 +6,7 @@ import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_cubit.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_tournament_screen.dart';
+import 'package:pingpong_score_tracker/tournament/circular/services/circular_tournament_generator.dart';
 import 'package:pingpong_score_tracker/tournament/circular/widgets/approx_time_button.dart';
 import 'package:pingpong_score_tracker/widgets/players_list.dart';
 
@@ -112,8 +113,13 @@ class CircularTournamentPlayersScreen extends HookWidget {
     BuildContext context,
     List<String> selectedPlayers,
   ) {
-    context.read<BracketTournamentCubit>().start(selectedPlayers);
-    Navigator.of(context).pushNamed(BracketTournamentScreen.route);
+    BergerTableGenerator<int>(
+      List.generate(8, (index) => index + 1),
+      // BergerTableGenerator<String>(
+      // selectedPlayers..shuffle(),
+    ).generate();
+    // context.read<BracketTournamentCubit>().start(selectedPlayers);
+    // Navigator.of(context).pushNamed(BracketTournamentScreen.route);
   }
 }
 
