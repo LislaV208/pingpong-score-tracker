@@ -10,9 +10,19 @@ List<String> generateRandomPlayers(
   return List.generate(
     count,
     (index) {
-      final length =
-          Random().nextInt(maxCharacters - minCharacters) + minCharacters;
-      return randomAlpha(length);
+      return randomString(
+        minCharacters: minCharacters,
+        maxCharacters: maxCharacters,
+      );
     },
   );
+}
+
+String randomString({
+  int minCharacters = 4,
+  int maxCharacters = 12,
+}) {
+  final length =
+      Random().nextInt(maxCharacters - minCharacters) + minCharacters;
+  return randomAlpha(length);
 }

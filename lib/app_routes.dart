@@ -19,4 +19,5 @@ final _appRoutes = {
   TournamentTypeScreen.route: (_) => const TournamentTypeScreen(),
   CircularTournamentPlayersScreen.route: (_) =>
       const CircularTournamentPlayersScreen(),
+  CircularTournamentScreen.route: (_) => const CircularTournamentScreen(),
 };
