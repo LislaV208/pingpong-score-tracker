@@ -19,5 +19,15 @@ final _appRoutes = {
   TournamentTypeScreen.route: (_) => const TournamentTypeScreen(),
   CircularTournamentPlayersScreen.route: (_) =>
       const CircularTournamentPlayersScreen(),
-  CircularTournamentScreen.route: (_) => const CircularTournamentScreen(),
+  CircularTournamentScreen.route: (BuildContext context) {
+    final players = ModalRoute.of(context)?.settings.arguments as List<String>;
+    final matches = CircularTournamentMatchGenerator(
+      BergerTableGenerator(players),
+    ).generate();
+
+    return ChangeNotifierProvider(
+      create: (context) => CircularTournamentState(matches),
+      child: const CircularTournamentScreen(),
+    );
+  },
 };

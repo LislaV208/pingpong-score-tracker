@@ -114,10 +114,10 @@ class CircularTournamentPlayersScreen extends HookWidget {
     BuildContext context,
     List<String> selectedPlayers,
   ) {
-    // BergerTableGenerator<int>(
-    //   List.generate(8, (index) => index + 1),
-    // ).generate();
-    Navigator.of(context).pushNamed(CircularTournamentScreen.route);
+    Navigator.of(context).pushNamed(
+      CircularTournamentScreen.route,
+      arguments: selectedPlayers,
+    );
   }
 }
 

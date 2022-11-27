@@ -1,11 +1,8 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:pingpong_score_tracker/utils/dev/colors.dart';
-import 'package:pingpong_score_tracker/utils/dev/random_players.dart';
-import 'package:table_sticky_headers/table_sticky_headers.dart';
+import 'package:pingpong_score_tracker/tournament/circular/circular_tournament_state.dart';
 
 class _TableCell extends StatelessWidget {
   const _TableCell({
@@ -67,25 +64,34 @@ class _MatchesPlayersCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _TableCell(label: 'Mecze / Gracze');
-    return CustomPaint(
-      painter: _MatchesPlayersCellPainter(),
-      // size: Size(100, 50),
-      child: SizedBox(
-        width: 100,
-        height: 36,
-        // child: Text('elo morelo joł'),
-      ),
-    );
+    // return CustomPaint(
+    //   painter: _MatchesPlayersCellPainter(),
+    //   // size: Size(100, 50),
+    //   child: SizedBox(
+    //     width: 100,
+    //     height: 36,
+    //     // child: Text('elo morelo joł'),
+    //   ),
+    // );
   }
 }
 
 class MatchesTable extends HookWidget {
-  const MatchesTable({super.key});
+  const MatchesTable({
+    super.key,
+    required this.state,
+  });
+
+  final CircularTournamentState state;
 
   @override
   Widget build(BuildContext context) {
     final scrollControler = useScrollController();
-    final mockPlayers = generateRandomPlayers(12, maxCharacters: 8);
+    final players = state.matches
+        .expand<String>((match) => [match.player1, match.player2])
+        .toSet()
+        .toList();
+
     final rowHeaders = ['Rozegrane', 'Wygrane', 'Przegrane'];
 
     const horizontalDivider = Divider(
@@ -136,7 +142,7 @@ class MatchesTable extends HookWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 16.0),
                   child: Row(
-                    children: mockPlayers.mapIndexed((index, player) {
+                    children: players.mapIndexed((index, player) {
                       return Row(
                         children: [
                           // if (index == 0) verticalDivider,
@@ -154,16 +160,22 @@ class MatchesTable extends HookWidget {
                                     // border: Border(bottom: BorderSide()),
                                   ),
                                   horizontalDivider,
-                                  _TableCell(label: '0'),
+                                  _TableCell(
+                                      label:
+                                          '${state.getPlayerPlayedMatchesCount(player)}'),
                                   horizontalDivider,
-                                  _TableCell(label: '0'),
+                                  _TableCell(
+                                      label:
+                                          '${state.getPlayerWonMatchesCount(player)}'),
                                   horizontalDivider,
-                                  _TableCell(label: '0'),
+                                  _TableCell(
+                                      label:
+                                          '${state.getPlayerLostMatchesCount(player)}'),
                                 ],
                               ),
                             ),
                           ),
-                          if (index < mockPlayers.length - 1) verticalDivider,
+                          if (index < players.length - 1) verticalDivider,
                         ],
                       );
                     }).toList(),

@@ -2,32 +2,28 @@ import 'package:collection/collection.dart';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:pingpong_score_tracker/tournament/circular/circular_tournament_state.dart';
 import 'package:pingpong_score_tracker/tournament/circular/widgets/carousel_match_item.dart';
-import 'package:pingpong_score_tracker/tournament/models/tournament_match.dart';
-import 'package:pingpong_score_tracker/utils/dev/colors.dart';
-import 'package:pingpong_score_tracker/utils/dev/random_players.dart';
 
-class MatchesCarousel extends StatefulWidget {
-  const MatchesCarousel({super.key});
+class MatchesCarousel extends StatelessWidget {
+  const MatchesCarousel({
+    super.key,
+    required this.state,
+    required this.controller,
+  });
 
-  @override
-  State<MatchesCarousel> createState() => _MatchesCarouselState();
-}
-
-class _MatchesCarouselState extends State<MatchesCarousel> {
-  final carouselController = CarouselController();
+  final CarouselController controller;
+  final CircularTournamentState state;
 
   @override
   Widget build(BuildContext context) {
-    final mockMatches = List.generate(5, (index) {
-      return TournamentMatch(player1: randomString(), player2: randomString());
-    });
-    const currentMatchIndex = 1;
+    final matches = state.matches;
+    final currentMatchIndex = state.currentMatchIndex;
     return Stack(
       children: [
         CarouselSlider(
-          carouselController: carouselController,
-          items: mockMatches
+          carouselController: controller,
+          items: matches
               .mapIndexed(
                 (index, match) => CarouselMatchItem(
                   match: match,
@@ -50,21 +46,21 @@ class _MatchesCarouselState extends State<MatchesCarousel> {
             children: [
               IconButton(
                 onPressed: () {
-                  carouselController.previousPage();
+                  controller.previousPage();
                 },
                 icon: Icon(Icons.navigate_before),
                 splashRadius: 14.0,
               ),
               IconButton(
                 onPressed: () {
-                  carouselController.animateToPage(currentMatchIndex);
+                  controller.animateToPage(currentMatchIndex);
                 },
                 icon: Icon(Icons.restart_alt),
                 splashRadius: 14.0,
               ),
               IconButton(
                 onPressed: () {
-                  carouselController.nextPage();
+                  controller.nextPage();
                 },
                 icon: Icon(Icons.navigate_next),
                 splashRadius: 14.0,
