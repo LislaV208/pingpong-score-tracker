@@ -19,7 +19,7 @@ class MatchesCarousel extends StatelessWidget {
   Widget build(BuildContext context) {
     final matches = state.matches;
     final currentMatchIndex = state.currentMatchIndex;
-    return Stack(
+    return Column(
       children: [
         CarouselSlider(
           carouselController: controller,
@@ -33,40 +33,38 @@ class MatchesCarousel extends StatelessWidget {
               )
               .toList(),
           options: CarouselOptions(
-            height: 60,
+            aspectRatio: 15,
             enableInfiniteScroll: false,
             enlargeCenterPage: true,
             viewportFraction: 0.35,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 40.0),
-          child: ButtonBar(
-            alignment: MainAxisAlignment.center,
-            children: [
-              IconButton(
-                onPressed: () {
-                  controller.previousPage();
-                },
-                icon: Icon(Icons.navigate_before),
-                splashRadius: 14.0,
-              ),
-              IconButton(
-                onPressed: () {
-                  controller.animateToPage(currentMatchIndex);
-                },
-                icon: Icon(Icons.restart_alt),
-                splashRadius: 14.0,
-              ),
-              IconButton(
-                onPressed: () {
-                  controller.nextPage();
-                },
-                icon: Icon(Icons.navigate_next),
-                splashRadius: 14.0,
-              ),
-            ],
-          ),
+        ButtonBar(
+          buttonPadding: const EdgeInsets.all(1),
+          alignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              onPressed: () {
+                controller.previousPage();
+              },
+              icon: const Icon(Icons.navigate_before),
+              splashRadius: 14.0,
+            ),
+            IconButton(
+              onPressed: () {
+                controller.animateToPage(currentMatchIndex);
+              },
+              icon: const Icon(Icons.restart_alt),
+              splashRadius: 14.0,
+            ),
+            IconButton(
+              onPressed: () {
+                controller.nextPage();
+              },
+              icon: const Icon(Icons.navigate_next),
+              splashRadius: 14.0,
+            ),
+          ],
         ),
       ],
     );

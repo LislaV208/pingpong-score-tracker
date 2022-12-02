@@ -15,24 +15,22 @@ class CarouselMatchItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: DefaultTextStyle(
-        style: TextStyle(
-            fontWeight: isCurrent ? FontWeight.bold : FontWeight.normal),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text('Mecz $matchNumber'),
-            const SizedBox(height: 4),
-            Text(
-              '${match.player1Score} ${match.player1} - ${match.player2} ${match.player2Score}',
-              style: TextStyle(
-                decoration:
-                    isCurrent ? TextDecoration.underline : TextDecoration.none,
-              ),
+    return DefaultTextStyle(
+      style: TextStyle(
+          fontWeight: isCurrent ? FontWeight.bold : FontWeight.normal),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('Mecz $matchNumber'),
+          Text(
+            '${match.player1Score} ${match.player1} - ${match.player2} ${match.player2Score}',
+            style: TextStyle(
+              decoration:
+                  isCurrent ? TextDecoration.underline : TextDecoration.none,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

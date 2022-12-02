@@ -20,12 +20,9 @@ class CircularTournamentView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         MatchesTable(state: state),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 16.0),
-          child: MatchesCarousel(
-            controller: matchesCarouselController,
-            state: state,
-          ),
+        MatchesCarousel(
+          controller: matchesCarouselController,
+          state: state,
         ),
       ],
     );
