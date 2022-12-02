@@ -104,10 +104,10 @@ class MatchesTable extends HookWidget {
       thickness: 1.0,
     );
 
-    return Container(
+    return SizedBox(
       height: 180,
-      // margin: const EdgeInsets.symmetric(vertical: 24.0),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           IntrinsicWidth(
             child: Column(
@@ -138,41 +138,34 @@ class MatchesTable extends HookWidget {
               child: SingleChildScrollView(
                 controller: scrollControler,
                 scrollDirection: Axis.horizontal,
-                physics: ClampingScrollPhysics(),
+                physics: const ClampingScrollPhysics(),
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 16.0),
                   child: Row(
                     children: players.mapIndexed((index, player) {
                       return Row(
                         children: [
-                          // if (index == 0) verticalDivider,
                           SizedBox(
                             width: 100.0,
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                  // border: Border(bottom: BorderSide()),
-                                  ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  _TableCell(
-                                    label: player,
-                                    // border: Border(bottom: BorderSide()),
-                                  ),
-                                  horizontalDivider,
-                                  _TableCell(
-                                      label:
-                                          '${state.getPlayerPlayedMatchesCount(player)}'),
-                                  horizontalDivider,
-                                  _TableCell(
-                                      label:
-                                          '${state.getPlayerWonMatchesCount(player)}'),
-                                  horizontalDivider,
-                                  _TableCell(
-                                      label:
-                                          '${state.getPlayerLostMatchesCount(player)}'),
-                                ],
-                              ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                _TableCell(
+                                  label: player,
+                                ),
+                                horizontalDivider,
+                                _TableCell(
+                                    label:
+                                        '${state.getPlayerPlayedMatchesCount(player)}'),
+                                horizontalDivider,
+                                _TableCell(
+                                    label:
+                                        '${state.getPlayerWonMatchesCount(player)}'),
+                                horizontalDivider,
+                                _TableCell(
+                                    label:
+                                        '${state.getPlayerLostMatchesCount(player)}'),
+                              ],
                             ),
                           ),
                           if (index < players.length - 1) verticalDivider,
@@ -187,80 +180,5 @@ class MatchesTable extends HookWidget {
         ],
       ),
     );
-
-    // return Table(
-    //   border: TableBorder(
-    //     horizontalInside: BorderSide(),
-    //     verticalInside: BorderSide(),
-    //   ),
-    //   children: [
-    //     TableRow(
-    //       children: [
-    //         Column(
-    //           crossAxisAlignment: CrossAxisAlignment.start,
-    //           children: <Widget>[
-    //             // first locked column items
-    //           ],
-    //         ),
-    //         SingleChildScrollView(
-    //           scrollDirection: Axis.horizontal,
-    //           child: Column(
-    //             crossAxisAlignment: CrossAxisAlignment.start,
-    //             children: <Widget>[
-    //               Row(
-    //                 children: <Widget>[
-    //                   // table header items
-    //                 ],
-    //               ),
-    //               Row(
-    //                 children: <Widget>[
-    //                   // data cells
-    //                 ],
-    //               ),
-    //               Row(
-    //                 children: <Widget>[
-    //                   // data cells
-    //                 ],
-    //               ),
-    //             ],
-    //           ),
-    //         ),
-    //         //   const TableCell(
-    //         //     child: Text(''),
-    //         //   ),
-    //         //   ...mockPlayers
-    //         //       .map(
-    //         //         (player) => TableCell(
-    //         //           child: Text(
-    //         //             player,
-    //         //             textAlign: TextAlign.center,
-    //         //           ),
-    //         //         ),
-    //         //       )
-    //         //       .toList(),
-    //       ],
-    //     ),
-    //     TableRow(
-    //       children: [
-    //         TableCell(
-    //           child: Text(
-    //             'Rozegrane mecze',
-    //             textAlign: TextAlign.center,
-    //           ),
-    //         ),
-    //         ...mockPlayers
-    //             .map(
-    //               (_) => TableCell(
-    //                 child: Text(
-    //                   '0',
-    //                   textAlign: TextAlign.center,
-    //                 ),
-    //               ),
-    //             )
-    //             .toList(),
-    //       ],
-    //     ),
-    //   ],
-    // );
   }
 }

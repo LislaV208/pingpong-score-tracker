@@ -9,6 +9,7 @@ import 'package:pingpong_score_tracker/match/match_type.dart';
 import 'package:pingpong_score_tracker/match/screens/single_match_screen.dart';
 import 'package:pingpong_score_tracker/match/widgets/serve_dialog.dart';
 import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.dart';
+import 'package:pingpong_score_tracker/tournament/bracket/widgets/exit_tournament_dialog.dart';
 import 'package:pingpong_score_tracker/tournament/circular/circular_tournament_state.dart';
 import 'package:pingpong_score_tracker/tournament/circular/screens/circular_tournament_view.dart';
 import 'package:pingpong_score_tracker/tournament/models/tournament_match.dart';
@@ -58,40 +59,27 @@ class _CircularTournamentScreenState extends State<CircularTournamentScreen> {
   }
 
   Future<bool> _onWillPop(BuildContext context) async {
-    // final cubit = context.read<BracketTournamentCubit>();
-    // final navigator = Navigator.of(context);
+    Navigator.of(context).popUntil(
+      ModalRoute.withName(HomeScreen.route),
+    );
 
-    // if (cubit.state.isFinished == true) {
-    //   cubit.setToNotStarted();
-    // }
-    // navigator.popUntil(
-    //   ModalRoute.withName(HomeScreen.route),
-    // );
-
-    // return false;
-
-    // TODO: implement
-    return true;
+    return false;
   }
 
   void _onAbourtTournament(BuildContext context) async {
-    // final cubit = context.read<BracketTournamentCubit>();
-    // final navigator = Navigator.of(context);
+    final navigator = Navigator.of(context);
 
-    // final doAbortTournament = await showDialog<bool>(
-    //       context: context,
-    //       builder: (context) => const ExitTournamentDialog(),
-    //     ) ??
-    //     false;
+    final doAbortTournament = await showDialog<bool>(
+          context: context,
+          builder: (context) => const ExitTournamentDialog(),
+        ) ??
+        false;
 
-    // if (doAbortTournament) {
-    //   cubit.setToNotStarted();
-    //   navigator.popUntil(
-    //     ModalRoute.withName(HomeScreen.route),
-    //   );
-    // }
-
-    // TODO: implement
+    if (doAbortTournament) {
+      navigator.popUntil(
+        ModalRoute.withName(HomeScreen.route),
+      );
+    }
   }
 
   void _onFabPressed(BuildContext context) async {
