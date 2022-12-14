@@ -12,6 +12,7 @@ import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.d
 import 'package:pingpong_score_tracker/tournament/bracket/widgets/exit_tournament_dialog.dart';
 import 'package:pingpong_score_tracker/tournament/circular/circular_tournament_state.dart';
 import 'package:pingpong_score_tracker/tournament/circular/screens/circular_tournament_view.dart';
+import 'package:pingpong_score_tracker/tournament/circular/services/circular_tournament_storage.dart';
 import 'package:pingpong_score_tracker/tournament/models/tournament_match.dart';
 
 class CircularTournamentScreen extends StatefulWidget {
@@ -26,6 +27,21 @@ class CircularTournamentScreen extends StatefulWidget {
 
 class _CircularTournamentScreenState extends State<CircularTournamentScreen> {
   final matchesCarouselController = CarouselController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final state = context.read<CircularTournamentState>();
+      final storage = context.read<CircularTournamentStorage>();
+
+      storage.writeTournamentStarted(true);
+      storage.writeMatches(state.matches);
+
+      matchesCarouselController.animateToPage(state.currentMatchIndex);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +84,7 @@ class _CircularTournamentScreenState extends State<CircularTournamentScreen> {
 
   void _onAbourtTournament(BuildContext context) async {
     final navigator = Navigator.of(context);
+    final tournamentStorage = context.read<CircularTournamentStorage>();
 
     final doAbortTournament = await showDialog<bool>(
           context: context,
@@ -76,6 +93,9 @@ class _CircularTournamentScreenState extends State<CircularTournamentScreen> {
         false;
 
     if (doAbortTournament) {
+      tournamentStorage.writeTournamentStarted(false);
+      tournamentStorage.writeMatches([]);
+      tournamentStorage.writeCurrentMatchIndex(0);
       navigator.popUntil(
         ModalRoute.withName(HomeScreen.route),
       );

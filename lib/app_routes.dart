@@ -20,13 +20,33 @@ final _appRoutes = {
   CircularTournamentPlayersScreen.route: (_) =>
       const CircularTournamentPlayersScreen(),
   CircularTournamentScreen.route: (BuildContext context) {
-    final players = ModalRoute.of(context)?.settings.arguments as List<String>;
-    final matches = CircularTournamentMatchGenerator(
-      BergerTableGenerator(players),
-    ).generate();
+    final tournamentStorage = context.read<CircularTournamentStorage>();
+    final isTournamentStarted = tournamentStorage.readIsTournamentStarted();
+
+    final matches = <TournamentMatch>[];
+    int? currentMatchIndex;
+
+    if (isTournamentStarted) {
+      matches.addAll(
+        tournamentStorage.readMatches(),
+      );
+      currentMatchIndex = tournamentStorage.readCurrentMatchIndex();
+    } else {
+      final players =
+          ModalRoute.of(context)?.settings.arguments as List<String>;
+      matches.addAll(
+        CircularTournamentMatchGenerator(
+          BergerTableGenerator(players),
+        ).generate(),
+      );
+    }
 
     return ChangeNotifierProvider(
-      create: (context) => CircularTournamentState(matches),
+      create: (context) => CircularTournamentState(
+        tournamentStorage,
+        matches,
+        currentMatchIndex,
+      ),
       child: const CircularTournamentScreen(),
     );
   },
