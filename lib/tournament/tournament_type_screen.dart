@@ -30,7 +30,10 @@ class TournamentTypeScreen extends StatelessWidget {
               const VerticalDivider(thickness: 3.0),
               ElevatedButton(
                 onPressed: () => _goToCircularTournamentScreen(context),
-                child: const Text('Turniej kołowy'),
+                child: const Text(
+                  'Turniej\nkażdy z każdym',
+                  textAlign: TextAlign.center,
+                ),
               ),
             ],
           ),
