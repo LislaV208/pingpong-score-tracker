@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -8,12 +6,15 @@ import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_cubit.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_tournament_screen.dart';
+import 'package:pingpong_score_tracker/tournament/circular/screens/circular_tournament_screen.dart';
+import 'package:pingpong_score_tracker/tournament/circular/services/berger_table_generator.dart';
+import 'package:pingpong_score_tracker/tournament/circular/widgets/approx_time_button.dart';
 import 'package:pingpong_score_tracker/widgets/players_list.dart';
 
-class BracketPlayersScreen extends HookWidget {
-  const BracketPlayersScreen({super.key});
+class CircularTournamentPlayersScreen extends HookWidget {
+  const CircularTournamentPlayersScreen({super.key});
 
-  static const route = 'bracket-tournament-players';
+  static const route = 'circular-tournament-players';
 
   @override
   Widget build(BuildContext context) {
@@ -113,8 +114,10 @@ class BracketPlayersScreen extends HookWidget {
     BuildContext context,
     List<String> selectedPlayers,
   ) {
-    context.read<BracketTournamentCubit>().start(selectedPlayers);
-    Navigator.of(context).pushNamed(BracketTournamentScreen.route);
+    Navigator.of(context).pushNamed(
+      CircularTournamentScreen.route,
+      arguments: selectedPlayers,
+    );
   }
 }
 
@@ -129,8 +132,6 @@ class _BottomPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final missingPlayersCount = _calculateMissingPlayers(selectedPlayersCount);
-
     return Container(
       color: const Color.fromARGB(255, 54, 54, 54),
       width: MediaQuery.of(context).size.width,
@@ -139,9 +140,35 @@ class _BottomPanel extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Spacer(),
           Expanded(
             flex: 3,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24.0,
+                  vertical: 14.0,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).padding.left,
+                  ),
+                  child: AnimatedSlide(
+                    duration: const Duration(milliseconds: 250),
+                    offset: selectedPlayersCount >=
+                            DefaultValues.minCircularTournamentPlayersCount
+                        ? Offset.zero
+                        : const Offset(0, 2),
+                    child: ApproxTimeButton(
+                      matchesToPlayCount: matchesToPlayCount,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 4,
             child: Column(
               children: [
                 RichText(
@@ -157,30 +184,14 @@ class _BottomPanel extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (missingPlayersCount > 0)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4.0),
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        text: 'Brakuje ',
-                        style: const TextStyle(fontSize: 14.0),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: _calculateMissingPlayers(selectedPlayersCount)
-                                .toString(),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, color: Colors.red),
-                          ),
-                          TextSpan(
-                            text: missingPlayersCount == 1
-                                ? ' gracza'
-                                : ' graczy',
-                          )
-                        ],
-                      ),
-                    ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 4.0),
+                  child: Text(
+                    _getHelperTextValue(),
+                    style: const TextStyle(fontSize: 14.0),
+                    textAlign: TextAlign.center,
                   ),
+                ),
                 if (selectedPlayersCount >= DefaultValues.maxPlayersCount)
                   const Padding(
                     padding: EdgeInsets.only(top: 4.0),
@@ -192,6 +203,7 @@ class _BottomPanel extends StatelessWidget {
             ),
           ),
           Expanded(
+            flex: 3,
             child: Align(
               alignment: Alignment.centerRight,
               child: Padding(
@@ -201,10 +213,12 @@ class _BottomPanel extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: EdgeInsets.only(
-                      right: MediaQuery.of(context).padding.right),
+                    right: MediaQuery.of(context).padding.right,
+                  ),
                   child: AnimatedSlide(
                     duration: const Duration(milliseconds: 250),
-                    offset: missingPlayersCount <= 0
+                    offset: selectedPlayersCount >=
+                            DefaultValues.minCircularTournamentPlayersCount
                         ? Offset.zero
                         : const Offset(0, 2),
                     child: FloatingActionButton.small(
@@ -221,14 +235,19 @@ class _BottomPanel extends StatelessWidget {
     );
   }
 
-  int _calculateMissingPlayers(int selectedPlayersCount) {
-    var power = 2;
-    var playersNeeded = pow(2, power);
-    while (playersNeeded < selectedPlayersCount) {
-      power++;
-      playersNeeded = pow(2, power);
+  int get matchesToPlayCount =>
+      selectedPlayersCount * (selectedPlayersCount - 1) ~/ 2;
+
+  String _getHelperTextValue() {
+    if (selectedPlayersCount <
+        DefaultValues.minCircularTournamentPlayersCount) {
+      return 'Wybierz co najmniej 3 graczy';
     }
 
-    return (playersNeeded - selectedPlayersCount).truncate();
+    return _getGamesToPlayText();
+  }
+
+  String _getGamesToPlayText() {
+    return 'Liczba meczy do rozegrania: $matchesToPlayCount';
   }
 }

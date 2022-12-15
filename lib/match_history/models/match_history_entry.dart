@@ -6,6 +6,8 @@ part 'match_history_entry.g.dart';
 
 @freezed
 class MatchHistoryEntry with _$MatchHistoryEntry {
+  const MatchHistoryEntry._();
+
   const factory MatchHistoryEntry({
     required String leftPlayer,
     required int leftPlayerScore,
@@ -18,4 +20,6 @@ class MatchHistoryEntry with _$MatchHistoryEntry {
 
   factory MatchHistoryEntry.fromJson(Map<String, dynamic> json) =>
       _$MatchHistoryEntryFromJson(json);
+
+  Duration get matchDuration => finishedAt.difference(startedAt);
 }

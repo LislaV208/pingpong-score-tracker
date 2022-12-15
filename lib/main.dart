@@ -8,6 +8,8 @@ import 'package:pingpong_score_tracker/configuration/bloc/configuration_cubit.da
 import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_cubit.dart';
+import 'package:pingpong_score_tracker/tournament/circular/services/circular_tournament_storage.dart';
+import 'package:provider/provider.dart';
 import 'package:wakelock/wakelock.dart';
 
 void main() async {
@@ -33,18 +35,25 @@ void main() async {
   final storage = await HydratedStorage.build(
     storageDirectory: await getApplicationDocumentsDirectory(),
   );
+
+  final circularTournamentStorage = CircularTournamentStorage();
+  await circularTournamentStorage.init();
+
   HydratedBlocOverrides.runZoned(
     () {
       Wakelock.enable();
       runApp(
-        MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (context) => ConfigurationCubit()),
-            BlocProvider(create: (context) => PlayersCubit()),
-            BlocProvider(create: (context) => BracketTournamentCubit()),
-            BlocProvider(create: (context) => MatchHistoryCubit()),
-          ],
-          child: const App(),
+        ChangeNotifierProvider.value(
+          value: circularTournamentStorage,
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (context) => ConfigurationCubit()),
+              BlocProvider(create: (context) => PlayersCubit()),
+              BlocProvider(create: (context) => BracketTournamentCubit()),
+              BlocProvider(create: (context) => MatchHistoryCubit()),
+            ],
+            child: const App(),
+          ),
         ),
       );
     },

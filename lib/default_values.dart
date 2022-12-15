@@ -5,4 +5,7 @@ class DefaultValues {
   static const setsInMatch = 2;
   static const maxPlayersCount = 32;
   static const maxPlayerNameLength = 12;
+  static const minCircularTournamentPlayersCount = 3;
+
+  static const approxTimePerMatch = Duration(minutes: 5);
 }

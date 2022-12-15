@@ -11,8 +11,43 @@ final _appRoutes = {
   PlayersScreen.route: (_) => const PlayersScreen(),
   // AddEditPlayerScreen needs parameters, so it uses anonymous navigation
   // AddEditPlayerScreen.route: (_) => const AddEditPlayerScreen(),
-  BracketPlayersScreen.route: (_) => const BracketPlayersScreen(),
+  BracketTournamentPlayersScreen.route: (_) =>
+      const BracketTournamentPlayersScreen(),
   BracketTournamentScreen.route: (_) => const BracketTournamentScreen(),
   ConfigurationScreen.route: (_) => const ConfigurationScreen(),
   MatchHistoryScreen.route: (_) => const MatchHistoryScreen(),
+  TournamentTypeScreen.route: (_) => const TournamentTypeScreen(),
+  CircularTournamentPlayersScreen.route: (_) =>
+      const CircularTournamentPlayersScreen(),
+  CircularTournamentScreen.route: (BuildContext context) {
+    final tournamentStorage = context.read<CircularTournamentStorage>();
+    final isTournamentStarted = tournamentStorage.readIsTournamentStarted();
+
+    final matches = <TournamentMatch>[];
+    int? currentMatchIndex;
+
+    if (isTournamentStarted) {
+      matches.addAll(
+        tournamentStorage.readMatches(),
+      );
+      currentMatchIndex = tournamentStorage.readCurrentMatchIndex();
+    } else {
+      final players =
+          ModalRoute.of(context)?.settings.arguments as List<String>;
+      matches.addAll(
+        CircularTournamentMatchGenerator(
+          BergerTableGenerator(players),
+        ).generate(),
+      );
+    }
+
+    return ChangeNotifierProvider(
+      create: (context) => CircularTournamentState(
+        tournamentStorage,
+        matches,
+        currentMatchIndex,
+      ),
+      child: const CircularTournamentScreen(),
+    );
+  },
 };

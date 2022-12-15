@@ -37,6 +37,7 @@ class ElevatedCircleButton extends StatelessWidget {
                   Text(
                     label!,
                     style: Theme.of(context).textTheme.bodySmall,
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),

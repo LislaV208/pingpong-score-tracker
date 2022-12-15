@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pingpong_score_tracker/configuration/screens/configuration_screen.dart';
 import 'package:pingpong_score_tracker/home/screens/home_screen.dart';
 import 'package:pingpong_score_tracker/match_history/screens/match_history_screen.dart';
@@ -10,8 +9,18 @@ import 'package:pingpong_score_tracker/match/screens/double_match_config_screen.
 import 'package:pingpong_score_tracker/match/screens/double_match_screen.dart';
 import 'package:pingpong_score_tracker/match/screens/single_match_config_screen.dart';
 import 'package:pingpong_score_tracker/players/screens/players_screen.dart';
-import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_players_screen.dart';
+import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_tournament_players_screen.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_tournament_screen.dart';
+import 'package:pingpong_score_tracker/tournament/circular/circular_tournament_state.dart';
+import 'package:pingpong_score_tracker/tournament/circular/screens/circular_tournament_screen.dart';
+import 'package:pingpong_score_tracker/tournament/circular/services/berger_table_generator.dart';
+import 'package:pingpong_score_tracker/tournament/circular/services/circular_tournament_match_generator.dart';
+import 'package:pingpong_score_tracker/tournament/circular/services/circular_tournament_storage.dart';
+import 'package:pingpong_score_tracker/tournament/models/tournament_match.dart';
+import 'package:pingpong_score_tracker/tournament/tournament_type_screen.dart';
+import 'package:provider/provider.dart';
+
+import 'tournament/circular/screens/circular_tournament_players_screen.dart';
 
 part 'app_routes.dart';
 

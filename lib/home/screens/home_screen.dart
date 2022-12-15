@@ -14,8 +14,10 @@ import 'package:pingpong_score_tracker/players/screens/players_screen.dart';
 import 'package:pingpong_score_tracker/players/widgets/match_type_dialog.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_cubit.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournament_state.dart';
-import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_players_screen.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_tournament_screen.dart';
+import 'package:pingpong_score_tracker/tournament/circular/screens/circular_tournament_screen.dart';
+import 'package:pingpong_score_tracker/tournament/circular/services/circular_tournament_storage.dart';
+import 'package:pingpong_score_tracker/tournament/tournament_type_screen.dart';
 import 'package:pingpong_score_tracker/widgets/app_dialog.dart';
 import 'package:pingpong_score_tracker/widgets/badge_icon.dart';
 
@@ -161,10 +163,19 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onTournamentPressed(BuildContext context) {
-    final tournamentState = context.read<BracketTournamentCubit>().state;
-    final routeName = tournamentState == BracketTournamentState.notStarted()
-        ? BracketPlayersScreen.route
-        : BracketTournamentScreen.route;
+    final bracketTournamentState = context.read<BracketTournamentCubit>().state;
+    final circularTournamentStorage = context.read<CircularTournamentStorage>();
+
+    final isBracketTournamentStarted =
+        bracketTournamentState != BracketTournamentState.notStarted();
+    final isCircularTournamentStarted =
+        circularTournamentStorage.readIsTournamentStarted();
+
+    final routeName = isBracketTournamentStarted
+        ? BracketTournamentScreen.route
+        : isCircularTournamentStarted
+            ? CircularTournamentScreen.route
+            : TournamentTypeScreen.route;
 
     Navigator.of(context).pushNamed(routeName);
   }
@@ -261,41 +272,57 @@ class _HomeTournamentButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BracketTournamentCubit, BracketTournamentState>(
-      builder: (context, state) {
-        final isTournamentStarted =
-            state != BracketTournamentState.notStarted();
+    final bracketTournamentState =
+        context.watch<BracketTournamentCubit>().state;
 
-        final gamesPlayedCount = state.matchesPlayedCount;
-        final totalMatchesCount = state.playersCount - 1;
+    final circularTournamentStorage =
+        context.watch<CircularTournamentStorage>();
 
-        return _HomeScreenButton(
-          onPressed: onPressed,
-          icon: isTournamentStarted ? null : Icons.emoji_events,
-          leading: isTournamentStarted
-              ? Stack(
-                  clipBehavior: Clip.none,
-                  alignment: Alignment.center,
-                  children: [
-                    const Positioned(
-                        top: 2.0,
-                        child: BadgeIcon(
-                          Icons.emoji_events,
-                        )),
-                    Positioned(
-                      bottom: 2,
-                      child: Text(
-                        '$gamesPlayedCount/$totalMatchesCount',
-                        style: const TextStyle(fontSize: 14.0),
-                      ),
-                    ),
-                  ],
-                )
-              : null,
-          label: 'Turniej',
-          backgroundColor: Colors.amber[700],
-        );
-      },
+    final isBracketTournamentStarted =
+        bracketTournamentState != BracketTournamentState.notStarted();
+
+    final isCircularTournamentStarted =
+        circularTournamentStorage.readIsTournamentStarted();
+
+    final isAnyTournamentStarted =
+        isBracketTournamentStarted || isCircularTournamentStarted;
+
+    final gamesPlayedCount = isBracketTournamentStarted
+        ? bracketTournamentState.matchesPlayedCount
+        : isCircularTournamentStarted
+            ? circularTournamentStorage.readCurrentMatchIndex()
+            : null;
+    final totalMatchesCount = isBracketTournamentStarted
+        ? bracketTournamentState.playersCount - 1
+        : isCircularTournamentStarted
+            ? circularTournamentStorage.readMatches().length
+            : null;
+
+    return _HomeScreenButton(
+      onPressed: onPressed,
+      icon: isAnyTournamentStarted ? null : Icons.emoji_events,
+      leading: isAnyTournamentStarted
+          ? Stack(
+              clipBehavior: Clip.none,
+              alignment: Alignment.center,
+              children: [
+                const Positioned(
+                    top: 2.0,
+                    child: BadgeIcon(
+                      Icons.emoji_events,
+                    )),
+                Positioned(
+                  bottom: 2,
+                  child: Text(
+                    '$gamesPlayedCount/$totalMatchesCount',
+                    style: const TextStyle(fontSize: 14.0),
+                  ),
+                ),
+              ],
+            )
+          : null,
+      label: 'Turniej',
+      backgroundColor: Colors.amber[700],
     );
   }
 }

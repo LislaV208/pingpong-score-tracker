@@ -94,9 +94,10 @@ class __$$_MatchHistoryStateCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MatchHistoryState implements _MatchHistoryState {
+class _$_MatchHistoryState extends _MatchHistoryState {
   const _$_MatchHistoryState({final List<MatchHistoryEntry> history = const []})
-      : _history = history;
+      : _history = history,
+        super._();
 
   factory _$_MatchHistoryState.fromJson(Map<String, dynamic> json) =>
       _$$_MatchHistoryStateFromJson(json);
@@ -141,9 +142,10 @@ class _$_MatchHistoryState implements _MatchHistoryState {
   }
 }
 
-abstract class _MatchHistoryState implements MatchHistoryState {
+abstract class _MatchHistoryState extends MatchHistoryState {
   const factory _MatchHistoryState({final List<MatchHistoryEntry> history}) =
       _$_MatchHistoryState;
+  const _MatchHistoryState._() : super._();
 
   factory _MatchHistoryState.fromJson(Map<String, dynamic> json) =
       _$_MatchHistoryState.fromJson;

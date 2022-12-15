@@ -42,6 +42,19 @@ class TournamentMatch with _$TournamentMatch {
           ? player2Score
           : null;
 
+  bool havePlayer(String player) => player1 == player || player2 == player;
+  int? playerScore(String player) {
+    if (!havePlayer(player)) return null;
+
+    return player1 == player ? player1Score : player2Score;
+  }
+
+  bool hasPlayerPlayed(String player) {
+    if (!havePlayer(player)) return false;
+
+    return player1Score > 0 || player2Score > 0;
+  }
+
   factory TournamentMatch.fromJson(Map<String, dynamic> json) =>
       _$TournamentMatchFromJson(json);
 }
