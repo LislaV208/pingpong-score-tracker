@@ -3,31 +3,20 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:pingpong_score_tracker/tournament/circular/circular_tournament_state.dart';
-import 'package:pingpong_score_tracker/utils/dev/colors.dart';
-import 'package:pingpong_score_tracker/utils/dev/random_players.dart';
 
 class _TableCell extends StatelessWidget {
   const _TableCell({
     required this.label,
-    this.border,
   });
 
   final String label;
-  final Border? border;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 40,
-      // width: 100,
       child: Container(
         padding: const EdgeInsets.all(12.0),
-        // height: 40,
-        decoration: BoxDecoration(
-          // color: DevTestColors.devBackgroundColor,
-          // border: Border.all(),
-          border: border,
-        ),
         child: FittedBox(
           child: Text(
             label,
@@ -39,45 +28,12 @@ class _TableCell extends StatelessWidget {
   }
 }
 
-class _MatchesPlayersCellPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = Colors.white;
-    // ..strokeWidth = 2.0;
-    canvas.drawLine(Offset.zero, Offset(size.width, size.height), paint);
-  }
-
-  // void paint(Canvas canvas, Size size) {
-  //   var center = size / 2;
-  //   var paint = Paint()
-  //     ..color = Colors.white
-  //     ..strokeWidth = 10.0;
-
-  //   canvas.drawLine(
-  //       Offset(0, center.height), Offset(size.width, center.height), paint);
-  // }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return oldDelegate != this;
-  }
-}
-
 class _MatchesPlayersCell extends StatelessWidget {
   const _MatchesPlayersCell();
 
   @override
   Widget build(BuildContext context) {
-    return _TableCell(label: 'Mecze / Gracze');
-    // return CustomPaint(
-    //   painter: _MatchesPlayersCellPainter(),
-    //   // size: Size(100, 50),
-    //   child: SizedBox(
-    //     width: 100,
-    //     height: 36,
-    //     // child: Text('elo morelo joł'),
-    //   ),
-    // );
+    return const _TableCell(label: 'Mecze / Gracze');
   }
 }
 
@@ -96,8 +52,6 @@ class MatchesTable extends HookWidget {
         .expand<String>((match) => [match.player1, match.player2])
         .toSet()
         .toList();
-
-    // final players = generateRandomPlayers(5, maxCharacters: 12);
 
     final rowHeaders = ['Rozegrane', 'Wygrane', 'Przegrane'];
 

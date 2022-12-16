@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pingpong_score_tracker/ads/banner_ad_view.dart';
 import 'package:pingpong_score_tracker/home/screens/home_screen.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
@@ -42,50 +43,52 @@ class _AddInitialPlayersScreenState extends State<AddInitialPlayersScreen> {
       appBar: AppBar(
         title: const Text('Gracze'),
       ),
-      body: SafeArea(
-        child: BlocBuilder<PlayersCubit, PlayersState>(
-          builder: (context, state) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Column(
-                children: [
-                  AddPlayerField(
-                    onSaveSuccess: (_) => _animatePlayersListToTop(),
-                  ),
-                  Expanded(
-                    child: BlocBuilder<PlayersCubit, PlayersState>(
-                      builder: (context, state) {
-                        final players = state.players;
-                        if (players.isEmpty) {
-                          return const Center(
-                            child: Text(
-                                'Dodaj co najmniej 2 graczy, aby kontynuować.'),
-                          );
-                        }
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 80.0),
-                          child: PlayersList(
-                            controller: controller,
-                            players: players.reversed.toList(),
-                            itemBuilder: (index, player) {
-                              return PlayerListItem(
-                                index: index,
-                                player: player,
-                                dense: true,
-                                onDeletePlayer: _onPlayerDelete,
-                              );
-                            },
-                            portrait: true,
-                            clipBehavior: Clip.hardEdge,
-                          ),
-                        );
-                      },
+      body: BannerAdView(
+        child: SafeArea(
+          child: BlocBuilder<PlayersCubit, PlayersState>(
+            builder: (context, state) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Column(
+                  children: [
+                    AddPlayerField(
+                      onSaveSuccess: (_) => _animatePlayersListToTop(),
                     ),
-                  ),
-                ],
-              ),
-            );
-          },
+                    Expanded(
+                      child: BlocBuilder<PlayersCubit, PlayersState>(
+                        builder: (context, state) {
+                          final players = state.players;
+                          if (players.isEmpty) {
+                            return const Center(
+                              child: Text(
+                                  'Dodaj co najmniej 2 graczy, aby kontynuować.'),
+                            );
+                          }
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 80.0),
+                            child: PlayersList(
+                              controller: controller,
+                              players: players.reversed.toList(),
+                              itemBuilder: (index, player) {
+                                return PlayerListItem(
+                                  index: index,
+                                  player: player,
+                                  dense: true,
+                                  onDeletePlayer: _onPlayerDelete,
+                                );
+                              },
+                              portrait: true,
+                              clipBehavior: Clip.hardEdge,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
         ),
       ),
       floatingActionButton: BlocBuilder<PlayersCubit, PlayersState>(

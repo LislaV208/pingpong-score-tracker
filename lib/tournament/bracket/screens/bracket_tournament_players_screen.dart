@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:pingpong_score_tracker/ads/banner_ad_view.dart';
 import 'package:pingpong_score_tracker/default_values.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
@@ -29,62 +30,64 @@ class BracketTournamentPlayersScreen extends HookWidget {
           ),
         ],
       ),
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              Expanded(
-                child: SafeArea(
-                  bottom: false,
-                  child: BlocBuilder<PlayersCubit, PlayersState>(
-                    builder: (context, state) {
-                      final players = state.players;
-                      if (players.isEmpty) {
-                        return const Center(
-                          child: Text('Brak graczy'),
-                        );
-                      }
+      body: BannerAdView(
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                Expanded(
+                  child: SafeArea(
+                    bottom: false,
+                    child: BlocBuilder<PlayersCubit, PlayersState>(
+                      builder: (context, state) {
+                        final players = state.players;
+                        if (players.isEmpty) {
+                          return const Center(
+                            child: Text('Brak graczy'),
+                          );
+                        }
 
-                      return Padding(
-                        padding: const EdgeInsets.only(
-                          top: 20.0,
-                          left: 20.0,
-                          right: 20.0,
-                        ),
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 700),
-                          child: PlayersList(
-                            players: players,
-                            itemBuilder: (index, player) {
-                              return CheckboxListTile(
-                                title: Text(player),
-                                activeColor: Colors.blueGrey,
-                                selectedTileColor:
-                                    Colors.black.withOpacity(0.1),
-                                selected:
-                                    selectedPlayers.value.contains(player),
-                                onChanged: (bool? isSelected) =>
-                                    _onPlayerSelected(
-                                        selectedPlayers, isSelected, player),
-                                value: selectedPlayers.value.contains(player),
-                              );
-                            },
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                            top: 20.0,
+                            left: 20.0,
+                            right: 20.0,
                           ),
-                        ),
-                      );
-                    },
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 700),
+                            child: PlayersList(
+                              players: players,
+                              itemBuilder: (index, player) {
+                                return CheckboxListTile(
+                                  title: Text(player),
+                                  activeColor: Colors.blueGrey,
+                                  selectedTileColor:
+                                      Colors.black.withOpacity(0.1),
+                                  selected:
+                                      selectedPlayers.value.contains(player),
+                                  onChanged: (bool? isSelected) =>
+                                      _onPlayerSelected(
+                                          selectedPlayers, isSelected, player),
+                                  value: selectedPlayers.value.contains(player),
+                                );
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 20.0),
-              _BottomPanel(
-                selectedPlayersCount: selectedPlayers.value.length,
-                onFabPressed: () =>
-                    _goToTournamentScreen(context, selectedPlayers.value),
-              ),
-            ],
-          ),
-        ],
+                const SizedBox(height: 20.0),
+                _BottomPanel(
+                  selectedPlayersCount: selectedPlayers.value.length,
+                  onFabPressed: () =>
+                      _goToTournamentScreen(context, selectedPlayers.value),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

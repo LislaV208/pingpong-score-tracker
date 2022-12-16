@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:pingpong_score_tracker/ads/banner_ad_view.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/widgets/elevated_circle_button.dart';
 
@@ -25,48 +26,50 @@ class AddEditPlayerScreen extends HookWidget {
       appBar: AppBar(
         title: Text(isAddingMode ? 'Nowy gracz' : 'Edytuj gracza: $player'),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: TextField(
-                    maxLength: maxNameLength,
-                    controller: controller,
-                    autofocus: true,
-                    decoration: InputDecoration(
-                      counterText: '${counter.value}/$maxNameLength',
-                      fillColor: Colors.grey.withOpacity(0.05),
-                      filled: true,
-                      labelText: 'Nazwa',
-                      errorText: isValid ? null : validationText.value,
-                      errorStyle: const TextStyle(fontSize: 14),
-                    ),
-                    onChanged: (value) {
-                      counter.value = value.length;
-                    },
-                    onSubmitted: (value) => _onSave(
-                      context,
-                      playerName: value,
-                      validationText: validationText,
+      body: BannerAdView(
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: TextField(
+                      maxLength: maxNameLength,
+                      controller: controller,
+                      autofocus: true,
+                      decoration: InputDecoration(
+                        counterText: '${counter.value}/$maxNameLength',
+                        fillColor: Colors.grey.withOpacity(0.05),
+                        filled: true,
+                        labelText: 'Nazwa',
+                        errorText: isValid ? null : validationText.value,
+                        errorStyle: const TextStyle(fontSize: 14),
+                      ),
+                      onChanged: (value) {
+                        counter.value = value.length;
+                      },
+                      onSubmitted: (value) => _onSave(
+                        context,
+                        playerName: value,
+                        validationText: validationText,
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 6.0, left: 16.0),
-                  child: ElevatedCircleButton(
-                    onPressed: () => _onSave(
-                      context,
-                      playerName: controller.text,
-                      validationText: validationText,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 6.0, left: 16.0),
+                    child: ElevatedCircleButton(
+                      onPressed: () => _onSave(
+                        context,
+                        playerName: controller.text,
+                        validationText: validationText,
+                      ),
+                      icon: const Icon(Icons.done),
                     ),
-                    icon: const Icon(Icons.done),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

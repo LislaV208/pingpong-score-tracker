@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pingpong_score_tracker/ads/banner_ad_view.dart';
 import 'package:pingpong_score_tracker/configuration/bloc/configuration_cubit.dart';
 import 'package:pingpong_score_tracker/home/screens/home_screen.dart';
 import 'package:pingpong_score_tracker/match/bloc/single_match_cubit.dart';
@@ -36,8 +37,10 @@ class BracketTournamentScreen extends StatelessWidget {
               ),
           ],
         ),
-        body: const SafeArea(
-          child: BracketGraph(),
+        body: const BannerAdView(
+          child: SafeArea(
+            child: BracketGraph(),
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => _onFabPressed(context, state),

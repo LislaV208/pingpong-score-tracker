@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pingpong_score_tracker/ads/banner_ad_view.dart';
 import 'package:pingpong_score_tracker/match/widgets/end_match_dialog.dart';
 import 'package:pingpong_score_tracker/match/widgets/player_score.dart';
 import 'package:pingpong_score_tracker/match/widgets/undo_button.dart';
@@ -43,51 +44,53 @@ class MatchScreen extends StatelessWidget {
           title: matchScore,
           centerTitle: true,
         ),
-        body: SafeArea(
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: _PointButton(
-                      onPressed: onGivePointToLeftTeam,
-                      score: leftTeamSetScore,
-                      children: leftTeamLabels,
-                    ),
-                  ),
-                  const VerticalDivider(
-                    thickness: 4.0,
-                    color: Colors.white,
-                  ),
-                  Expanded(
-                    child: _PointButton(
-                      onPressed: onGivePointToRightTeam,
-                      score: rightTeamSetScore,
-                      children: rightTeamLabels,
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: ElevatedCircleButton(
-                      onPressed: onFlipTeamsPressed,
-                      icon: const Icon(
-                        Icons.compare_arrows,
+        body: BannerAdView(
+          child: SafeArea(
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: _PointButton(
+                        onPressed: onGivePointToLeftTeam,
+                        score: leftTeamSetScore,
+                        children: leftTeamLabels,
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: UndoButton(onPressed: onUndoPressed),
-                  ),
-                ],
-              ),
-            ],
+                    const VerticalDivider(
+                      thickness: 4.0,
+                      color: Colors.white,
+                    ),
+                    Expanded(
+                      child: _PointButton(
+                        onPressed: onGivePointToRightTeam,
+                        score: rightTeamSetScore,
+                        children: rightTeamLabels,
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: ElevatedCircleButton(
+                        onPressed: onFlipTeamsPressed,
+                        icon: const Icon(
+                          Icons.compare_arrows,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: UndoButton(onPressed: onUndoPressed),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
