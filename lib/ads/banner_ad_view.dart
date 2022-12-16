@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:pingpong_score_tracker/ads/ad_units.dart';
 import 'package:pingpong_score_tracker/main.dart';
 
 class BannerAdView extends StatefulWidget {
@@ -17,21 +18,9 @@ class BannerAdView extends StatefulWidget {
 }
 
 class _BannerAdViewState extends State<BannerAdView> {
-  static const androidTestAdUnitId = 'ca-app-pub-3940256099942544/6300978111';
-  static const iosTestAdUnitId = 'ca-app-pub-3940256099942544/2934735716';
-
-  static const androidAdUnitId = 'ca-app-pub-4623610003844927/5306433506';
-  static const iosAdUnitId = 'ca-app-pub-4623610003844927/5534460372';
-
   final bannerAd = BannerAd(
     size: AdSize.fluid,
-    adUnitId: Platform.isAndroid
-        ? isAdTestMode
-            ? androidTestAdUnitId
-            : androidAdUnitId
-        : isAdTestMode
-            ? iosTestAdUnitId
-            : iosAdUnitId,
+    adUnitId: AdUnits.banner,
     listener: const BannerAdListener(),
     // listener: BannerAdListener(
     //   // Called when an ad is successfully received.

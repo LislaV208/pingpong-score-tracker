@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:pingpong_score_tracker/ads/ad_units.dart';
+import 'package:pingpong_score_tracker/main.dart';
 import 'package:pingpong_score_tracker/match/bloc/single_match_cubit.dart';
 import 'package:pingpong_score_tracker/match/bloc/single_match_state.dart';
 import 'package:pingpong_score_tracker/match/match_type.dart';
@@ -13,7 +16,7 @@ typedef OnFinishedCallback = void Function(
   SingleMatchState state,
 );
 
-class SingleMatchScreen extends StatelessWidget {
+class SingleMatchScreen extends StatefulWidget {
   const SingleMatchScreen({
     super.key,
     required this.onFinished,
@@ -24,6 +27,37 @@ class SingleMatchScreen extends StatelessWidget {
 
   final MatchType matchType;
   final OnFinishedCallback onFinished;
+
+  @override
+  State<SingleMatchScreen> createState() => _SingleMatchScreenState();
+}
+
+class _SingleMatchScreenState extends State<SingleMatchScreen> {
+  InterstitialAd? ad;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (isFreeVersion) {
+      InterstitialAd.load(
+        adUnitId: AdUnits.interstitial,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          onAdLoaded: (ad) {
+            this.ad = ad;
+          },
+          onAdFailedToLoad: (error) {},
+        ),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    ad?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +81,13 @@ class SingleMatchScreen extends StatelessWidget {
               false;
 
           if (isFinished) {
-            cubit.addMatchHistoryEntry(matchType);
+            cubit.addMatchHistoryEntry(widget.matchType);
 
-            onFinished(navigator, state);
+            if (isFreeVersion) {
+              await ad?.show();
+            }
+
+            widget.onFinished(navigator, state);
           }
         }
       },

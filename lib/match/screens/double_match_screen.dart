@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:pingpong_score_tracker/ads/ad_units.dart';
 import 'package:pingpong_score_tracker/home/screens/home_screen.dart';
+import 'package:pingpong_score_tracker/main.dart';
 import 'package:pingpong_score_tracker/match/bloc/double_match_cubit.dart';
 import 'package:pingpong_score_tracker/match/bloc/double_match_state.dart';
 import 'package:pingpong_score_tracker/match/screens/match_screen.dart';
@@ -8,10 +11,41 @@ import 'package:pingpong_score_tracker/match/widgets/match_finished_dialog.dart'
 import 'package:pingpong_score_tracker/match/widgets/match_score.dart';
 import 'package:pingpong_score_tracker/match/widgets/player_name.dart';
 
-class DoubleMatchScreen extends StatelessWidget {
+class DoubleMatchScreen extends StatefulWidget {
   const DoubleMatchScreen({super.key});
 
   static const route = 'double-match';
+
+  @override
+  State<DoubleMatchScreen> createState() => _DoubleMatchScreenState();
+}
+
+class _DoubleMatchScreenState extends State<DoubleMatchScreen> {
+  InterstitialAd? ad;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (isFreeVersion) {
+      InterstitialAd.load(
+        adUnitId: AdUnits.interstitial,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          onAdLoaded: (ad) {
+            this.ad = ad;
+          },
+          onAdFailedToLoad: (error) {},
+        ),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    ad?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +70,11 @@ class DoubleMatchScreen extends StatelessWidget {
 
           if (isFinished) {
             cubit.addMatchHistoryEntry();
+
+            if (isFreeVersion) {
+              await ad?.show();
+            }
+
             navigator.popUntil(
               ModalRoute.withName(HomeScreen.route),
             );
