@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pingpong_score_tracker/ads/banner_ad_view.dart';
 import 'package:pingpong_score_tracker/configuration/bloc/configuration_cubit.dart';
 import 'package:pingpong_score_tracker/home/screens/home_screen.dart';
 import 'package:pingpong_score_tracker/match/bloc/single_match_cubit.dart';
@@ -60,10 +61,12 @@ class _CircularTournamentScreenState extends State<CircularTournamentScreen> {
               ),
           ],
         ),
-        body: SafeArea(
-          child: CircularTournamentView(
-            state: state,
-            matchesCarouselController: matchesCarouselController,
+        body: BannerAdView(
+          child: SafeArea(
+            child: CircularTournamentView(
+              state: state,
+              matchesCarouselController: matchesCarouselController,
+            ),
           ),
         ),
         floatingActionButton: FloatingActionButton.small(

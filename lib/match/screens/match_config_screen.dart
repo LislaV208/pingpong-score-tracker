@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pingpong_score_tracker/ads/banner_ad_view.dart';
 import 'package:pingpong_score_tracker/widgets/elevated_circle_button.dart';
 
 class MatchConfigScreen extends StatelessWidget {
@@ -101,21 +102,23 @@ class MatchConfigScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Konfiguracja meczu'),
       ),
-      body: DefaultTextStyle(
-        style: Theme.of(context).textTheme.bodyText1 ?? const TextStyle(),
-        child: SafeArea(
-          child: centerFab
-              ? Stack(
-                  alignment: AlignmentDirectional.centerEnd,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: fab,
-                    ),
-                    content
-                  ],
-                )
-              : content,
+      body: BannerAdView(
+        child: DefaultTextStyle(
+          style: Theme.of(context).textTheme.bodyText1 ?? const TextStyle(),
+          child: SafeArea(
+            child: centerFab
+                ? Stack(
+                    alignment: AlignmentDirectional.centerEnd,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: fab,
+                      ),
+                      content
+                    ],
+                  )
+                : content,
+          ),
         ),
       ),
       floatingActionButton: centerFab ? null : fab,

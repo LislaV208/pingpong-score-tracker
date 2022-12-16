@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pingpong_score_tracker/ads/banner_ad_view.dart';
 import 'package:pingpong_score_tracker/default_values.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
@@ -28,64 +29,66 @@ class PlayersScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Gracze'),
         ),
-        body: Stack(
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: EdgeInsets.only(
-                  bottom: listBottomPadding,
-                ),
-                child: SafeArea(
-                  child: BlocBuilder<PlayersCubit, PlayersState>(
-                    builder: (context, state) {
-                      final players = state.players;
-                      if (players.isEmpty) {
-                        return const Center(
-                          child: Text(
-                              'Dodaj co najmniej 2 graczy, aby móc korzystać z aplikacji'),
-                        );
-                      }
+        body: BannerAdView(
+          child: Stack(
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    bottom: listBottomPadding,
+                  ),
+                  child: SafeArea(
+                    child: BlocBuilder<PlayersCubit, PlayersState>(
+                      builder: (context, state) {
+                        final players = state.players;
+                        if (players.isEmpty) {
+                          return const Center(
+                            child: Text(
+                                'Dodaj co najmniej 2 graczy, aby móc korzystać z aplikacji'),
+                          );
+                        }
 
-                      return Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(66.0, 20.0, 66.0, 0.0),
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 700),
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: PlayersList(
-                                  players: players,
-                                  itemBuilder: (index, player) {
-                                    return PlayerListItem(
-                                      index: index,
-                                      player: player,
-                                      onEditPlayer: _onEditPlayer,
-                                      onDeletePlayer: _onPlayerDelete,
-                                    );
-                                  },
-                                  clipBehavior: listClip,
+                        return Padding(
+                          padding:
+                              const EdgeInsets.fromLTRB(66.0, 20.0, 66.0, 0.0),
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 700),
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: PlayersList(
+                                    players: players,
+                                    itemBuilder: (index, player) {
+                                      return PlayerListItem(
+                                        index: index,
+                                        player: player,
+                                        onEditPlayer: _onEditPlayer,
+                                        onDeletePlayer: _onPlayerDelete,
+                                      );
+                                    },
+                                    clipBehavior: listClip,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
-            Positioned(
-              right: MediaQuery.of(context).padding.right / 4 + 20,
-              bottom: 20,
-              child: FloatingActionButton(
-                onPressed: () => _onAddPlayer(context),
-                child: const Icon(Icons.add),
+              Positioned(
+                right: MediaQuery.of(context).padding.right / 4 + 20,
+                bottom: 20,
+                child: FloatingActionButton(
+                  onPressed: () => _onAddPlayer(context),
+                  child: const Icon(Icons.add),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

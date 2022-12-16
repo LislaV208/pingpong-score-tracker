@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pingpong_score_tracker/app.dart';
@@ -12,8 +13,15 @@ import 'package:pingpong_score_tracker/tournament/circular/services/circular_tou
 import 'package:provider/provider.dart';
 import 'package:wakelock/wakelock.dart';
 
+const isFreeVersion = true;
+const isAdTestMode = true;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  if (isFreeVersion) {
+    await MobileAds.instance.initialize();
+  }
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(

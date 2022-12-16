@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pingpong_score_tracker/ads/banner_ad_view.dart';
 import 'package:pingpong_score_tracker/configuration/screens/configuration_screen.dart';
 import 'package:pingpong_score_tracker/match/match_type.dart';
 import 'package:pingpong_score_tracker/match/screens/double_match_config_screen.dart';
@@ -57,81 +58,85 @@ class _HomeScreenState extends State<HomeScreen> {
       body: OrientationBuilder(builder: (context, orientation) {
         if (orientation == Orientation.portrait) return const SizedBox();
 
-        return Center(
-          child: SafeArea(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 720),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          children: [
-                            _HomeScreenButton(
-                              onPressed: _onStartMatchPressed(context),
-                              icon: Icons.sports_cricket,
-                              label: 'Rozpocznij mecz',
-                              backgroundColor: Colors.green[700],
-                            ),
-                            _HomeTournamentButton(
-                              onPressed: () => _onTournamentPressed(context),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            _HomeScreenButton(
-                              onPressed: () => _onManagePlayersPressed(context),
-                              leading:
-                                  BlocSelector<PlayersCubit, PlayersState, int>(
-                                selector: (state) => state.players.length,
-                                builder: (context, playersCount) =>
-                                    _PlayersIcon(playersCount: playersCount),
+        return BannerAdView(
+          child: Center(
+            child: SafeArea(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 720),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            children: [
+                              _HomeScreenButton(
+                                onPressed: _onStartMatchPressed(context),
+                                icon: Icons.sports_cricket,
+                                label: 'Rozpocznij mecz',
+                                backgroundColor: Colors.green[700],
                               ),
-                              label: 'Zarządzaj graczami',
-                              backgroundColor: Colors.blue[700],
-                            ),
-                            _HomeScreenButton(
-                              onPressed: () => _onMatchHistoryPressed(context),
-                              icon: Icons.restore,
-                              label: 'Historia meczy',
-                              backgroundColor: Colors.blueGrey[700],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return const AppDialog(
-                              title: 'O autorze',
-                              child: Center(
-                                child: Text(
-                                  'Tu będą jakieś informacje, moze jakis odnosnik do jakiejs strony.\nW sumie to jeszcze nie wiem, to sie zrobi później XD',
-                                  textAlign: TextAlign.center,
+                              _HomeTournamentButton(
+                                onPressed: () => _onTournamentPressed(context),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              _HomeScreenButton(
+                                onPressed: () =>
+                                    _onManagePlayersPressed(context),
+                                leading: BlocSelector<PlayersCubit,
+                                    PlayersState, int>(
+                                  selector: (state) => state.players.length,
+                                  builder: (context, playersCount) =>
+                                      _PlayersIcon(playersCount: playersCount),
                                 ),
+                                label: 'Zarządzaj graczami',
+                                backgroundColor: Colors.blue[700],
                               ),
-                            );
-                          },
-                        );
-                      },
-                      child: const Text(
-                        'O autorze',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: Colors.white,
-                          decoration: TextDecoration.underline,
+                              _HomeScreenButton(
+                                onPressed: () =>
+                                    _onMatchHistoryPressed(context),
+                                icon: Icons.restore,
+                                label: 'Historia meczy',
+                                backgroundColor: Colors.blueGrey[700],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const AppDialog(
+                                title: 'O autorze',
+                                child: Center(
+                                  child: Text(
+                                    'Tu będą jakieś informacje, moze jakis odnosnik do jakiejs strony.\nW sumie to jeszcze nie wiem, to sie zrobi później XD',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: const Text(
+                          'O autorze',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.white,
+                            decoration: TextDecoration.underline,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

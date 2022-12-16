@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pingpong_score_tracker/ads/banner_ad_view.dart';
 import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.dart';
 import 'package:pingpong_score_tracker/match_history/cubit/match_history_state.dart';
 import 'package:pingpong_score_tracker/match_history/widgets/clear_history_dialog.dart';
@@ -35,29 +36,31 @@ class MatchHistoryScreen extends StatelessWidget {
           )
         ],
       ),
-      body: SafeArea(
-        child: BlocBuilder<MatchHistoryCubit, MatchHistoryState>(
-          builder: (context, state) {
-            final historyEntries = state.history.reversed.toList();
-            if (historyEntries.isEmpty) {
-              return const Center(
-                child: Text('Brak danych'),
-              );
-            }
+      body: BannerAdView(
+        child: SafeArea(
+          child: BlocBuilder<MatchHistoryCubit, MatchHistoryState>(
+            builder: (context, state) {
+              final historyEntries = state.history.reversed.toList();
+              if (historyEntries.isEmpty) {
+                return const Center(
+                  child: Text('Brak danych'),
+                );
+              }
 
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ListView.builder(
-                clipBehavior: Clip.none,
-                itemCount: historyEntries.length,
-                itemBuilder: (context, index) {
-                  return MatchHistoryListItem(
-                    entry: historyEntries[index],
-                  );
-                },
-              ),
-            );
-          },
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ListView.builder(
+                  clipBehavior: Clip.none,
+                  itemCount: historyEntries.length,
+                  itemBuilder: (context, index) {
+                    return MatchHistoryListItem(
+                      entry: historyEntries[index],
+                    );
+                  },
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
