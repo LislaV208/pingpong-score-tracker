@@ -45,12 +45,6 @@ class App extends StatelessWidget {
       ),
       themeMode: ThemeMode.dark,
       routes: _appRoutes,
-      // routes: _appRoutes.map(
-      //   (key, value) => MapEntry(
-      //     key,
-      //     ((context) => AdsView(child: value(context))),
-      //   ),
-      // ),
       initialRoute: initialRoute,
     );
   }

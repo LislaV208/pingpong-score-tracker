@@ -6,6 +6,7 @@ import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
 import 'package:pingpong_score_tracker/players/screens/add_edit_player_screen.dart';
 import 'package:pingpong_score_tracker/players/widgets/player_list_item.dart';
+import 'package:pingpong_score_tracker/players/widgets/players_options_button.dart';
 import 'package:pingpong_score_tracker/utils/media_query_utils.dart';
 import 'package:pingpong_score_tracker/widgets/app_dialog.dart';
 import 'package:pingpong_score_tracker/widgets/app_snack_bar.dart';
@@ -28,6 +29,9 @@ class PlayersScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Gracze'),
+          actions: const [
+            PlayersOptionsButton(),
+          ],
         ),
         body: BannerAdView(
           child: Stack(
