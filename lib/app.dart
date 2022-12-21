@@ -9,6 +9,7 @@ import 'package:pingpong_score_tracker/match/screens/double_match_config_screen.
 import 'package:pingpong_score_tracker/match/screens/double_match_screen.dart';
 import 'package:pingpong_score_tracker/match/screens/single_match_config_screen.dart';
 import 'package:pingpong_score_tracker/players/screens/players_screen.dart';
+import 'package:pingpong_score_tracker/qr_code_share/screens/scan_qr_code_screen.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_tournament_players_screen.dart';
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_tournament_screen.dart';
 import 'package:pingpong_score_tracker/tournament/circular/circular_tournament_state.dart';
@@ -42,6 +43,10 @@ class App extends StatelessWidget {
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
+        snackBarTheme: SnackBarThemeData(
+          backgroundColor: Colors.grey[800],
+          contentTextStyle: const TextStyle(color: Colors.white),
+        ),
       ),
       themeMode: ThemeMode.dark,
       routes: _appRoutes,

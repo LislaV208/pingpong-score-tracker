@@ -50,4 +50,12 @@ final _appRoutes = {
       child: const CircularTournamentScreen(),
     );
   },
+  ScanQrCodeScreen.route: (context) {
+    final arguments =
+        ModalRoute.of(context)?.settings.arguments as ScanQrCodeScreenArguments;
+
+    return ScanQrCodeScreen(
+      arguments: arguments,
+    );
+  },
 };

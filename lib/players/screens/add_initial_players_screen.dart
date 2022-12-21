@@ -5,6 +5,7 @@ import 'package:pingpong_score_tracker/ads/banner_ad_view.dart';
 import 'package:pingpong_score_tracker/home/screens/home_screen.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
+import 'package:pingpong_score_tracker/qr_code_share/screens/scan_qr_code_screen.dart';
 import 'package:pingpong_score_tracker/players/widgets/add_player_field.dart';
 import 'package:pingpong_score_tracker/players/widgets/player_list_item.dart';
 import 'package:pingpong_score_tracker/widgets/players_list.dart';
@@ -42,6 +43,27 @@ class _AddInitialPlayersScreenState extends State<AddInitialPlayersScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Gracze'),
+        actions: [
+          TextButton.icon(
+            onPressed: () async {
+              Navigator.of(context).pushNamed(
+                ScanQrCodeScreen.route,
+                arguments: ScanQrCodeScreenArguments(
+                  onQrCodeScanned:
+                      context.read<PlayersCubit>().importPlayersFromQrCode,
+                ),
+              );
+            },
+            icon: const Icon(
+              Icons.qr_code_scanner,
+              color: Colors.white,
+            ),
+            label: const Text(
+              'Importuj',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
       ),
       body: BannerAdView(
         child: SafeArea(

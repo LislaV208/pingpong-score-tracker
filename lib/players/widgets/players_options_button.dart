@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
+import 'package:pingpong_score_tracker/qr_code_share/screens/scan_qr_code_screen.dart';
 import 'package:pingpong_score_tracker/players/widgets/share_players_qr_view.dart';
 
 class PlayersOptionsButton extends StatelessWidget {
@@ -35,20 +36,30 @@ class PlayersOptionsButton extends StatelessWidget {
           PopupMenuItem<String>(
             value: importPlayers,
             child: buildChild(
-              Icons.add_box_outlined,
+              Icons.qr_code_scanner,
               importPlayers,
             ),
           ),
         ];
       },
-      onSelected: (value) {
-        final playersState = context.read<PlayersCubit>().state;
+      onSelected: (value) async {
+        final playersCubit = context.read<PlayersCubit>();
+        final playersState = playersCubit.state;
 
         if (value == sharePlayers) {
           showModalBottomSheet(
             context: context,
             builder: (context) => SharePlayersQrView(
               playersJsonData: jsonEncode(playersState.toJson()),
+            ),
+          );
+        }
+
+        if (value == importPlayers) {
+          Navigator.of(context).pushNamed(
+            ScanQrCodeScreen.route,
+            arguments: ScanQrCodeScreenArguments(
+              onQrCodeScanned: playersCubit.importPlayersFromQrCode,
             ),
           );
         }

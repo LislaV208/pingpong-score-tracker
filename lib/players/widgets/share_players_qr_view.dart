@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pingpong_score_tracker/widgets/app_button.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class SharePlayersQrView extends StatelessWidget {
@@ -32,6 +33,13 @@ class SharePlayersQrView extends StatelessWidget {
                 const SizedBox(height: 20),
                 const Text(
                   '1. Na drugim urządzeniu wybierz opcję "Importuj"\n2. Zeskanuj widoczny obok kod QR',
+                ),
+                const SizedBox(height: 20),
+                AppButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Gotowe'),
                 ),
               ],
             ),

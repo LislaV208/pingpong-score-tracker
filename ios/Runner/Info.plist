@@ -47,6 +47,8 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs camera access to scan QR codes</string>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-4623610003844927~4052776179</string>
 </dict>

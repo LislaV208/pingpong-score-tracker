@@ -5,17 +5,19 @@ class AppDialog extends StatelessWidget {
     super.key,
     required this.title,
     required this.child,
+    this.crossAxisAlignment = CrossAxisAlignment.end,
   });
 
   final String title;
   final Widget child;
+  final CrossAxisAlignment crossAxisAlignment;
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: crossAxisAlignment,
         children: [
           ListTile(
             title: Center(child: Text(title)),
