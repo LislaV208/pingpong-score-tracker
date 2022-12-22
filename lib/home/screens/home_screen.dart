@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -45,6 +46,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+    final ratio = width / height;
+
+    log('Width: $width');
+    log('Height: $height');
+    log('Screen ratio: $ratio');
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ekran główny'),
@@ -66,74 +76,41 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      Row(
                         children: [
-                          Row(
-                            children: [
-                              _HomeScreenButton(
-                                onPressed: _onStartMatchPressed(context),
-                                icon: Icons.sports_cricket,
-                                label: 'Rozpocznij mecz',
-                                backgroundColor: Colors.green[700],
-                              ),
-                              _HomeTournamentButton(
-                                onPressed: () => _onTournamentPressed(context),
-                              ),
-                            ],
+                          _HomeScreenButton(
+                            onPressed: _onStartMatchPressed(context),
+                            icon: Icons.sports_cricket,
+                            label: 'Rozpocznij mecz',
+                            backgroundColor: Colors.green[700],
                           ),
-                          Row(
-                            children: [
-                              _HomeScreenButton(
-                                onPressed: () =>
-                                    _onManagePlayersPressed(context),
-                                leading: BlocSelector<PlayersCubit,
-                                    PlayersState, int>(
-                                  selector: (state) => state.players.length,
-                                  builder: (context, playersCount) =>
-                                      _PlayersIcon(playersCount: playersCount),
-                                ),
-                                label: 'Zarządzaj graczami',
-                                backgroundColor: Colors.blue[700],
-                              ),
-                              _HomeScreenButton(
-                                onPressed: () =>
-                                    _onMatchHistoryPressed(context),
-                                icon: Icons.restore,
-                                label: 'Historia meczy',
-                                backgroundColor: Colors.blueGrey[700],
-                              ),
-                            ],
+                          _HomeTournamentButton(
+                            onPressed: () => _onTournamentPressed(context),
                           ),
                         ],
                       ),
-                      TextButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return const AppDialog(
-                                title: 'O autorze',
-                                child: Center(
-                                  child: Text(
-                                    'Tu będą jakieś informacje, moze jakis odnosnik do jakiejs strony.\nW sumie to jeszcze nie wiem, to sie zrobi później XD',
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                        child: const Text(
-                          'O autorze',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: Colors.white,
-                            decoration: TextDecoration.underline,
+                      Row(
+                        children: [
+                          _HomeScreenButton(
+                            onPressed: () => _onManagePlayersPressed(context),
+                            leading:
+                                BlocSelector<PlayersCubit, PlayersState, int>(
+                              selector: (state) => state.players.length,
+                              builder: (context, playersCount) =>
+                                  _PlayersIcon(playersCount: playersCount),
+                            ),
+                            label: 'Zarządzaj graczami',
+                            backgroundColor: Colors.blue[700],
                           ),
-                        ),
+                          _HomeScreenButton(
+                            onPressed: () => _onMatchHistoryPressed(context),
+                            icon: Icons.restore,
+                            label: 'Historia meczy',
+                            backgroundColor: Colors.blueGrey[700],
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -217,6 +194,11 @@ class _HomeScreenButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+
+    final ratio = width / height;
+
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
@@ -228,41 +210,82 @@ class _HomeScreenButton extends StatelessWidget {
             ),
           ),
           onPressed: onPressed,
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 300),
-            child: Container(
-              height: 84,
-              alignment: Alignment.center,
-              padding: const EdgeInsets.fromLTRB(10.0, 8.0, 20.0, 8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: leading ??
-                        FittedBox(
-                          child: Icon(icon),
-                        ),
+          child: ratio < 2
+              ? _buildNarrowerContent(context)
+              : _buildWiderContent(context),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildWiderContent(BuildContext context) {
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 300),
+      child: Container(
+        height: 84,
+        alignment: Alignment.center,
+        padding: const EdgeInsets.fromLTRB(10.0, 8.0, 20.0, 8.0),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: leading ??
+                  FittedBox(
+                    child: Icon(icon),
                   ),
-                  const Spacer(),
-                  Expanded(
-                    flex: 3,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          label,
-                          textAlign: TextAlign.end,
-                          style: Theme.of(context).textTheme.headline5,
-                        ),
-                      ],
-                    ),
+            ),
+            const Spacer(),
+            Expanded(
+              flex: 3,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    label,
+                    textAlign: TextAlign.end,
+                    style: Theme.of(context).textTheme.headline5,
                   ),
                 ],
               ),
             ),
-          ),
+          ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildNarrowerContent(BuildContext context) {
+    return Container(
+      height: 84,
+      alignment: Alignment.center,
+      padding: const EdgeInsets.fromLTRB(2.0, 8.0, 0.0, 8.0),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: leading ??
+                FittedBox(
+                  child: Icon(icon),
+                ),
+          ),
+          const Spacer(),
+          Expanded(
+            flex: 3,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  label,
+                  textAlign: TextAlign.end,
+                  // style: Theme.of(context).textTheme.labelLarge,
+                  style: TextStyle(fontSize: 18.0),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
