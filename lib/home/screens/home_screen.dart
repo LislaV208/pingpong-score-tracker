@@ -9,6 +9,7 @@ import 'package:pingpong_score_tracker/configuration/screens/configuration_scree
 import 'package:pingpong_score_tracker/match/match_type.dart';
 import 'package:pingpong_score_tracker/match/screens/double_match_config_screen.dart';
 import 'package:pingpong_score_tracker/match/screens/single_match_config_screen.dart';
+import 'package:pingpong_score_tracker/match/widgets/tournament_type_dialog.dart';
 import 'package:pingpong_score_tracker/match_history/screens/match_history_screen.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_state.dart';
@@ -19,8 +20,6 @@ import 'package:pingpong_score_tracker/tournament/bracket/bloc/bracket_tournamen
 import 'package:pingpong_score_tracker/tournament/bracket/screens/bracket_tournament_screen.dart';
 import 'package:pingpong_score_tracker/tournament/circular/screens/circular_tournament_screen.dart';
 import 'package:pingpong_score_tracker/tournament/circular/services/circular_tournament_storage.dart';
-import 'package:pingpong_score_tracker/tournament/tournament_type_screen.dart';
-import 'package:pingpong_score_tracker/widgets/app_dialog.dart';
 import 'package:pingpong_score_tracker/widgets/badge_icon.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -144,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
           };
   }
 
-  void _onTournamentPressed(BuildContext context) {
+  void _onTournamentPressed(BuildContext context) async {
     final bracketTournamentState = context.read<BracketTournamentCubit>().state;
     final circularTournamentStorage = context.read<CircularTournamentStorage>();
 
@@ -153,13 +152,20 @@ class _HomeScreenState extends State<HomeScreen> {
     final isCircularTournamentStarted =
         circularTournamentStorage.readIsTournamentStarted();
 
+    final navigator = Navigator.of(context);
+
     final routeName = isBracketTournamentStarted
         ? BracketTournamentScreen.route
         : isCircularTournamentStarted
             ? CircularTournamentScreen.route
-            : TournamentTypeScreen.route;
+            : await showDialog<String>(
+                context: context,
+                builder: (context) => const TournamentTypeDialog(),
+              );
 
-    Navigator.of(context).pushNamed(routeName);
+    if (routeName != null) {
+      navigator.pushNamed(routeName);
+    }
   }
 
   void _onManagePlayersPressed(BuildContext context) {

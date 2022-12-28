@@ -43,7 +43,6 @@ class MatchConfigScreen extends StatelessWidget {
               ? 0.0
               : MediaQuery.of(context).viewPadding.right,
         ),
-        // EdgeInsets.only(right: 0.0),
         child: FloatingActionButton(
           onPressed: arePlayersSelected
               ? () async {

@@ -18,7 +18,6 @@ import 'package:pingpong_score_tracker/tournament/circular/services/berger_table
 import 'package:pingpong_score_tracker/tournament/circular/services/circular_tournament_match_generator.dart';
 import 'package:pingpong_score_tracker/tournament/circular/services/circular_tournament_storage.dart';
 import 'package:pingpong_score_tracker/tournament/models/tournament_match.dart';
-import 'package:pingpong_score_tracker/tournament/tournament_type_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'tournament/circular/screens/circular_tournament_players_screen.dart';
