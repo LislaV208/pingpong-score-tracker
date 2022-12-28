@@ -279,8 +279,7 @@ class _HomeScreenButton extends StatelessWidget {
                 Text(
                   label,
                   textAlign: TextAlign.end,
-                  // style: Theme.of(context).textTheme.labelLarge,
-                  style: TextStyle(fontSize: 18.0),
+                  style: const TextStyle(fontSize: 18.0),
                 ),
               ],
             ),

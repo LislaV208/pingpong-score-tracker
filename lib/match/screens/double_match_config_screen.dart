@@ -14,6 +14,7 @@ import 'package:pingpong_score_tracker/match/widgets/player_dropdown_button/doub
 import 'package:pingpong_score_tracker/match/widgets/serve_dialog.dart';
 import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
+import 'package:pingpong_score_tracker/utils/media_query_utils.dart';
 import 'package:pingpong_score_tracker/widgets/elevated_circle_button.dart';
 
 class DoubleMatchConfigScreen extends HookWidget {
@@ -75,6 +76,7 @@ class DoubleMatchConfigScreen extends HookWidget {
           rightTopPlayer,
           rightBottomPlayer,
         ],
+        alignment: isWideScreen(context) ? null : Alignment.centerLeft,
       ),
       rightChild: _SidePanel(
         players: players,
@@ -92,6 +94,7 @@ class DoubleMatchConfigScreen extends HookWidget {
           leftBottomPlayer,
           rightTopPlayer,
         ],
+        alignment: isWideScreen(context) ? null : Alignment.centerRight,
       ),
       selectRandomPlayers: () => _selectRandomPlayers(
         players: players,
@@ -189,6 +192,7 @@ class _SidePanel extends StatelessWidget {
     required this.topOtherPlayers,
     required this.bottomPlayer,
     required this.bottomOtherPlayers,
+    this.alignment,
   });
 
   final List<String> players;
@@ -198,39 +202,43 @@ class _SidePanel extends StatelessWidget {
   final List<ValueNotifier<String?>> topOtherPlayers;
   final ValueNotifier<String?> bottomPlayer;
   final List<ValueNotifier<String?>> bottomOtherPlayers;
+  final Alignment? alignment;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        _PlayerChoice(
-          title: topTitle,
-          players: players,
-          playerNotifier: topPlayer,
-          otherPlayerNotifiers: topOtherPlayers,
-        ),
-        ElevatedCircleButton(
-          onPressed: topPlayer.value != null || bottomPlayer.value != null
-              ? () {
-                  final temp = topPlayer.value;
-                  topPlayer.value = bottomPlayer.value;
-                  bottomPlayer.value = temp;
-                }
-              : null,
-          icon: const RotatedBox(
-            quarterTurns: 1,
-            child: Icon(Icons.compare_arrows),
+    return Align(
+      alignment: alignment ?? Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _PlayerChoice(
+            title: topTitle,
+            players: players,
+            playerNotifier: topPlayer,
+            otherPlayerNotifiers: topOtherPlayers,
           ),
-          label: 'Zamień',
-        ),
-        _PlayerChoice(
-          title: bottomTitle,
-          players: players,
-          playerNotifier: bottomPlayer,
-          otherPlayerNotifiers: bottomOtherPlayers,
-        ),
-      ],
+          ElevatedCircleButton(
+            onPressed: topPlayer.value != null || bottomPlayer.value != null
+                ? () {
+                    final temp = topPlayer.value;
+                    topPlayer.value = bottomPlayer.value;
+                    bottomPlayer.value = temp;
+                  }
+                : null,
+            icon: const RotatedBox(
+              quarterTurns: 1,
+              child: Icon(Icons.compare_arrows),
+            ),
+            label: 'Zamień',
+          ),
+          _PlayerChoice(
+            title: bottomTitle,
+            players: players,
+            playerNotifier: bottomPlayer,
+            otherPlayerNotifiers: bottomOtherPlayers,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -253,7 +261,12 @@ class _PlayerChoice extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(title),
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: isWideScreen(context) ? null : 13.0,
+          ),
+        ),
         const SizedBox(height: 10.0),
         DoublePlayerDropdownButton(
           players: players,

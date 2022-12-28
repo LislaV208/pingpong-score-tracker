@@ -14,6 +14,7 @@ import 'package:pingpong_score_tracker/match/widgets/player_dropdown_button/sing
 import 'package:pingpong_score_tracker/match/widgets/serve_dialog.dart';
 import 'package:pingpong_score_tracker/match_history/cubit/match_history_cubit.dart';
 import 'package:pingpong_score_tracker/players/bloc/players_cubit.dart';
+import 'package:pingpong_score_tracker/utils/media_query_utils.dart';
 
 class SingleMatchConfigScreen extends HookWidget {
   const SingleMatchConfigScreen({super.key});
@@ -58,12 +59,14 @@ class SingleMatchConfigScreen extends HookWidget {
         players: players,
         playerNotifier: leftPlayer,
         otherPlayerNotifier: rightPlayer,
+        alignment: isWideScreen(context) ? null : Alignment.centerLeft,
       ),
       rightChild: _PlayerChoice(
         title: 'Zawodnik z prawej strony:',
         players: players,
         playerNotifier: rightPlayer,
         otherPlayerNotifier: leftPlayer,
+        alignment: isWideScreen(context) ? null : Alignment.centerRight,
       ),
       selectRandomPlayers: () =>
           _selectRandomPlayers(leftPlayer, rightPlayer, players),
@@ -118,26 +121,34 @@ class _PlayerChoice extends StatelessWidget {
     required this.players,
     required this.playerNotifier,
     required this.otherPlayerNotifier,
+    this.alignment,
   });
 
   final String title;
   final List<String> players;
   final ValueNotifier<String?> playerNotifier;
   final ValueNotifier<String?> otherPlayerNotifier;
+  final Alignment? alignment;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(title),
-        const SizedBox(height: 10.0),
-        SinglePlayerDropdownButton(
-          players: players,
-          playerNotifier: playerNotifier,
-          otherPlayerNotifier: otherPlayerNotifier,
-        ),
-      ],
+    return Align(
+      alignment: alignment ?? Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 10.0),
+          SinglePlayerDropdownButton(
+            players: players,
+            playerNotifier: playerNotifier,
+            otherPlayerNotifier: otherPlayerNotifier,
+          ),
+        ],
+      ),
     );
   }
 }

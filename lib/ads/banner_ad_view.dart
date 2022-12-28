@@ -71,6 +71,7 @@ class _BannerAdViewState extends State<BannerAdView> {
   List<Widget> _buildLandscapeWidgets() {
     final padding =
         Platform.isAndroid ? MediaQuery.of(context).viewPadding.right : 0.0;
+
     return [
       Padding(
         padding: EdgeInsets.only(left: padding),

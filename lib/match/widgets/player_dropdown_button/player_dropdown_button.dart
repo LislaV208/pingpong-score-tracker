@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pingpong_score_tracker/utils/media_query_utils.dart';
 
 class PlayerDropdownButton extends StatelessWidget {
   const PlayerDropdownButton({
@@ -19,7 +20,8 @@ class PlayerDropdownButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 220.0),
+      constraints:
+          BoxConstraints(maxWidth: isWideScreen(context) ? 220.0 : 180.0),
       child: DecoratedBox(
         decoration: BoxDecoration(
           border: Border.all(

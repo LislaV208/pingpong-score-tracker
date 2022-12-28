@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pingpong_score_tracker/ads/banner_ad_view.dart';
+import 'package:pingpong_score_tracker/utils/media_query_utils.dart';
 import 'package:pingpong_score_tracker/widgets/elevated_circle_button.dart';
 
 class MatchConfigScreen extends StatelessWidget {
@@ -28,6 +29,7 @@ class MatchConfigScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Right view padding: ${MediaQuery.of(context).viewPadding.right}');
     var fab = AnimatedSlide(
       duration: const Duration(milliseconds: 300),
       offset: arePlayersSelected
@@ -35,25 +37,33 @@ class MatchConfigScreen extends StatelessWidget {
           : centerFab
               ? const Offset(3, 0)
               : const Offset(0, 3),
-      child: FloatingActionButton(
-        onPressed: arePlayersSelected
-            ? () async {
-                final navigator = Navigator.of(context);
-                final playerServing = await showDialog<String>(
-                  context: context,
-                  builder: serveDialogBuilder,
-                );
-
-                if (playerServing != null) {
-                  navigator.pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => matchScreenBuilder(playerServing),
-                    ),
+      child: Padding(
+        padding: EdgeInsets.only(
+          right: isWideScreen(context)
+              ? 0.0
+              : MediaQuery.of(context).viewPadding.right,
+        ),
+        // EdgeInsets.only(right: 0.0),
+        child: FloatingActionButton(
+          onPressed: arePlayersSelected
+              ? () async {
+                  final navigator = Navigator.of(context);
+                  final playerServing = await showDialog<String>(
+                    context: context,
+                    builder: serveDialogBuilder,
                   );
+
+                  if (playerServing != null) {
+                    navigator.pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => matchScreenBuilder(playerServing),
+                      ),
+                    );
+                  }
                 }
-              }
-            : null,
-        child: const Icon(Icons.arrow_forward),
+              : null,
+          child: const Icon(Icons.arrow_forward),
+        ),
       ),
     );
 

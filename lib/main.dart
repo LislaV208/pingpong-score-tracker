@@ -13,7 +13,7 @@ import 'package:pingpong_score_tracker/tournament/circular/services/circular_tou
 import 'package:provider/provider.dart';
 import 'package:wakelock/wakelock.dart';
 
-const isFreeVersion = true;
+const isFreeVersion = false;
 const isAdTestMode = true;
 
 void main() async {
